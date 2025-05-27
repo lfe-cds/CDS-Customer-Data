@@ -10,6 +10,9 @@ jobs:
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/main-branch/website/Gemfile
 
+    permissions:
+      contents: write
+
     steps:
 
       - name: Checkout main branch
@@ -62,11 +65,11 @@ jobs:
           echo "baseurl: /" \
             >> ${{ github.workspace }}/main-branch/website/_config.yml
 
-      - name: Non-production builds use Github Page's default base url (/Customer-Data/)
-        if: ${{ github.repository != 'carbon-data-specification/Customer-Data' }}
+      - name: Non-production builds use Github Page's default base url (/CDS-Customer-Data/)
+        if: ${{ github.repository != 'lfe-cds/CDS-Customer-Data' }}
         run: |
           sed -i \
-            's|baseurl: \/|baseurl: /Customer-Data/|g' \
+            's|baseurl: \/|baseurl: /CDS-Customer-Data/|g' \
             ${{ github.workspace }}/main-branch/website/_config.yml
 
       - name: Build static website
@@ -75,9 +78,9 @@ jobs:
           bundle exec jekyll build -d ${{ github.workspace }}/gh-pages-branch
 
       - name: Set production domain
-        if: ${{ github.repository == 'carbon-data-specification/Customer-Data' }}
+        if: ${{ github.repository == 'lfe-cds/CDS-Customer-Data' }}
         run: |
-          echo -n "customerdata.carbondataspec.org" > ${{ github.workspace }}/gh-pages-branch/CNAME
+          echo -n "cds-customerdata.lfenergy.org" > ${{ github.workspace }}/gh-pages-branch/CNAME
 
       - name: Push static site to gh-pages branch
         run: |

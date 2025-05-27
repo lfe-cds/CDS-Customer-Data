@@ -2,7 +2,7 @@
 layout: base
 nav: use_cases
 title: Use Cases
-meta_description: What are the use cases that the Customer Data specifications this working group is trying to address?
+meta_description: What are the use cases that the CDS Customer Data specifications this working group is trying to address?
 ---
 [Home]({{ "/" | relative_url }}) / Use Cases
 

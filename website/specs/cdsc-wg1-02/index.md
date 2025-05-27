@@ -1,4 +1,4 @@
 ---
 layout: redirect
-absolute_url: https://connectivity.carbondataspec.org/specs/cdsc-wg1-02
+absolute_url: https://cds-registration.lfenergy.org/specs/cds-wg1-02
 ---

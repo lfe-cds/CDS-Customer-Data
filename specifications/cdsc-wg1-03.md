@@ -1,1 +1,1 @@
-This specification has moved to https://github.com/carbon-data-specification/Customer-Data/blob/main/specifications/cdsc-wg3-01.md
+This specification has moved to https://github.com/lfe-cds/CDS-Customer-Data/blob/main/specifications/cds-wg3-01.md

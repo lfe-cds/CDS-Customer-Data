@@ -8,7 +8,7 @@ meta_description: What is LFESS, and why do I need to join to contribute edits t
 
 ## What is LFESS? <a id="what-is-lfess" href="#what-is-lfess" class="permalink">🔗</a>
 
-In order to make sure our [specifications](https://customerdata.carbondataspec.org/specs) are free and open, we require that all contributers agree to membership terms of our Joint Development Foundation (JDF) project, called "LF Energy Standards and Specifications" (LFESS).
+In order to make sure our [specifications](https://cds-customerdata.lfenergy.org/specs) are free and open, we require that all contributers agree to membership terms of our Joint Development Foundation (JDF) project, called "LF Energy Standards and Specifications" (LFESS).
 
 View the LFESS membership agreement and charter: [https://github.com/lf-energy/foundation/blob/main/project_charters/lfess_charter.pdf](https://github.com/lf-energy/foundation/blob/main/project_charters/lfess_charter.pdf)
 

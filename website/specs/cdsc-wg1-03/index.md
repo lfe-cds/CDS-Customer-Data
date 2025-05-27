@@ -1,4 +1,4 @@
 ---
 layout: redirect
-relative_url: /specs/cdsc-wg3-01
+relative_url: /specs/cds-wg3-01
 ---

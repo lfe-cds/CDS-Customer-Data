@@ -1,1 +1,1 @@
-This specification has moved to https://github.com/carbon-data-specification/Connectivity/blob/main/specifications/cdsc-wg1-01.md
+This specification has moved to https://github.com/lfe-cds/CDS-Registration/blob/main/specifications/cds-wg1-01.md

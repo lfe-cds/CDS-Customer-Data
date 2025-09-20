@@ -1,4 +1,4 @@
-# Joint CDSC WG1 & WG3 (Connectivity and Customer Data) Meeting 2024-03-27
+# Joint CDSC WG1 & WG3 (Connectivity and Customer Data) Meeting 2025-03-27
 
 Recording: https://zoom.us/rec/share/NBc-dS8osVWABgiF65iavEUkhrMBiQbJFCu9FL-KCD64-c76ydaEholsvkzRAm0F.pk47ce9SFqafjQU3
 

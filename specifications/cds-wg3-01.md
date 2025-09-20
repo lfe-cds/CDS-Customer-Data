@@ -605,7 +605,7 @@ The authors would like to thank the late Shuli Goodman, who was the Executive Di
 ## 18. Authors' Addresses <a id="authors-addresses" href="#authors-addresses" class="permalink">🔗</a>
 
 Daniel Roesler  
-UtilityAPI  
-Email: [daniel@utilityapi.com](mailto:daniel@utilityapi.com)  
-URI: [https://utilityapi.com/](https://utilityapi.com/)
+Daniel Roesler LLC  
+Email: [daniel@danielroesler.com](mailto:daniel@danielroesler.com)  
+URI: [https://danielroesler.com/](https://danielroesler.com/)
 

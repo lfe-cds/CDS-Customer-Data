@@ -883,5 +883,5 @@ GET /api/eacs
 
 # Other Drafts <a id="other-drafts" href="#other-drafts" class="permalink">🔗</a>
 
-* Maintainer's draft: [[Website](https://daniel-utilityapi.github.io/CDS-Customer-Data/specs/cds-wg3-01/overview)] [[Code](https://github.com/daniel-utilityapi/CDS-Customer-Data/blob/main/website/specs/cds-wg3-01/overview.md)]
+* Maintainer's draft: [[Website](https://daniel-roesler.github.io/CDS-Customer-Data/specs/cds-wg3-01/overview)] [[Code](https://github.com/daniel-roesler/CDS-Customer-Data/blob/main/website/specs/cds-wg3-01/overview.md)]
 

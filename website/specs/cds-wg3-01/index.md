@@ -20,4 +20,4 @@ Below is a rendering of the original specification source: [{{ site.github_specs
 
 # Other Drafts <a id="other-drafts" href="#other-drafts" class="permalink">🔗</a>
 
-* Maintainer's draft: [[Website](https://daniel-utilityapi.github.io/CDS-Customer-Data/specs/cds-wg3-01)] [[Code](https://github.com/daniel-utilityapi/CDS-Customer-Data/blob/main/specifications/cds-wg3-01.md)]
+* Maintainer's draft: [[Website](https://daniel-roesler.github.io/CDS-Customer-Data/specs/cds-wg3-01)] [[Code](https://github.com/daniel-roesler/CDS-Customer-Data/blob/main/specifications/cds-wg3-01.md)]

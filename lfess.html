@@ -36,6 +36,10 @@
                 width: 0.7em;
                 fill:currentColor;
             }
+            /* Remove main column margin when printing (so content fills the full page width) */
+            @media print {
+                .container { max-width: 100% !important; }
+            }
         </style>
     </head>
     <body>

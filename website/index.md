@@ -8,25 +8,19 @@ meta_description: Linux Foundation Energy - Connected Data Specifications (CDS) 
 
 # Customer Data Working Group (WG3)
 
-This is the homepage of the [Customer Data Working Group (WG3)](https://github.com/lfe-cds/CDS-Customer-Data),
-part of the
-[Connected Data Specifications (CDS)](https://cds.lfenergy.org/),
-an [LF Energy](https://www.lfenergy.org/) project.
+This is the homepage of the [Customer Data Working Group (WG3)](https://github.com/lfe-cds/CDS-Customer-Data), part of the [Connected Data Specifications (CDS)](https://cds.lfenergy.org/), an [LF Energy](https://www.lfenergy.org/) project.
 
 ## Scope <a id="scope" href="#scope" class="permalink">🔗</a>
 
-This working group focuses on writing free, open specifications for providing utility customer data access,
-in order to facilitate carbon emissions calculations and decarbonization efforts.
+This working group focuses on writing free, open specifications for providing utility customer data access, in order to facilitate energy management, reporting, and projects.
 
 ## Use Cases <a id="use-cases" href="#use-cases" class="permalink">🔗</a>
 
-We have defined several broad categories of [use cases]({{ "/use-cases" | relative_url }}) we will focus on addressing,
-along with what customer data types and functionalities will need to be specified to accommodate
-those use cases.
+We have defined several broad categories of [use cases]({{ "/use-cases" | relative_url }}) we will focus on addressing, along with what customer data types and functionalities will need to be specified to accommodate those use cases.
 
-* `Use Case 1` - [Carbon Accounting]({{ "/use-cases" | relative_url }}#use-case-carbon-accounting)
-* `Use Case 2` - [Decarbonization Projects]({{ "/use-cases" | relative_url }}#use-case-decarbonization-projects)
-* `Use Case 3` - [Distributed Grid Flexibility]({{ "/use-cases" | relative_url }}#use-case-distributed-flexibility)
+* `Use Case 1` - [Energy Management]({{ "/use-cases" | relative_url }}#use-case-energy-management)
+* `Use Case 2` - [Energy Projects]({{ "/use-cases" | relative_url }}#use-case-energy-projects)
+* `Use Case 3` - [Grid Flexibility]({{ "/use-cases" | relative_url }}#use-case-grid-flexibility)
 * `Use Case 4` - [Building Benchmarking]({{ "/use-cases" | relative_url }}#use-case-benchmarking)
 
 We've also made a list of what data and functionality is specifically [not in scope]({{ "/use-cases" | relative_url }}#not-in-scope).

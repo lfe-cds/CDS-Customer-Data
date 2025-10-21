@@ -10,7 +10,9 @@ This specification defines how utilities and other central entities ("Servers") 
 
 ## Copyright <a id="copyright" href="#copyright" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+Copyright Joint Development Foundation Projects, LLC, LF Energy Standards and Specifications Series and its contributors ("LFESS").
+All rights reserved.
+For more information, visit [https://lfess.energy/](https://lfess.energy/).
 
 ## Table of Contents <a id="table-of-contents" href="#table-of-contents" class="permalink">🔗</a>
 

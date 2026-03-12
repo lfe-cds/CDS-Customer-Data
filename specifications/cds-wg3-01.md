@@ -3,7 +3,7 @@
 ## Abstract <a id="abstract" href="#abstract" class="permalink">🔗</a>
 
 This specification defines how utilities and other central entities ("Servers") may allow vendors, customers, and other external organizations ("Clients") to securely access account holder data ("Customer Data"), including in situations where Customer consent where needed or data is aggregated.
-This specification extends [[CDS-WG1-02](#ref-cds-wg1-02)] ("Client Registration") to add authorization [Scopes](#scopes) for Customer Data access, specifies common [Scenarios](#scenarios), and defines Application Programming Interfaces (APIs) and data formats for Customer Data.
+This specification extends [[CDS-WG1-02](#ref-cds-wg1-02)] ("Client Registration") to add new authorization [Scopes](#scopes) and defines new Application Programming Interfaces (APIs) for Customer Data.
 
 ## Status <a id="status" href="#status" class="permalink">🔗</a>
 
@@ -21,18 +21,19 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
 * [2. Terminology](#terminology)  
 * [3. Scenarios](#scenarios)  
     * [3.1. Usage Self-Access](#scenario-usage-self-access)  
-    * [3.2. Billing Self-Access](#scenario-billing-self-access)  
-    * [3.3. Meter Data](#scenario-meter-data)  
-    * [3.4. Rate Plan](#scenario-rate-plan)  
-    * [3.5. Program Participation](#scenario-program-participation)  
-    * [3.6. Program Analysis](#scenario-program-analysis)  
-    * [3.7. Bill Amount Due](#scenario-bill-amount-due)  
-    * [3.8. Bill Statements](#scenario-bill-statements)  
-    * [3.9. Service Charges](#scenario-service-charges)  
-    * [3.10. Whole-Building Data](#scenario-building-data)  
-    * [3.11. Aggregated Data](#scenario-aggregated-data)  
-    * [3.12. EAC Data](#scenario-eac-data)  
-    * [3.13. Internal Access](#scenario-internal-access)  
+    * [3.2. Billing Self-Access](#scenario-billing-self-access) 
+    * [3.3. Usage and Billing Self-Access](#scenario-self-access)   
+    * [3.4. Meter Data](#scenario-meter-data)  
+    * [3.5. Rate Plan](#scenario-rate-plan)  
+    * [3.6. Program Participation](#scenario-program-participation)  
+    * [3.7. Program Analysis](#scenario-program-analysis)  
+    * [3.8. Bill Amount Due](#scenario-bill-amount-due)  
+    * [3.9. Bill Statements](#scenario-bill-statements)  
+    * [3.10. Service Charges](#scenario-service-charges)  
+    * [3.11. Whole-Building Data](#scenario-building-data)  
+    * [3.12. Aggregated Data](#scenario-aggregated-data)  
+    * [3.13. EAC Data](#scenario-eac-data)  
+    * [3.14. Internal Access](#scenario-internal-access)  
 * [4. CDS-WG1-02 Extension](#cds-wg1-02-extension)  
 * [5. Server Metadata](#server-metadata)  
 * [6. Scopes Supported](#scopes)  
@@ -54,6 +55,33 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
     * [6.16. Aggregations Query](#scope-aggregations-query)  
     * [6.17. Usage Query](#scope-usage-query)  
 * [7. Authorization Details Fields](#auth-details-fields)  
+    * [7.1. Allow Scope Modifications](#auth-details-allow-scope-modifications)  
+    * [7.2. Error If No Preselections](#auth-details-error-if-no-preselections)  
+    * [7.3. Preselect Account Numbers](#auth-details-account-numbers)  
+    * [7.4. Preselect Contract Numbers](#auth-details-contract-numbers)  
+    * [7.5. Preselect Meter Numbers](#auth-details-meter-numbers)  
+    * [7.6. Preselect Addresses](#auth-details-addresses)  
+    * [7.7. Preselect Service Types](#auth-details-service-types)  
+    * [7.8. Preselect Account Programs](#auth-details-account-programs)  
+    * [7.9. Preselect Contract Programs](#auth-details-contract-programs)  
+    * [7.10. Sync Until](#auth-details-sync-until)  
+    * [7.11. Bill Statement Date Start](#auth-details-statement-start)  
+    * [7.12. Bill Statement Date End](#auth-details-statement-end)  
+    * [7.13. Bill Section Start Date](#auth-details-bill-section-start)  
+    * [7.14. Bill Section End Date](#auth-details-bill-section-end)  
+    * [7.15. Usage Segment Start](#auth-details-usage-segment-start)  
+    * [7.16. Usage Segment End](#auth-details-usage-segment-end)  
+    * [7.17. Include Bill Statements](#auth-details-include-bill-statements)  
+    * [7.18. Include Bill Statement Files](#auth-details-include-bill-statement-files)  
+    * [7.19. Include Bill Sections](#auth-details-include-bill-sections)  
+    * [7.20. Include Bill Section Line Items](#auth-details-include-bill-section-line-items)  
+    * [7.21. Include Account Numbers](#auth-details-include-account-numbers)  
+    * [7.22. Include Account Details](#auth-details-include-account-details)  
+    * [7.23. Include Contract Numbers](#auth-details-include-contract-numbers)  
+    * [7.24. Include Contract Details](#auth-details-include-contract-details)  
+    * [7.25. Include Premise Numbers](#auth-details-include-premise-numbers)  
+    * [7.26. Include Addresses](#auth-details-include-addresses)  
+    * [7.27. Include Coordinates](#auth-details-include-coordinates)  
 * [8. Client Registration Requirements](#client-registration-requirements)  
 * [9. Customer Authorizations](#customer-authorizations)  
 * [10. Accounts API](#accounts-api)  
@@ -112,7 +140,7 @@ These entities can include, but are not limited to, distribution utilities, grid
 
 <a id="client" href="#client" class="permalink">🔗</a> **"Client"** - The entity requesting Server's metadata endpoints.
 A Client can be any organization or user seeking to access Customer data with a Server for a specific scope of access.
-These entities can include, but are not limited to, carbon tracking applications, electric vehicle companies, clean energy technology providers, commercial utility customers, grid management applications, and energy efficiency organizations.
+These entities can include, but are not limited to, energy efficiency contractors, utility vendors, distributed energy resource companies, building energy management platforms, and even Customers themselves (to gain automated access their own data).
 
 <a id="customer" href="#customer" class="permalink">🔗</a> **"Customer"** - The entity who's data is being requested from a Server by a Client ("Customer Data").
 For grants that require customer authorization, the Customer is the user who authorizes the access.
@@ -151,20 +179,24 @@ Customers may also be a representative of the customer of record, such as an ene
 
 Customer Data access is necessary for many different use cases, but not all use cases require the same type of access or same fields of Customer Data.
 For example, an energy efficiency auditor working with a Customer may need historical usage intervals, but no bill data.
-In contrast, another example is for a building management company to need access to their property owner client's (i.e. the utility Customer's) bill statements.
+In contrast, another example is for a building management company to need ongoing access to a Customer's bill statements for accounting and reporting.
 
-This section defines typical Scenarios as sets of [Scopes](#scopes) and configuration requirements for Scope Descriptions that are intended to meet the Scenario's use cases.
+This section defines "Scenarios" as sets of [Scopes](#scopes) and configuration requirements for Scope Descriptions that are intended to meet the Scenario's use cases.
 Because Scenarios are defined sets of Scopes and configuration requirements, they don't actually appear in any API responses by the Server.
 Rather, Scenarios are intended to aide regulators, governing authorities, and [Extensions](#extensions) in choosing which Scopes, data fields, and functionality they require Servers to implement.
 
-Regulators, governing authorities, and extensions MAY choose to require implementation of any or all Scenarios defined in this specification or choose to define new Scenarios.
-When defining new Scenarios, it is RECOMMENDED that those Scenarios are defined either as a modification to one or more Scenarios from this specification or by defining the new Scenario in the same format as the Scenarios defined in this specification.
+Regulators, governing authorities, and extensions MAY choose to require implementation of any combination of Scenarios defined in this specification or choose to define new Scenarios.
+When defining new Scenarios, it is RECOMMENDED that those Scenarios are defined either as a list of modifications to one or more Scenarios from this specification or, if a completely new Scenario, using the same format as the Scenarios defined in this specification.
 
 New Scenarios MAY include requirements to extend various object formats or numerated values to include additional fields.
-For example, a regulator could define a new Scenario that extends the "Meter Data" Scenario by requiring an additional field be included in the [Service Contract](#service-contract-format) object, such as `dso_participant_id`.
+For example, a regulator could define a new Scenario that extends the "Meter Data" Scenario by requiring an additional `CAISO_pricing_node` field be included in the [Service Contract](#service-contract-format) object.
+It is RECOMMENDED that when requiring new fields for new Scenarios, that defining the new fields follows the [Extensions](#extensions) section, including adding a relevant prefix to the new field names (e.g. `CAISO_*`).
 
-In addition to implementing requirements for their jurisdiction, Servers MAY implement additional Scopes or configurations that helps provide Customer Data access for relevant internal or external use cases.
-For example, a utility could provide program participants' meter data to the utility's contracted vendor that is running the program.
+New Scenarios MAY also define new [Scopes](#scopes) that specify a specialized levels of access for Clients of the Scenario's use cases.
+When defining new Scopes, it is RECOMMENDED that those Scopes are defined either as a list of modifications to one or more Scopes from this specification or, if a completely new Scope, using the same format as the otherScopes defined in this specification.
+
+In addition to implementing requirements for their jurisdiction, Servers MAY implement any Scope or configuration that helps provide Customer Data access for relevant internal or external use cases.
+For example, a utility could enable Scopes that streamline how they transfer program participant meter data to their contracted program administrator vendor for internal program analysis and reporting.
 
 Clients MUST NOT rely on stated Scenario compliance from regulators or Servers.
 Instead, Clients MUST parse the [Server Metadata](#server-metadata) to evaluate if a Server's offered Scopes and functionality is adequate for their use case.
@@ -175,7 +207,7 @@ This section defines the Scenario "Usage Self-Access" in which a utility Custome
 For example, a commercial customer would like to download their historical meter usage feed for their owned properties, so that their energy management team can evaluate their buildings' energy profiles.
 Another example is for a data center owner to want to integrate an automatic nightly update of their previous day's meter usage, so that they can check their operations for discrepancies between their own energy monitoring systems.
 
-To implement the "Customer Self-Access" Scenario, Servers MUST implement the following list of requirements.
+To implement the "Usage Self-Access" Scenario, Servers MUST implement the following list of requirements.
 
 * Servers MUST include at least one of each [Accounts Query](#scope-accounts-query), [Service Contracts Query](#scope-service-contracts-query), [Service Points Query](#scope-service-points-query), [Meter Devices Query](#scope-meter-devices-query), and [Usage Query](#scope-usage-query) Scope Descriptions in the Server Metadata `cds_scope_descriptions` object, as well as include those Scope Description `id` values in the Server Metadata `scopes_supported` list.
 * Servers MUST include any required steps for verifying the identity of a Client as the Customer in the Scope Description `registration_requirements` list.
@@ -185,6 +217,8 @@ To implement the "Customer Self-Access" Scenario, Servers MUST implement the fol
 * Servers MUST keep the list of Accounts, Service Contracts, Service Points, Meter Devices, and Usage Segments that are associated with the Client updated to reflect any changes to the Customer.
   For example, if a Customer builds a new warehouse on their property and installs a new electric service for the warehouse, the Client should see any new Accounts, Service Contracts, Service Points, Meter Devices, and Usage Segments for the new warehouse included in API objects returned when data is next synced from the Server.
 * The [Usage Query](#scope-usage-query) Scope Description's `segment_start` authorization details field MUST allow the Client to access for each connected Service Contract's usage at least 1 year of historical usage data (i.e. `minimum` value set to at least `P1Y`).
+* The [Usage Query](#scope-usage-query) Scope Description's `segment_end` authorization details field MUST have the `maximum` field's value set to `infinite`, which means Clients MAY authorize access to.
+* <span style="background-color:yellow">TODO: what `include_*` auth details</span>
 
 ### 3.2. Billing Self-Access <a id="scenario-billing-self-access" href="#scenario-billing-self-access" class="permalink">🔗</a>
 
@@ -202,52 +236,67 @@ To implement the "Billing Self-Access" Scenario, Servers MUST implement the foll
   For example, if a Customer buys a property and transfers the utility services for that property to a new account under their profile, the Client should see any new Accounts, Service Contracts, Bill Statements, and Bill Sections for the new account in API objects returned when data is next synced from the Server.
 * Bill Statement object `file_uri` and `file_mimetype` fields are REQUIRED to be included, so that Clients MAY download copies of their utility bill statements.
 * The [Bill Statements Query](#scope-bill-statements-query) Scope Description's `statement_date_start` authorization details field MUST allow the Client to access for each connected Account at least 1 year of historical bill statements (i.e. `minimum` value set to at least `P1Y`).
+* The [Bill Statements Query](#scope-bill-statements-query) Scope Description's `statement_date_end` authorization details field MUST allow the Client to access for each connected Account for any future duration of time (i.e. `maximum` value set to at least `in`).
 * The [Bill Sections Query](#scope-bill-sections-query) Scope Description's `start_date` authorization details field MUST allow the Client to access for each connected Service Contract at least 1 year of historical bill sections (i.e. `minimum` value set to at least `P1Y`).
+* <span style="background-color:yellow">TODO: what `include_*` auth details</span>
 
-### 3.3. Meter Data <a id="scenario-meter-data" href="#scenario-meter-data" class="permalink">🔗</a>
+### 3.3. Usage and Billing Self-Access <a id="scenario-self-access" href="#scenario-self-access" class="permalink">🔗</a>
+
+This section defines the Scenario "Usage and Billing Self-Access" in which a utility Customer wants to access their own accounts' usage and bills.
+For example, an enterprise customer would like automate a energy billing.
+
+To implement the "Usage and Billing Self-Access" Scenario, Servers MUST implement the following list of requirements.
+
+* Servers MUST implement the [Usage Self-Access](#scenario-usage-self-access) Scenario.
+* Servers MUST implement the [Billing Self-Access](#scenario-billing-self-access) Scenario.
+
+### 3.4. Meter Data <a id="scenario-meter-data" href="#scenario-meter-data" class="permalink">🔗</a>
 
 This section defines the Scenario "Meter Data" in which a Client requests access to a Customer's historical and/or ongoing usage data.
 For example, an energy efficiency auditor is working with building owner, and needs to download their previous year's usage.
 
-<span style="background-color:yellow">TODO</span>
+To implement the "Meter Data" Scenario, Servers MUST implement the following list of requirements.
 
-### 3.4. Rate Plan <a id="scenario-rate-plan" href="#scenario-rate-plan" class="permalink">🔗</a>
+* Servers MUST include at least one of each [Accounts Query](#scope-accounts-query), [Service Contracts Query](#scope-service-contracts-query), [Service Points Query](#scope-service-points-query), [Meter Devices Query](#scope-meter-devices-query), and [Usage Query](#scope-usage-query) Scope Descriptions in the Server Metadata `cds_scope_descriptions` object, as well as include those Scope Description `id` values in the Server Metadata `scopes_supported` list.
+* The [Usage Query](#scope-usage-query) Scope Description's `segment_start` authorization details field MUST allow the Client to access for each connected Service Contract's usage at least 1 year of historical usage data (i.e. `minimum` value set to at least `P1Y`).
 
-<span style="background-color:yellow">TODO</span>
-
-### 3.5. Program Participation <a id="scenario-program-participation" href="#scenario-program-participation" class="permalink">🔗</a>
-
-<span style="background-color:yellow">TODO</span>
-
-### 3.6. Program Analysis <a id="scenario-program-analysis" href="#scenario-program-analysis" class="permalink">🔗</a>
+### 3.5. Rate Plan <a id="scenario-rate-plan" href="#scenario-rate-plan" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.7. Bill Amount Due <a id="scenario-bill-amount-due" href="#scenario-bill-amount-due" class="permalink">🔗</a>
+### 3.6. Program Participation <a id="scenario-program-participation" href="#scenario-program-participation" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.8. Bill Statements <a id="scenario-bill-statements" href="#scenario-bill-statements" class="permalink">🔗</a>
+### 3.7. Program Analysis <a id="scenario-program-analysis" href="#scenario-program-analysis" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.9. Service Charges <a id="scenario-service-charges" href="#scenario-service-charges" class="permalink">🔗</a>
+### 3.8. Bill Amount Due <a id="scenario-bill-amount-due" href="#scenario-bill-amount-due" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.10. Whole-Building Data <a id="scenario-building-data" href="#scenario-building-data" class="permalink">🔗</a>
+### 3.9. Bill Statements <a id="scenario-bill-statements" href="#scenario-bill-statements" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.11. Aggregated Data <a id="scenario-aggregated-data" href="#scenario-aggregated-data" class="permalink">🔗</a>
+### 3.10. Service Charges <a id="scenario-service-charges" href="#scenario-service-charges" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.12. EAC Data <a id="scenario-eac-data" href="#scenario-eac-data" class="permalink">🔗</a>
+### 3.11. Whole-Building Data <a id="scenario-building-data" href="#scenario-building-data" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.13. Internal Access <a id="scenario-internal-access" href="#scenario-internal-access" class="permalink">🔗</a>
+### 3.12. Aggregated Data <a id="scenario-aggregated-data" href="#scenario-aggregated-data" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+### 3.13. EAC Data <a id="scenario-eac-data" href="#scenario-eac-data" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+### 3.14. Internal Access <a id="scenario-internal-access" href="#scenario-internal-access" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
@@ -255,6 +304,8 @@ For example, an energy efficiency auditor is working with building owner, and ne
 
 As the framework for providing Client registration, onboarding, communication, management, and grant authorizations, Servers MUST implement CDS's Client Registration specification [[CDS-WG1-02](#ref-cds-wg1-02)].
 This specification in subsequent sections extends the CDS's Client Registration framework by defining additional fields, values, and APIs that are relevant to Customer Data access, so that Servers implementing this specification can satisfy Customer Data use cases.
+
+<span style="background-color:yellow">TODO</span>
 
 ## 5. Server Metadata <a id="server-metadata" href="#server-metadata" class="permalink">🔗</a>
 
@@ -356,6 +407,173 @@ This specification extends CDS's Client Registration Scopes Supported [[CDS-WG1-
 <span style="background-color:yellow">TODO</span>
 
 ## 7. Authorization Details Fields <a id="auth-details-fields" href="#auth-details-fields" class="permalink">🔗</a>
+
+This section defines Authorization Details Fields that are available to be included in [Scope](#scopes) definitions.
+Authorization Details Fields allow Clients to define tailored authorization experiences and scopes of access that meet their specific use case needs.
+
+When a Server supports an Authorization Details Field defined by this section, the Server MUST include that field in the `authorization_details_fields_supported` array in the Server's relevant Scope Description objects [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)].
+This allows Clients to automate discovery of which Authorization Details Fields are supported when formatting authorization and token request parameters.
+Formats listed in this section are defined by CDS-WG1-02's Authorization Details Field Formats [[CDS-WG1-02 Section 3.9](#ref-cds-wg1-02-auth-field-formats)], unless otherwise noted.
+
+Extensions of this specification MAY define additional Authorization Details Fields that define additional behavior for [Scope](#scopes) defined in this specification.
+When defining additional Authorization Details Fields, it is RECOMMENDED to define them in the same format as those defined in this section.
+
+### 7.1. Allow Scope Modifications <a id="auth-details-allow-scope-modifications" href="#auth-details-allow-scope-modifications" class="permalink">🔗</a>
+
+For some use cases, a Client may have a specific set of data fields that they are required to have to complete their process.
+For example, an energy audit contractor could be required to obtain the last 12 months of meter usage data from a Customer in order to complete their energy audit report.
+
+In these relevant use cases, Clients benefit from being able to configure an authorization request that cannot be modified by a Customer during the authorization process, so that the Customer does not inadvertently remove required data fields or ranges.
+This authorization data field is intended to allow Clients a way to configure a Server's authorization form as editable or non-editable.
+
+**Field:** `allow_scope_modifications`  
+**Format:** `boolean`  
+**Requirements:**
+When this field value is `true`, Servers MAY render authorization form presented to the user as editable, meaning that the user MAY modify the requested scope within the authorization form and authorize that modified scope.
+When this field value is `false`, Servers MUST render the authorization from presented to the user as non-editable, meaning that the user MUST be able to only authorize or decline the authorization request as a whole and cannot modify the requested scope.
+This field MUST NOT be included in the Scope Description's `authorization_details_fields_supported` array [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)] when the `response_types_supported` list is empty (i.e. no authorization request method is available).
+
+### 7.2. Error If No Preselections <a id="auth-details-error-if-no-preselections" href="#auth-details-error-if-no-preselections" class="permalink">🔗</a>
+
+For some use cases, when requesting authorization from a Customer, a Client may want to preselect certain fields on the authorization form.
+These preselections are configured by other authorization details fields (e.g. `service_types`).
+However, sometimes a Customer does not have any Accounts, Meter Devices, or other relevant objects that meet the preselection criteria.
+For example, an energy audit contractor Client may request access to all of a Customer's electric Service Contracts using the `service_types` authorization details field (i.e. `"service_types": ["electric"]`).
+If the Customer does not have any electric meters (e.g. they are a gas-only customer), the authorization form will not be able to have any Service Contracts preselected.
+
+In these relevant use cases, Clients benefit from being able to configure the authorization request to automatically redirect with an error if an authenticated Customer does not have any objects that can be preselected.
+This allows Clients to present relevant error messages to Customers that do not have required objects for the Client's use case (e.g. "You don't appear to have any electric meters, so we won't be able to run an energy audit for your account.").
+
+**Field:** `error_if_no_preselections`  
+**Format:** `boolean`  
+**Requirements:**
+When this field value is `true`, after the user is authenticated and prior to showing the authorization form to the user, the Server MUST determine if the user will need to select any objects relevant to preselection fields included in the authorization details of the request (e.g. `"account_numbers": ["123456789"]` didn't match any of the user's Account `account_number` values, so no Accounts will be preselected and the user will be asked to select the Accounts they want to apply to this authorization).
+If the user will need to select any objects relevant to preselection fields included in the authorization details of the request, the Server MUST reject the authorization request prior to showing the authorization form to the user and redirect the user back to the Client's `redirect_uri` with an `error` parameter value of `no_preselections`.
+If the authorization request did not include any preselection fields, defined by Sections 7.3 through 7.9, or this field value is `false`, the Server MUST ignore this filed and treat the authorization request as if this field was not included.
+This field MUST NOT be included in the Scope Description's `authorization_details_fields_supported` array [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)] when the `response_types_supported` list is empty (i.e. no authorization request method is available).
+
+### 7.3. Preselect Account Numbers <a id="auth-details-account-numbers" href="#auth-details-account-numbers" class="permalink">🔗</a>
+* `account_numbers`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.4. Preselect Contract Numbers <a id="auth-details-contract-numbers" href="#auth-details-contract-numbers" class="permalink">🔗</a>
+* `contract_numbers`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.5. Preselect Meter Numbers <a id="auth-details-meter-numbers" href="#auth-details-meter-numbers" class="permalink">🔗</a>
+* `meter_numbers`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.6. Preselect Addresses <a id="auth-details-addresses" href="#auth-details-addresses" class="permalink">🔗</a>
+* `addresses`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.7. Preselect Service Types <a id="auth-details-service-types" href="#auth-details-service-types" class="permalink">🔗</a>
+* `service_types`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.8. Preselect Account Programs <a id="auth-details-account-programs" href="#auth-details-account-programs" class="permalink">🔗</a>
+* `account_programs`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.9. Preselect Contract Programs <a id="auth-details-contract-programs" href="#auth-details-contract-programs" class="permalink">🔗</a>
+* `contract_programs`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.10. Sync Until <a id="auth-details-sync-until" href="#auth-details-sync-until" class="permalink">🔗</a>
+* `sync_until`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.11. Bill Statement Date Start <a id="auth-details-statement-start" href="#auth-details-statement-start" class="permalink">🔗</a>
+* `statement_date_start`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.12. Bill Statement Date End <a id="auth-details-statement-end" href="#auth-details-statement-end" class="permalink">🔗</a>
+* `statement_date_end`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.13. Bill Section Start Date <a id="auth-details-bill-section-start" href="#auth-details-bill-section-start" class="permalink">🔗</a>
+* `start_date`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.14. Bill Section End Date <a id="auth-details-bill-section-end" href="#auth-details-bill-section-end" class="permalink">🔗</a>
+* `end_date`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.15. Usage Segment Start <a id="auth-details-usage-segment-start" href="#auth-details-usage-segment-start" class="permalink">🔗</a>
+* `segment_start`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.16. Usage Segment End <a id="auth-details-usage-segment-end" href="#auth-details-usage-segment-end" class="permalink">🔗</a>
+* `segment_end`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.17. Include Bill Statements <a id="auth-details-include-bill-statements" href="#auth-details-include-bill-statements" class="permalink">🔗</a>
+* `include_bill_statements`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.18. Include Bill Statement Files <a id="auth-details-include-bill-statement-files" href="#auth-details-include-bill-statement-files" class="permalink">🔗</a>
+* `include_bill_statement_files`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.19. Include Bill Sections <a id="auth-details-include-bill-sections" href="#auth-details-include-bill-sections" class="permalink">🔗</a>
+* `include_bill_sections`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.20. Include Bill Section Line Items <a id="auth-details-include-bill-section-line-items" href="#auth-details-include-bill-section-line-items" class="permalink">🔗</a>
+* `include_bill_section_line_items`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.21. Include Account Numbers <a id="auth-details-include-account-numbers" href="#auth-details-include-account-numbers" class="permalink">🔗</a>
+* `include_account_numbers`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.22. Include Account Details <a id="auth-details-include-account-details" href="#auth-details-include-account-details" class="permalink">🔗</a>
+* `include_account_details`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.23. Include Contract Numbers <a id="auth-details-include-contract-numbers" href="#auth-details-include-contract-numbers" class="permalink">🔗</a>
+* `include_contract_numbers`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.24. Include Contract Details <a id="auth-details-include-contract-details" href="#auth-details-include-contract-details" class="permalink">🔗</a>
+* `include_contract_details`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.25. Include Premise Numbers <a id="auth-details-include-premise-numbers" href="#auth-details-include-premise-numbers" class="permalink">🔗</a>
+* `include_premise_numbers`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.26. Include Addresses <a id="auth-details-include-addresses" href="#auth-details-include-addresses" class="permalink">🔗</a>
+* `include_addresses`
+
+<span style="background-color:yellow">TODO</span>
+
+### 7.27. Include Coordinates <a id="auth-details-include-coordinates" href="#auth-details-include-coordinates" class="permalink">🔗</a>
+* `include_coordinates`
 
 <span style="background-color:yellow">TODO</span>
 
@@ -975,12 +1193,16 @@ In situations where relevant EACs have the same `period_start` and `cds_created`
 [https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scopes](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scopes)
 
 <a id="ref-cds-wg1-02-scope-descriptions" href="#ref-cds-wg1-02-scope-descriptions" class="permalink">🔗</a>
-`CDS-WG1-02 Section 3.4` - "Scopes Descriptions Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
+`CDS-WG1-02 Section 3.4` - "Scope Descriptions Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
 [https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scope-descriptions-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scope-descriptions-format)
 
 <a id="ref-cds-wg1-02-registration-fields" href="#ref-cds-wg1-02-registration-fields" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.5` - "Registration Field Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
 [https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-field-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-field-format)
+
+<a id="ref-cds-wg1-02-auth-field-formats" href="#ref-cds-wg1-02-auth-field-formats" class="permalink">🔗</a>
+`CDS-WG1-02 Section 3.9` - "Authorization Details Field Formats", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-details-field-formats](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-details-field-formats)
 
 <a id="ref-iso4217" href="#ref-iso4217" class="permalink">🔗</a>
 `ISO 4217` - "Currency Codes", ISO 4217, International Organization for Standardization (ISO),  

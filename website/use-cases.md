@@ -16,12 +16,12 @@ These are the use cases that this working group is writing specifications to add
 Many companies, organizations, and governments around the world are working to measure and track their energy usage and costs.
 This is called [energy management](https://en.wikipedia.org/wiki/Energy_management_system_(building_management)).
 
-While energy management analyses vary widely, most of these procedures for calculating results involve obtaining customer utility data, such as electric and natural gas usage, meter locations, rate plans, etc.
+While energy management analyses vary widely, most of these procedures for calculating results involve obtaining customer data, such as electric and natural gas usage, meter locations, rate plans, retailer details, generation and supply information, etc.
 
 #### Needs:
 
 * **Standardized Data Formats and Access Procedures:**
-This data often needs to be gathered both as historical data (e.g. getting the past year of usage data for a historical analysis) and ongoing data (e.g. getting the past day's usage for real-time tracking of energy usage).
+This data often needs to be gathered both as historical data (e.g. getting the past year of usage data for a historical analysis), current data (e.g. a customer's current retailer and rate plan), and ongoing data (e.g. getting the past day's usage for real-time tracking of energy usage).
 To address this need, the specifications from this working group will establish standardized data formats and access procedures so that data can be easily obtained, analyzed, and combined from multiple sources (e.g. companies with buildings in multiple utility territories).
 
 * **Standardized Customer Datasets:**
@@ -29,14 +29,14 @@ In order to perform the needed calculations for energy management and other Use 
 Which data fields, granularity, and time periods are needed are highly use-case dependent, but without requirements to follow, utilities may not provide access to adequate datasets to satisfy an intended use case's needs.
 Thus, specifications to address this use case must consider what specific datasets are required for common use cases in addition to how the data should be formatted and accessed.
 
-* **Granular Certification Data:**
-As a component energy management, carbon emissions is often monitored and reported in order to meet regulatory requirements or corporate policies.
-As part of tracking emissions, granular certificates are an important tool for applications such as 24/7 energy matching and creating market signals to stimulate investment in new technologies.
-Granular certification depends on streamlined and scalable access to granular generation data from clean energy projects (for example, from wholesale power purchase agreements) and charge / discharge data from in-front-of-the-meter storage assets.
-To address this use case, the specifications must consider how to obtain (revenue grade) metered generation data from individual asset owners in a centralized and secure manner.
+* **Granular Production and Certification Data:**
+As a component energy management, energy purchase contracts and emissions are often monitored and reported in order to meet corporate policies or regulatory requirements.
+As part of tracking energy contracts and emissions, granular certificates, attestations, supply mix and details, and production meter data are important for technical calculations needed to meet energy management policies.
+Examples of these policies include verifying power purchase agreements, 24/7 energy matching, and creating market signals to stimulate investment in new technologies.
+To address this use case, the specifications must consider how to obtain revenue grade metered generation data and other necessary certification inputs from individual asset owners and grid operators in a centralized and secure manner.
 
 * **Privacy, Consent, and Security:**
-Since energy management is typically for specific entities, the actual utility data of that specific entity is required to perform calculations (e.g. the actual kwh usage, meter locations, and rate plans for the customer for the past 12 months).
+Since energy management calculations are typically for specific entities, the actual utility data of that specific entity is required to perform calculations (e.g. the actual kwh usage, meter locations, and rate plans for the customer for the past 12 months).
 This data is typcially considered private information, so specifications to address this use case must consider privacy, consent, and security requirements as part of the scope of work.
 
 * **Streamlined User Experience:**
@@ -69,9 +69,9 @@ These projects can range from physical locally (e.g. installing solar or EV char
 Like energy management, the calculations for assessing energy projects typcially require the specific utility data for a specific entity.
 So, all of the needs for energy management often are needed for assessing energy projects, both for the initial feasibility analysis and ongoing project measurement and verification ([M&V](https://en.wikipedia.org/wiki/Measurement_and_Verification)).
 
-* **Utility Bill and Cost Breakdowns:**
+* **Bill and Cost Breakdowns:**
 Energy projects are frequently analyzed based on financial payback or savings calculations (e.g. converting a fleet of company vehicles to EVs would remove gasoline costs while incurring more electricity costs).
-Thus, to address this use case the specifications must consider how to obtain customer utility bill and cost breakdown information so that these complex financial analyses can be performed, both for initial financial analysis and ongoing cost monitoring.
+Thus, to address this use case the specifications must consider how to obtain utility customer bill and cost breakdown information, from distributor and retailer, so that these complex financial analyses can be performed, both for initial financial analysis and ongoing cost monitoring.
 
 #### Examples of users in this use case:
 
@@ -89,7 +89,7 @@ Thus, to address this use case the specifications must consider how to obtain cu
 *"In the past, we would forecast load and deploy generation. In the future, we will forecast generation and deploy load." -overheard at utility conference*
 
 While the first two use cases focus on individual entities' energy footprint, as more and more non-dispatchable renewables get deployed, the grid will increasingly need sources of dynamic load flexibility to partially address the intermittency of solar and wind generation.
-Technologies to allow for higher and higher penetration of renewables on the grid can often be installed "behind the meter" as distributed energy resources (DERs).
+Technologies to allow for higher and higher penetration of renewables on the grid can often be installed "behind the meter" as distributed energy resources (DERs) or virtual power plants (VPPs).
 
 While these technologies do not directly reduce emissions, they allow for higher penetration of new, clean energy technologies.
 Thus, this working group considers grid flexibility and load management technologies a key use case for bolstering energy management efforts.
@@ -104,12 +104,18 @@ So, all of the needs for energy management often are needed for assessing distri
 Because distributed grid flexibility and load management technologies are active participants in managing load on the electrical grid, they often are registered as part of a utility or central operator program (e.g. demand response programs).
 Thus, the specifications to address this use case must consider how to include program eligibility and participation details as part of the standardized customer dataset.
 
+* **Program Market and Settlement Data:**
+When customers and energy service providers sign up to participate in grid flexibility programs, compensation for their participation is often "settled" in a program-specific manner defined by regulators, energy markets, regional operators (ISOs/TSOs/DSOs), or utilities.
+To calculate these settlements, participating entities, such as VPP operators, typically need to receive relevant market data and submit data about their behavior, operations, and relevant logs to central grid operators or markets.
+Thus, the specifications to address this use case must consider how to include data formats of program-related market data and settlement results as part of the standardized customer dataset, as well as data formats and protocols for external entities to  submit relevant program participation data to central entities.
+NOTE: This need does NOT include creating data formats and protocols for live market data and pricing, live grid status information, or live operation and control of assets (see [Not In Scope](#not-in-scope)).
+
 #### Examples of users in this use case:
 
 * Apps and devices that participate in demand response programs (
 [FERC Order 2222](https://ferc.gov/media/ferc-order-no-2222-fact-sheet),
-[CEC Load Management Rulemaking](https://www.energy.ca.gov/proceedings/energy-commission-proceedings/load-management-rulemaking),
-[NYISO Demand Response](https://www.nyserda.ny.gov/All-Programs/Energy-Storage/Energy-Storage-for-Your-Business/Demand-Response-Programs),
+[CEC Load Management Standards](https://www.energy.ca.gov/programs-and-topics/topics/load-flexibility/load-management-standards),
+[NYSERDA Demand Response Programs](https://www.nyserda.ny.gov/All-Programs/Energy-Storage-Program/Energy-Storage-for-Your-Business/Demand-Response-Programs),
 etc.)
 
 * DER aggregators that manage collections of distributed resources and participate in grid events and markets (
@@ -147,7 +153,7 @@ Thus, specifications addressing this use case must consider how to incorporate c
 
 * Cities and regions with building benchmarking mandates (
 [Fort Collins Building Energy and Water Scoring](https://www.fcgov.com/bews/),
-[Atlanta Building Efficiency](https://atlantabuildingefficiency.com/),
+[Atlanta Building Efficiency](https://www.benchmarkatl.com/),
 [California Building Energy Benchmarking Program](https://www.energy.ca.gov/programs-and-topics/programs/building-energy-benchmarking-program),
 etc.)
 
@@ -159,14 +165,21 @@ etc.)
 
 ## Use cases NOT in scope for this working group <a id="not-in-scope" href="#not-in-scope" class="permalink">🔗</a>
 
+The focus of this working group is to write specifications for data formats and secure protocols for Customer Data, not creating protocols for the live management and operation of grid assets or live participation in energy and financial markets.
+Thus, we have limited our scope to only providing asynchronous (i.e. not live) access to and submission of Customer Data.
+Below are some examples of uses cases that we consider outside of our scope as a working group.
+We believe other working groups, specifications, and organizations are a better fit for addressing these use cases.
+
 * Live grid operations and controls (actual demand response signaling for equipment, solar inverter control and generation curtailment, EV charging shut-off signals, etc.)
 
-* Financial transactions and settlements (customer utility bill payments, load management program participation financial payouts and settlement, etc.)
+* Financial transactions (customer utility bill payments, load management program participation financial payouts, etc.)
 
 * Modifying customer accounts (changing a customer's rate plan, starting or stopping utility services, etc.)
 
-* Providing data access to region-level datasets (ISO load and generation curves, capacity market live pricing data, etc.)
+* Providing live data access to market or region-level datasets (ISO load and generation curves, capacity market live pricing data, etc.)
 
 * Environmental Attribute Credit registry integrations for exchanging information and data on issued or retired granular certificates
 
 * Disaggregation and analysis methods for aggregate datasets, either for single meter disaggregation (e.g. home appliance enumeration) or multi-meter analysis (e.g. whole-building-to-individual-tenant)
+
+* Defining algorithms and methodologies for calculating energy report results (Scope 2 carbon emissions, market settlement amounts for participating entities, etc.)

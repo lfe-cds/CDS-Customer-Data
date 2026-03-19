@@ -409,11 +409,10 @@ This specification extends CDS's Client Registration Scopes Supported [[CDS-WG1-
 ## 7. Authorization Details Fields <a id="auth-details-fields" href="#auth-details-fields" class="permalink">🔗</a>
 
 This section defines Authorization Details Fields that are available to be included in [Scope](#scopes) definitions.
-Authorization Details Fields allow Clients to define tailored authorization experiences and scopes of access that meet their specific use case needs.
+When supported, these fields can be used in `authorization_details` parameters as part of OAuth's Rich Authorization Requests [[RFC 9396](#ref-rfc9396)] to define tailored authorization experiences and scopes of access that meet specific use case needs.
 
-When a Server supports an Authorization Details Field defined by this section, the Server MUST include that field in the `authorization_details_fields_supported` array in the Server's relevant Scope Description objects [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)].
+When a Server supports an Authorization Details Field defined by this section, the Server MUST include an Authorization Details Field Object [[CDS-WG1-02 Section 3.8](#ref-cds-wg1-02-auth-details-object)] for the field in the `authorization_details_fields_supported` array in the Server's relevant Scope Description objects [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)].
 This allows Clients to automate discovery of which Authorization Details Fields are supported when formatting authorization and token request parameters.
-Formats listed in this section are defined by CDS-WG1-02's Authorization Details Field Formats [[CDS-WG1-02 Section 3.9](#ref-cds-wg1-02-auth-field-formats)], unless otherwise noted.
 
 Extensions of this specification MAY define additional Authorization Details Fields that define additional behavior for [Scope](#scopes) defined in this specification.
 When defining additional Authorization Details Fields, it is RECOMMENDED to define them in the same format as those defined in this section.
@@ -426,41 +425,88 @@ For example, an energy audit contractor could be required to obtain the last 12 
 In these relevant use cases, Clients benefit from being able to configure an authorization request that cannot be modified by a Customer during the authorization process, so that the Customer does not inadvertently remove required data fields or ranges.
 This authorization data field is intended to allow Clients a way to configure a Server's authorization form as editable or non-editable.
 
-**Field:** `allow_scope_modifications`  
-**Format:** `boolean`  
-**Requirements:**
-When this field value is `true`, Servers MAY render authorization form presented to the user as editable, meaning that the user MAY modify the requested scope within the authorization form and authorize that modified scope.
-When this field value is `false`, Servers MUST render the authorization from presented to the user as non-editable, meaning that the user MUST be able to only authorize or decline the authorization request as a whole and cannot modify the requested scope.
-This field MUST NOT be included in the Scope Description's `authorization_details_fields_supported` array [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)] when the `response_types_supported` list is empty (i.e. no authorization request method is available).
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"allow_scope_modifications"`.
+* The `format` value MUST be `"boolean"`.
+
+Servers MUST NOT include an object for this authorization field in a Scope Description's `authorization_details_fields_supported` array when the Scope Description's `response_types_supported` list is empty (i.e. no authorization request method is available).
+
+When this authorization field is included in a Rich Authorization Request `authorization_details` parameter, Servers MUST implement the following requirements:
+
+* When the field value is `true`, Servers MAY render authorization form presented to the user as editable, meaning that the user MAY modify the requested scope within the authorization form and authorize that modified scope.
+* When this field value is `false`, Servers MUST render the authorization from presented to the user as non-editable, meaning that the user MUST be able to only authorize or decline the authorization request as a whole and cannot modify the requested scope.
 
 ### 7.2. Error If No Preselections <a id="auth-details-error-if-no-preselections" href="#auth-details-error-if-no-preselections" class="permalink">🔗</a>
 
 For some use cases, when requesting authorization from a Customer, a Client may want to preselect certain fields on the authorization form.
 These preselections are configured by other authorization details fields (e.g. `service_types`).
 However, sometimes a Customer does not have any Accounts, Meter Devices, or other relevant objects that meet the preselection criteria.
-For example, an energy audit contractor Client may request access to all of a Customer's electric Service Contracts using the `service_types` authorization details field (i.e. `"service_types": ["electric"]`).
+For example, an energy audit contractor Client may request access to all of a Customer's electric Service Contracts using the [`service_types`](#auth-details-service-types) authorization details field (i.e. `"service_types": ["electric"]`).
 If the Customer does not have any electric meters (e.g. they are a gas-only customer), the authorization form will not be able to have any Service Contracts preselected.
+In other situations, a Customer may have multiple accounts they control, such as a commercial Customer with multiple locations, and may need to reauthenticate as a different user if they are accidentally logged in as the wrong user for an authorization request with a specific list of preselected [account numbers](#auth-details-account-numbers) (e.g. `"account_numbers": ["1234-5"]`).
 
-In these relevant use cases, Clients benefit from being able to configure the authorization request to automatically redirect with an error if an authenticated Customer does not have any objects that can be preselected.
-This allows Clients to present relevant error messages to Customers that do not have required objects for the Client's use case (e.g. "You don't appear to have any electric meters, so we won't be able to run an energy audit for your account.").
+In these relevant use cases, Clients benefit from being able to configure the authorization request to automatically render a [Preselection Error](#TODO-preselection-error) for an authenticated Customer if they do not have any objects that can be preselected.
+That way, Customers are given a chance to re-authenticate as a different user or decline the authorization and be redirected back to the Client with a specific error.
+This allows Clients to present relevant messages to Customers that do not have required objects for the Client's use case (e.g. "You don't appear to have any electric meters, so we won't be able to run an energy audit for your account.").
 
-**Field:** `error_if_no_preselections`  
-**Format:** `boolean`  
-**Requirements:**
-When this field value is `true`, after the user is authenticated and prior to showing the authorization form to the user, the Server MUST determine if the user will need to select any objects relevant to preselection fields included in the authorization details of the request (e.g. `"account_numbers": ["123456789"]` didn't match any of the user's Account `account_number` values, so no Accounts will be preselected and the user will be asked to select the Accounts they want to apply to this authorization).
-If the user will need to select any objects relevant to preselection fields included in the authorization details of the request, the Server MUST reject the authorization request prior to showing the authorization form to the user and redirect the user back to the Client's `redirect_uri` with an `error` parameter value of `no_preselections`.
-If the authorization request did not include any preselection fields, defined by Sections 7.3 through 7.9, or this field value is `false`, the Server MUST ignore this filed and treat the authorization request as if this field was not included.
-This field MUST NOT be included in the Scope Description's `authorization_details_fields_supported` array [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)] when the `response_types_supported` list is empty (i.e. no authorization request method is available).
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"error_if_no_preselections"`.
+* The `format` value MUST be `"boolean"`.
+
+Servers MUST NOT include an object for this authorization field in a Scope Description's `authorization_details_fields_supported` array when the Scope Description's `response_types_supported` list is empty (i.e. no authorization request method is available).
+
+When this authorization field is included in a Rich Authorization Request `authorization_details` parameter, Servers MUST implement the following requirements:
+
+* When this field value is `true`, after the user is authenticated and prior to rendering the authorization form to the user, the Server MUST determine if the user will need to select any objects relevant to preselection fields included in the authorization details of the request (e.g. `"account_numbers": ["1234-5"]` didn't match any of the user's Account `account_number` values, so no Accounts will be preselected and the user will be asked to select the Accounts they want to apply to this authorization).
+  If the user will need to select any objects relevant to preselection fields included in the authorization details of the request, the Server MUST render and present a [Preselection Error](#TODO-preselection-error) to the user, which allows the user to either reauthenticate or cancel the authorization request.
+ If the user selects to cancel the authorization request, the Server MUST redirect the user back to the Client's `redirect_uri` with an `error` parameter value of `no_preselections`.
+* If the authorization request did not include any preselection fields, defined by Sections 7.3 through 7.9, or this field value is `false`, the Server MUST ignore this field and treat the authorization request as if this field was not included.
 
 ### 7.3. Preselect Account Numbers <a id="auth-details-account-numbers" href="#auth-details-account-numbers" class="permalink">🔗</a>
-* `account_numbers`
 
-<span style="background-color:yellow">TODO</span>
+For some use cases, a Client may need to request access to datasets for a specific list of Customer accounts.
+For example, an energy services company may be working with a property management Customer to analyze the energy use for a specific subset of utility accounts that the Customer has specified.
+In these relevant use cases, Clients benefit from being able to configure an authorization request that preselects a set of [Accounts](#account-format) with the provided `account_number` values.
+
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"account_numbers"`.
+* The `format` value MUST be `"string_list_or_null"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+    * The `default` value MUST be one of `null`, `["_ALL"]`, or `["_ALL", "_FUTURE"]`.
+
+When this authorization field is included in a Rich Authorization Request `authorization_details` parameter, Servers MUST implement the following requirements:
+
+* If the value is `null`, the Server MUST render any [Account Selection](#TODO-account-selection), [Service Contract Selection](#TODO-service-contract-selection), or [Meter Device Selection](#TODO-meter-devide-point-selection) sections of the authorization form for the authorization details field's scope with no preselections.
+* If the value is an array of strings with the string `"_ALL"` included, the Server MUST render any [Account Selection](#TODO-account-selection), [Service Contract Selection](#TODO-service-contract-selection), or [Meter Device Selection](#TODO-meter-devide-point-selection) sections of the authorization form for the authorization details field's scope with all Accounts preselected.
+* If the value is an array of strings with the string `"_FUTURE"` included, the Server MUST render any [Account Selection](#TODO-account-selection), [Service Contract Selection](#TODO-service-contract-selection), or [Meter Device Selection](#TODO-meter-devide-point-selection) sections of the authorization form for the authorization details field's scope with the include-future option preselected.
+* If the value is an array of strings that does NOT include `"_ALL"`, the Server MUST render any [Account Selection](#TODO-account-selection), [Service Contract Selection](#TODO-service-contract-selection), or [Meter Device Selection](#TODO-meter-devide-point-selection) sections of the authorization form for the authorization details field's scope with Accounts preselected that match their `account_number` value to one of the strings included in the provided array.
+* If Accounts are also preselected by other authorization details fields for the same scope (e.g. the `account_programs` field), the Accounts preselected MUST be the intersection of Accounts preselected by the authorization details fields.
 
 ### 7.4. Preselect Contract Numbers <a id="auth-details-contract-numbers" href="#auth-details-contract-numbers" class="permalink">🔗</a>
-* `contract_numbers`
 
-<span style="background-color:yellow">TODO</span>
+For some use cases, a Client may need to request access to datasets for a specific list of Customer service contracts.
+For example, an energy auditor may be working with a commercial Customer to produce a report on the energy use for a specific set of electric services on a Customer's property.
+In these relevant use cases, Clients benefit from being able to configure an authorization request that preselects a set of [Service Contract](#service-contract-format) with the provided `contract_number` values.
+
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"contract_numbers"`.
+* The `format` value MUST be `"string_list_or_null"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+    * The `default` value MUST be one of `null`, `["_ALL"]`, or `["_ALL", "_FUTURE"]`.
+
+When this authorization field is included in a Rich Authorization Request `authorization_details` parameter, Servers MUST implement the following requirements:
+
+* If the value is `null`, the Server MUST render any [Service Contract Selection](#TODO-service-contract-selection) or [Meter Device Selection](#TODO-meter-devide-point-selection) sections of the authorization form for the authorization details field's scope with no preselections.
+* If the value is an array of strings with the string `"_ALL"` included, the Server MUST render any [Service Contract Selection](#TODO-service-contract-selection) or [Meter Device Selection](#TODO-meter-devide-point-selection) sections of the authorization form for the authorization details field's scope with all Service Contracts preselected.
+* If the value is an array of strings with the string `"_FUTURE"` included, the Server MUST render any [Service Contract Selection](#TODO-service-contract-selection) or [Meter Device Selection](#TODO-meter-devide-point-selection) sections of the authorization form for the authorization details field's scope with the include-future option preselected.
+* If the value is an array of strings that does NOT include `"_ALL"`, the Server MUST render any [Service Contract Selection](#TODO-service-contract-selection) or [Meter Device Selection](#TODO-meter-devide-point-selection) sections of the authorization form for the authorization details field's scope with Service Contracts preselected that match their `contract_number` value to one of the strings included in the provided array.
+* If Service Contracts are also preselected by other authorization details fields for the same scope (e.g. the `service_types` field), the Service Contracts preselected MUST be the intersection of Service Contracts preselected by the authorization details fields.
 
 ### 7.5. Preselect Meter Numbers <a id="auth-details-meter-numbers" href="#auth-details-meter-numbers" class="permalink">🔗</a>
 * `meter_numbers`
@@ -1200,9 +1246,9 @@ In situations where relevant EACs have the same `period_start` and `cds_created`
 `CDS-WG1-02 Section 3.5` - "Registration Field Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
 [https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-field-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-field-format)
 
-<a id="ref-cds-wg1-02-auth-field-formats" href="#ref-cds-wg1-02-auth-field-formats" class="permalink">🔗</a>
-`CDS-WG1-02 Section 3.9` - "Authorization Details Field Formats", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-details-field-formats](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-details-field-formats)
+<a id="ref-cds-wg1-02-auth-details-object" href="#ref-cds-wg1-02-auth-details-object" class="permalink">🔗</a>
+`CDS-WG1-02 Section 3.8` - "Authorization Details Field Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-details-field-formats](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-details-fields-format)
 
 <a id="ref-iso4217" href="#ref-iso4217" class="permalink">🔗</a>
 `ISO 4217` - "Currency Codes", ISO 4217, International Organization for Standardization (ISO),  
@@ -1263,6 +1309,10 @@ In situations where relevant EACs have the same `period_start` and `cds_created`
 <a id="ref-rfc9110-codes" href="#ref-rfc9110-codes" class="permalink">🔗</a>
 `RFC 9110 Section 15` - Section 15. Status Codes, "HTTP Semantics", RFC 9110, Internet Engineering Task Force (IETF),  
 [https://www.rfc-editor.org/rfc/rfc9110#section-15](https://www.rfc-editor.org/rfc/rfc9110#section-15)
+
+<a id="ref-rfc9396" href="#ref-rfc9396" class="permalink">🔗</a>
+`RFC 9396` - "OAuth 2.0 Rich Authorization Requests", RFC 9396, Internet Engineering Task Force (IETF),  
+[https://www.rfc-editor.org/rfc/rfc9396](https://www.rfc-editor.org/rfc/rfc9396)
 
 ## 23. Acknowledgments <a id="acknowledgments" href="#acknowledgments" class="permalink">🔗</a>
 

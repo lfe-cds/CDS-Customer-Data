@@ -4,7 +4,7 @@ nav: home
 title: Customer Data Working Group
 meta_description: Linux Foundation Energy - Connected Data Specifications (CDS) - Customer Data Working Group (WG3)
 ---
-<img src="{{ '/assets/cdscustomerdata-horizontal-color.svg' | relative_url }}" style="width:100%;max-width:30em;display:inline-block;margin-bottom:3em;">
+<img src="{{ '/assets/cdscustomerdata-horizontal-color.svg' | relative_url }}" style="width:100%;max-width:30em;display:inline-block;margin-bottom:3em;" alt="CDS Customer Data Working Group Logo">
 
 # Customer Data Working Group (WG3)
 

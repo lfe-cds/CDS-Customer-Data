@@ -52,7 +52,8 @@ Want to participate? Great! We're an open organization, so we welcome any compan
 * Contribute comments, suggestions, or other content that will be included in our [specifications](https://cds-customerdata.lfenergy.org/specs).
 * Open [pull requests](https://github.com/lfe-cds/CDS-Customer-Data/pulls) with proposed changes to our [repository](https://github.com/lfe-cds/CDS-Customer-Data) or [specifications](https://cds-customerdata.lfenergy.org/specs).
 
-NOTE: It's okay if you're not yet an [LFESS member]({{ "/lfess" | relative_url }}) and comment on something (spec, issue, pull request, mailing list, slack discussion, etc.), and we want your input to be incorporated into our specifications. We'll just ask you to [join LFESS]({{ "/lfess" | relative_url }}#join) before we can merge your suggestions into the specifications.
+NOTE: It's okay if you're not yet an [LFESS member]({{ "/lfess" | relative_url }}) and comment on something (spec, issue, pull request, mailing list, slack discussion, etc.), and we want your input to be incorporated into our specifications.
+We'll just ask you to [join LFESS]({{ "/lfess" | relative_url }}#join) before we can merge your suggestions into the specifications.
 
 
 ## License

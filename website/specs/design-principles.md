@@ -7,10 +7,7 @@ meta_description: These are the various design principles we want to keep in min
 
 # CDS-WG3 Design Principles
 
-As we write, discuss, and publish our [specifications]({{ '/specs' | relative_url }})
-for how to provide streamlined customer data access to address our target
-[Use Cases]({{ '/use-cases' | relative_url }}), we will follow several design
-principles that help guide our choices as a working group.
+As we write, discuss, and publish our [specifications]({{ '/specs' | relative_url }}) for how to provide streamlined customer data access to address our target [Use Cases]({{ '/use-cases' | relative_url }}), we will follow several design principles that help guide our choices as a working group.
 
 #### Table of Contents
 
@@ -157,5 +154,5 @@ By actively soliciting input and engaging with different perspectives, we can en
 
 ### Regularly review and update <a id="regularly-review-and-update" href="#regularly-review-and-update" class="permalink">🔗</a>
 
-We must establish a process for regular review and updates to the specifications to ensure they remain aligned with the latest developments in the energy and carbon accounting sectors.
+We must establish a process for regular review and updates to the specifications to ensure they remain aligned with the latest developments in the energy ecosystem.
 This includes monitoring changes in related standards and best practices, as well as incorporating feedback from the user community.

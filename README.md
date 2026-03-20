@@ -2,7 +2,8 @@
 
 **Visit our website: https://cds-customerdata.lfenergy.org/**
 
-This repository is dedicated to the CDS Customer Data Working Group. We focus on writing free, open specifications for providing utility customer data access, in order to facilitate energy management, reporting, and projects.
+This repository is dedicated to the CDS Customer Data Working Group (WG3).
+We focus on writing free, open specifications for providing utility customer data access, in order to facilitate energy management, reporting, and projects.
 
 We are part of the [Connected Data Specifications (CDS)](https://cds.lfenergy.org/), an [LF Energy](https://www.lfenergy.org/) project at the [Linux Foundation](https://www.linuxfoundation.org/projects).
 
@@ -37,7 +38,7 @@ NOTE: It's okay if you're not yet an [LFESS member](https://cds-customerdata.lfe
 
 ## Scope
 
-This working group focuses on writing free, open specifications for providing utility customer data access, in order to facilitate carbon emissions calculations and decarbonization efforts.
+This working group focuses on writing free, open specifications for providing utility customer data access, in order to facilitate energy management, reporting, and projects.
 
 See the [Use Cases](https://cds-customerdata.lfenergy.org/use-cases) for which we are writing specifications to address, along with what data types and functionalities will need to be specified to accommodate those use cases.
 

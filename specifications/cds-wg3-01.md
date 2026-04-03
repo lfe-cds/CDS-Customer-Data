@@ -93,6 +93,7 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
         * [7.2.7. Include Aggregations](#auth-details-include-aggregations)  
             * [7.2.7.1. Include Aggregation Addresses](#auth-details-include-aggregation-addresses)  
         * [7.2.8. Include Usage Segments](#auth-details-include-usage-segments)  
+            * [7.2.8.1. Include Usage Segment Formats](#auth-details-include-usage-segment-formats)  
         * [7.2.9. Include Energy Attribute Certificates](#auth-details-include-eacs)  
     * [7.3. Duration Fields](#auth-details-duration)  
         * [7.3.1. Sync Until](#auth-details-sync-until)  
@@ -818,7 +819,7 @@ In these relevant use cases, Clients benefit from being able to configure an aut
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
 * The `id` value MUST be `"addresses"`.
-* The `format` value MUST be `"string_list_or_null"` or `"choice_list_or_null"`.  
+* The `format` value MUST be `"string_list_or_null"` or `"choice_list_or_null"`.
 * If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
     * The `is_required` value MUST be `false`.
 
@@ -909,7 +910,7 @@ For all authorization details fields defined in this section, if the field's val
 
 For some use cases, Clients need to have access to a Customer's [Accounts](#account-format).
 For example, a contracted vendor may need catalog and organize the list of accounts for an enterprise Customer's locations.
-To enable whether Account objects access is in included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Account access.
+To enable whether Account objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Account access.
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
@@ -921,7 +922,7 @@ To support this authorization details field, the Authorization Details Field Obj
 Additionally, Servers MUST implement the following behavior to support this authorization details field:
 
 * If this field's value is `true`, in addition to the data access defined with this field's scope, the Server MUST provide access to related Account objects.
-  Related Account objects are any Account that are referenced by `cds_account_id`, `grouped_accounts`, or `related_accounts` values in any included [Service Contract](#service-contract-format), [Bill Statement](#bill-statment-format), [Bill Section](#bill-section-format), [Aggregation](#aggregation-format), or [Usage Segment](#usage-segment-format). 
+  Related Account objects are any Account that are referenced by `cds_account_id`, `grouped_accounts`, or `related_accounts` values in any included [Service Contract](#service-contract-format), [Bill Statement](#bill-statment-format), [Bill Section](#bill-section-format), [Aggregation](#aggregation-format), or [Usage Segment](#usage-segment-format).
   Additionally, parent Accounts that are referenced by any included Accounts' `cds_account_parent` values MUST also be included.
 * Servers MUST NOT include OPTIONAL fields for Accounts unless those fields are enabled to be included by the Grant's scope or other authorization details fields.
 
@@ -993,7 +994,7 @@ Additionally, Servers MUST implement the following behavior to support this auth
 
 For some use cases, Clients need to have access to a Customer's [Service Contracts](#service-contract-format).
 For example, a contracted vendor may need get a business Customer's list of services so that they can determine which locations are feasible for a project.
-To enable whether Service Contract objects access is in included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Service Contract access.
+To enable whether Service Contract objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Service Contract access.
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
@@ -1005,7 +1006,7 @@ To support this authorization details field, the Authorization Details Field Obj
 Additionally, Servers MUST implement the following behavior to support this authorization details field:
 
 * If this field's value is `true`, in addition to the data access defined with this field's scope, the Server MUST provide access to related Service Contract objects.
-  Related Service Contract objects are any Service Contract that are referenced by `cds_servicecontract_id`, `current_servicecontracts`, `previous_servicecontracts`, `related_servicecontracts`, `grouped_servicecontracts`, or `beneficiaries` values in any included [Service Point](#service-point-format), [Bill Section](#bill-section-format), [Aggregation](#aggregation-format), [Usage Segment](#usage-segment-format), or [Energy Attribute Certificate](#eac-format) object. 
+  Related Service Contract objects are any Service Contract that are referenced by `cds_servicecontract_id`, `current_servicecontracts`, `previous_servicecontracts`, `related_servicecontracts`, `grouped_servicecontracts`, or `beneficiaries` values in any included [Service Point](#service-point-format), [Bill Section](#bill-section-format), [Aggregation](#aggregation-format), [Usage Segment](#usage-segment-format), or [Energy Attribute Certificate](#eac-format) object.
   Additionally, Service Contracts that have an `cds_account_id` value that matches any included Accounts MUST also be included.
 * Servers MUST NOT include OPTIONAL fields for Service Contracts unless those fields are enabled to be included by the Grant's scope or other authorization details fields.
 
@@ -1071,7 +1072,7 @@ Additionally, Servers MUST implement the following behavior to support this auth
 
 For some use cases, Clients need to have access to a specific list of [Service Points](#service-point-format).
 For example, a utility vendor Client may need access to the list of relevant service point locations for the data analysis project with which they are working with the Server utility.
-To enable whether Service Point objects access is in included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Service Point access.
+To enable whether Service Point objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Service Point access.
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
@@ -1083,7 +1084,7 @@ To support this authorization details field, the Authorization Details Field Obj
 Additionally, Servers MUST implement the following behavior to support this authorization details field:
 
 * If this field's value is `true`, in addition to the data access defined with this field's scope, the Server MUST provide access to related Service Point objects.
-  Related Service Point objects are any Service Point that are referenced by `current_servicepoints`, `previous_servicepoints`, `related_servicepoints`, or `grouped_servicepoints` values in any included [Meter Device](#meter-device-format), [Bill Section](#bill-section-format), [Aggregation](#aggregation-format), or [Usage Segment](#usage-segment-format) object. 
+  Related Service Point objects are any Service Point that are referenced by `current_servicepoints`, `previous_servicepoints`, `related_servicepoints`, or `grouped_servicepoints` values in any included [Meter Device](#meter-device-format), [Bill Section](#bill-section-format), [Aggregation](#aggregation-format), or [Usage Segment](#usage-segment-format) object.
 * Servers MUST NOT include OPTIONAL fields for Service Points unless those fields are enabled to be included by the Grant's scope or other authorization details fields.
 
 Additional authorization details fields are defined in subsections to this section to enable the inclusion of OPTIONAL Service Point object fields.
@@ -1092,7 +1093,7 @@ Additional authorization details fields are defined in subsections to this secti
 
 For some use cases, Clients need to have access to the Server's premise identifiers and details for reference with other materials (e.g. the local municipality's building permit records).
 For example, a utility vendor Client may need cross reference which of the utility's service points have had construction work performed on that premise's property.
-To address these use cases, this specification defines an authorization details field that controls whether service contract details access is enabled.
+To address these use cases, this specification defines an authorization details field that controls whether service contract details access is enabled.##########TODO
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
@@ -1108,9 +1109,9 @@ Additionally, Servers MUST implement the following behavior to support this auth
 
 ##### 7.2.3.2. Include Service Point Addresses <a id="auth-details-include-service-point-addresses" href="#auth-details-include-service-point-addresses" class="permalink">🔗</a>
 
-For some use cases, Clients need to have access to a Customer's service contract details for reference with other Customer materials (e.g. the Customer's service addresses).
-For example, an energy consultant Client working with an enterprise Customer may need to understand which locations have how many and which types of utility services.
-To address these use cases, this specification defines an authorization details field that controls whether service contract details access is enabled.
+For some use cases, Clients need to have access to a Customer's service point addresses for reference with other materials (e.g. municipal maps).
+For example, a utility vendor Client may need cross reference which of the utility's service point locations are within areas designated as commercial zoning.
+To address these use cases, this specification defines an authorization details field that controls whether service point address access is enabled.
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
@@ -1126,26 +1127,67 @@ Additionally, Servers MUST implement the following behavior to support this auth
 
 ##### 7.2.3.3. Include Coordinates <a id="auth-details-include-coordinates" href="#auth-details-include-coordinates" class="permalink">🔗</a>
 
-* `include_coordinates`
+For some use cases, Clients need to have access to a Customer's service point coordinates for reference with other materials (e.g. flood zone maps).
+For example, a utility vendor Client may need cross reference which of the utility's rural service points are within a specific local municipal jurisdiction.
+To address these use cases, this specification defines an authorization details field that controls whether service point coordinates access is enabled.
 
-<span style="background-color:yellow">TODO</span>
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"include_coordinates"`.
+* The `format` value MUST be `"boolean"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* If this field's value is `true`, Servers MUST include the following field values in any Service Point objects accessible using this field's scope:
+    * `latitude`
+    * `longitude`
 
 #### 7.2.4. Include Meter Devices <a id="auth-details-include-meter-devices" href="#auth-details-include-meter-devices" class="permalink">🔗</a>
 
-* `include_meter_devices`
+For some use cases, Clients need to have access to a specific list of [Meter Devices](#meter-device-format).
+For example, a utility vendor Client may need access to the list of relevant meters for the data analysis project with which they are working with the Server utility.
+To enable whether Meter Device objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Meter Device access.
 
-<span style="background-color:yellow">TODO</span>
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"include_meter_devices"`.
+* The `format` value MUST be `"boolean"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* If this field's value is `true`, in addition to the data access defined with this field's scope, the Server MUST provide access to related Meter Device objects.
+  Related Meter Device objects are any Meter Device that are referenced by `related_meterdevices` or `grouped_meterdevices` values in any included [Bill Section](#bill-section-format), [Aggregation](#aggregation-format), or [Usage Segment](#usage-segment-format) object.
+* Servers MUST NOT include OPTIONAL fields for Service Points unless those fields are enabled to be included by the Grant's scope or other authorization details fields.
+
+Additional authorization details fields are defined in subsections to this section to enable the inclusion of OPTIONAL Service Point object fields.
 
 ##### 7.2.4.1. Include Meter Numbers <a id="auth-details-include-meter-numbers" href="#auth-details-include-meter-numbers" class="permalink">🔗</a>
-* `include_meter_numbers`
 
-<span style="background-color:yellow">TODO</span>
+For some use cases, Clients need to have access to a Customer's meter numbers for reference with other Customer materials (e.g. their notes from an on-site inspection).
+For example, an energy service company Client doing and initial feasibility analysis for an enterprise Customer's locations may need to match up the meter numbers written down during their on-site inspection to the list of Meter Devices obtained when requesting usage data from the Server for the Customer.
+To address these use cases, this specification defines an authorization details field that controls whether Meter Device `meter_number` access is enabled.
+
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"include_meter_numbers"`.
+* The `format` value MUST be `"boolean"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* If this field's value is `true`, Servers MUST include the following field values in any Meter Device objects accessible using this field's scope:
+    * `meter_number`
 
 #### 7.2.5. Include Bill Statements <a id="auth-details-include-bill-statements" href="#auth-details-include-bill-statements" class="permalink">🔗</a>
 
 For some use cases, Clients need to have access to a Customer's [Bill Statements](#bill-statement-format).
 For example, a financial auditor Client may need to review a Customer's utility bills as part of a business's financial audit.
-To enable whether Bill Statement objects access is in included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Bill Statement access.
+To enable whether Bill Statement objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Bill Statement access.
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
@@ -1225,7 +1267,7 @@ Additionally, Servers MUST implement the following behavior to support this auth
 
 For some use cases, Clients need to have access to a Customer's [Bill Sections](#bill-section-format).
 For example, an energy service company Client may need to analyze a Customer's billed energy charges to settle an energy savings contract they have with the Customer.
-To enable whether Bill Section objects access is in included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Bill Section access.
+To enable whether Bill Section objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Bill Section access.
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
@@ -1262,27 +1304,118 @@ Additionally, Servers MUST implement the following behavior to support this auth
 
 #### 7.2.7. Include Aggregations <a id="auth-details-include-aggregations" href="#auth-details-include-aggregations" class="permalink">🔗</a>
 
-* `include_aggregations`
+For some use cases, Clients need to have access to a specific list of [Aggregations](#aggregation-format).
+For example, an academic research Client may need access aggregated usage data as part of their energy grid project with their university.
+To enable whether Aggregation objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Aggregation access.
 
-<span style="background-color:yellow">TODO</span>
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"include_aggregations"`.
+* The `format` value MUST be `"boolean"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* If this field's value is `true`, in addition to the data access defined with this field's scope, the Server MUST provide access to related Aggregation objects.
+  Related Aggregation objects are any Aggregation that are referenced by `grouped_aggregations` or `related_aggregations` values in any included [Aggregation](#aggregation-format) or [Usage Segment](#usage-segment-format) object.
+* Servers MUST NOT include OPTIONAL fields for Aggregations unless those fields are enabled to be included by the Grant's scope or other authorization details fields.
+
+Additional authorization details fields are defined in subsections to this section to enable the inclusion of OPTIONAL Aggregation object fields.
 
 ##### 7.2.7.1. Include Aggregation Addresses <a id="auth-details-include-aggregation-addresses" href="#auth-details-include-aggregation-addresses" class="permalink">🔗</a>
 
-* `include_aggregation_addresses`
+For some use cases, Clients need to have access to an [Aggregation](#aggregation-format)'s grouped set of addresses.
+For example, a utility vendor Client may need access to an Aggregation's set of addresses to cross reference them with other municipal details (e.g. the distribution zoning designations for the aggregated data).
+To address these use cases, this specification defines an authorization details field that controls whether Aggregation `grouped_addresses` access is enabled.
 
-<span style="background-color:yellow">TODO</span>
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"include_aggregation_addresses"`.
+* The `format` value MUST be `"boolean"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* If this field's value is `true`, Servers MUST include the following field values in any Aggregation objects accessible using this field's scope:
+    * `grouped_addresses`
 
 #### 7.2.8. Include Usage Segments <a id="auth-details-include-usage-segments" href="#auth-details-include-usage-segments" class="permalink">🔗</a>
 
-* `include_usage_segments`
+For some use cases, Clients need to have access to a set of [Usage Segments](#usage-segment-format).
+For example, a utility vendor Client may need to access the electric usage for a set of Customer Accounts to analyze the impact of a rebate program.
+To enable whether Usage Segment objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Usage Segment access.
 
-<span style="background-color:yellow">TODO</span>
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"include_usage_segments"`.
+* The `format` value MUST be `"boolean"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* If this field's value is `true`, in addition to the data access defined with this field's scope, the Server MUST provide access to related Usage Segment objects.
+  Related Usage Segment objects are any Usage Segments that have the following relationships with other objects included in this field's scope or other authorization details fields:
+    * Usage Segments that have `related_aggregations` values that match the `cds_aggregation_id` for any included Aggregation object.
+    * Usage Segments that have `related_accounts` values that match the `cds_account_id` for any included Account object.
+    * Usage Segments that have `related_servicecontracts` values that match the `cds_servicecontract_id` for any included Service Contract object.
+    * Usage Segments that have `related_servicepoints` values that match the `cds_servicepoint_id` for any included Service Point object.
+    * Usage Segments that have `related_meterdevices` values that match the `cds_meterdevice_id` for any included Meter Device object.
+    * Usage Segments that have `related_billsections` values that match the `cds_billsection_id` for any included Bill Section object.
+* If this field's value is `false`, Servers MUST NOT include Usage Segment objects in the Client's access.
+
+##### 7.2.8.1. Include Usage Segment Formats <a id="auth-details-include-usage-segment-formats" href="#auth-details-include-usage-segment-formats" class="permalink">🔗</a>
+
+For some use cases, Clients need to have access to a specific set of [Usage Segment Value Formats](#usage-segment-value-format) (e.g. both usage kWh and peak kW readings).
+For example, a utility vendor Client may need to access the electric usage, demand, and supply mix for a specific set of Meter Devices with which they are contracted in analyzing.
+To enable which Usage Segment Value Formats access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Usage Segment access.
+
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"include_usage_segment_formats"`.
+* The `format` value MUST be `"choice_list_or_null"`.
+* The `choices` array contains Choice objects who's `id` values are one of the defined [Usage Segment Value Formats](#usage-segment-value-format) in this specification.
+  Servers MAY include additional Choice objects that do not represent one of the defined Value Formats defined in this specification in order to accommodate extensions and Server-specific use cases (e.g. cloud coverage readings).
+  Servers MUST NOT have custom Choice `id` values that represent an already defined Value Format in this specification, so that Clients can be interoperable with Servers for the set of Value Formats defined in this specification.
+  Clients MUST ignore any Choice `id` values that they do not understand, so that Servers are able to include extension and Server-specific `id` values without breaking Client integrations.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* If the value is `null`, Usage Segments included as part of this field's scope MUST have empty arrays (`[]`) for their `values` and `format` values.
+  This can be useful if the Server is only providing durations (e.g. month cutoff dates) for a Usage Segment, but no values, for example as part of an Aggregation.
+* If the value is an array, Usage Segments included as part of this field's scope MUST have `format` values that are an array that contains the same or a subset of Value Formats in this field's array.
+  Servers MAY order the `format` values in any order, so it does not have to be in the same order as this field's array values.
+  Clients MUST be able to parse Usage Segment [Value Formats](#usage-segment-value-format) in any order and in any subset of this field's array values.
 
 #### 7.2.9. Include Energy Attribute Certificates <a id="auth-details-include-eacs" href="#auth-details-include-eacs" class="permalink">🔗</a>
 
-* `include_eacs`
+For some use cases, Clients need to have access to a set of [Energy Attribute Certificates](#eac-format") (EACs).
+For example, a emissions auditor Client may need to access the utility's EACs that have been applied to a set of enterprise Customer's Accounts in order to verify the Customer's corporate emissions reporting.
+To enable whether EAC objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional EAC access.
 
-<span style="background-color:yellow">TODO</span>
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"include_eacs"`.
+* The `format` value MUST be `"boolean"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* If this field's value is `true`, in addition to the data access defined with this field's scope, the Server MUST provide access to related EAC objects.
+  Related EAC objects are any EACs that have the following relationships with other objects included in this field's scope or other authorization details fields:
+    * EACs that have a `beneficiary_type` value of `customer` and `beneficiaries` values that match the `customer_number` for any included Account object.
+    * EACs that have a `beneficiary_type` value of `account` and `beneficiaries` values that match the `cds_account_id` for any included Account object.
+    * EACs that have a `beneficiary_type` value of `servicecontract` and `beneficiaries` values that match the `cds_servicecontract_id` for any included Service Contract object.
+    * EACs that have a `beneficiary_type` value of `rateplan` and `beneficiaries` values that match the `rateplan_code` for any included Service Contract object.
+    * EACs that have a `beneficiary_type` value of `program` and `beneficiaries` values that match the `program_number` for any included Account object's `account_programs` entries or Service Contract object's `service_programs` entries.
+    * EACs that are referenced in [`eacs`](#TODO-usage-segment-value-eacs) formatted [Value Objects](#usage-segment-value-object-format) in any included [Usage Segment](#usage-segment-format) object.
+    * Any additional EACs that the Server determines are related to this field's scope or other authorization details fields (e.g. EACs that have a `beneficiary_type` value of `general` and applicable to the Client's use case).
+* If this field's value is `false`, Servers MUST NOT include EAC objects in the Client's access.
 
 ### 7.3. Duration Fields <a id="auth-details-duration" href="#auth-details-duration" class="permalink">🔗</a>
 
@@ -1982,22 +2115,25 @@ Aggregation objects are formatted as JSON objects and contain the following name
 * `aggregation_number` - _[string](#string) or `null`_ - (REQUIRED) The aggregation identifier that a Client sees in Server documentation or other online interfaces as the aggregation identifier for this Aggregation, if available.
   If a Server does not have a Client-facing aggregation identifier for an Aggregation and the Client is not authorized to see the Server's internal aggregation identifier for this Aggregation, or the Server does not have aggregation identifiers stored for this Aggregation, this value is `null`.
 * `grouped_accounts` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_account_id` values that identify Accounts that are part of this Aggregation.
-  For Aggregations that do not have or do not make available Accounts that are part of the Aggregation, this is an empty array (`[]`).
+  For Aggregations that do not have or the Client does not have authorization to access Accounts that are part of the Aggregation, this is an empty array (`[]`).
 * `grouped_servicecontracts` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_servicecontract_id` values that identify Service Contracts that are part of this Aggregation.
-  For Aggregations that do not have or do not make available Service Contracts that are part of the Aggregation, this is an empty array (`[]`).
+  For Aggregations that do not have or the Client does not have authorization to access Service Contracts that are part of the Aggregation, this is an empty array (`[]`).
 * `grouped_servicepoints` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_servicepoint_id` values that identify Service Points that are part of this Aggregation.
-  For Aggregations that do not have or do not make available Service Points that are part of the Aggregation, this is an empty array (`[]`).
+  For Aggregations that do not have or the Client does not have authorization to access Service Points that are part of the Aggregation, this is an empty array (`[]`).
 * `grouped_meterdevices` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_meterdevice_id` values that identify Meter Devices that are part of this Aggregation.
-  For Aggregations that do not have or do not make available Meter Devices that are part of the Aggregation, this is an empty array (`[]`).
+  For Aggregations that do not have or the Client does not have authorization to access Meter Devices that are part of the Aggregation, this is an empty array (`[]`).
 * `grouped_aggregations` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_aggregation_id` values that identify other Aggregations that are part of this Aggregation.
-  For Aggregations that do not have or do not make available other sub Aggregations that are part of the parent Aggregation, this is an empty array (`[]`).
-* `addresses` - _Array[[string](#string)]_ - (OPTIONAL) A list of addresses that are associated with this Aggregation, if applicable for the `aggregation_type`.
+  For Aggregations that do not have or the Client does not have authorization to access other sub Aggregations that are part of the parent Aggregation, this is an empty array (`[]`).
+* `grouped_addresses` - _Array[[string](#string)]_ - (OPTIONAL) A list of addresses that are associated with this Aggregation, if applicable for the `aggregation_type`.
   Strings MAY have line breaks, such as when the address is multiple lines.
-  If there are no addresses for this Aggregation, this value is an empty array (`[]`).
-* `regions` - _Array[[AggregationRegion](#TODO-aggregation-region-format)]_ - (REQUIRED) A list of Aggregation Regions that are associated with this Aggregation, if applicable for the `aggregation_type`.
-  If there are no regions for this Aggregation, this value is an empty array (`[]`).
+  For Aggregations that do not have or the Client does not have authorization to access addresses that are part of the parent Aggregation, this is an empty array (`[]`).
+* `grouped_regions` - _Array[[AggregationRegion](#TODO-aggregation-region-format)]_ - (REQUIRED) A list of Aggregation Regions that are associated with this Aggregation, if applicable for the `aggregation_type`.
+  For Aggregations that do not have or the Client does not have authorization to access regions that are part of the parent Aggregation, this is an empty array (`[]`).
 * `consents_required` - _Array[[ConsentRequirement](#TODO-consent-requirement-format)]_ - (REQUIRED) A list of Consent Requirements that are required for this Aggregation, if applicable for the `aggregation_type`.
   If there are no consent requirements for this Aggregation, this value is an empty array (`[]`).
+
+For Aggregations that have more than 1000 grouped items in any of the Aggregation object's `grouped_*` arrays, so as to not create overly large individual Aggregation objects, the Server MUST create Aggregation objects that group the items in groups of 1000 or fewer items, then include those Aggregations in the original Aggregation's `groupd_aggregations` array.
+The intent of this requirement is to enable Servers to use the [Listing Aggregations](#aggregation-list) API as a means for breaking up and paginating very large groupings of Account, Service Contract, Service Point, Meter Devices, or Aggregation objects.
 
 ### 16.2. Listing Aggregations <a id="aggregation-list" href="#aggregation-list" class="permalink">🔗</a>
 
@@ -2052,10 +2188,11 @@ Usage Segment objects are formatted as JSON objects and contain the following na
 * `interval` - _[decimal](#decimal)_ - (REQUIRED) How long between values, in seconds.
   For values representing a duration interval (e.g. kwh usage intervals), this `interval` represents the duration of each interval, where the next value starts immediately at the end of the prior interval value with no time gap.
   For values representing instantaneous readings (e.g. register read), this `interval` represents the time between the readings provided in the `values`.
+  For usage readings that have varying duration, such as monthly usage readings, Servers MUST create individual Usage Point objects that have an `interval` value with the duration of the specific period (e.g. month) and a single Value Set entry in their `values` array.
 * `format` - _Array[[ValueFormat](#usage-segment-value-format)]_ - (REQUIRED) For each entry in `values`, these are the formats of that are included, presented in the order in which the values are presented.
 * `values` - _Array[[ValueSet](#usage-segment-value-set-format)]_ - (REQUIRED) A list of Value Sets that represent the entries included in the Usage Segment.
 
-Servers MUST only inlude unique identifiers in `related_aggregations`, `related_accounts`, `related_servicecontracts`, `related_servicepoints`, `related_meterdevices`, and `related_billsections` lists MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
+Servers MUST only include unique identifiers in `related_aggregations`, `related_accounts`, `related_servicecontracts`, `related_servicepoints`, `related_meterdevices`, and `related_billsections` lists MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
 
 ### 17.2. Usage Segment Value Formats <a id="usage-segment-value-format" href="#usage-segment-value-format" class="permalink">🔗</a>
 
@@ -2070,6 +2207,7 @@ The following Usage Segment format strings are specified with their correspondin
 * `usage_net_kwh` - [Net Electric Usage in kWh object](#TODO-usage-segment-value-usage-net-kwh)
 * `aggregated_kwh` - [Aggregated Electric Usage in kWh object](#TODO-usage-segment-value-aggregated-kwh)
 * `demand_kw` - [Electric Demand in kW object](#TODO-usage-segment-value-demand-kw)
+* `peak_kw` - [Electric Peak Demand in kW object](#TODO-usage-segment-value-peak-kw)
 * `water_m3` - [Water Usage in Cubic Meters object](#TODO-usage-segment-value-water-m3)
 * `water_gal` - [Water Usage in Gallons object](#TODO-usage-segment-value-water-gal)
 * `water_ft3` - [Water Usage in Cubic Feet object](#TODO-usage-segment-value-water-ft3)

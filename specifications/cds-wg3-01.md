@@ -37,24 +37,27 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
 * [4. CDS-WG1-02 Extension](#cds-wg1-02-extension)  
 * [5. Server Metadata](#server-metadata)  
 * [6. Scopes Supported](#scopes)  
-    * [6.1. Rate Plan](#scope-rate-plan)  
-    * [6.2. Account Program Participation](#scope-account-program-participation)  
-    * [6.3. Service Program Participation](#scope-service-program-participation)  
-    * [6.4. Account List](#scope-account-list)  
-    * [6.5. Service List](#scope-service-list)  
-    * [6.6. Meter List](#scope-meter-list)  
-    * [6.7. Bill Statements](#scope-bill-statements)  
-    * [6.8. Service Bills](#scope-service-bills)  
-    * [6.9. Meter Usage](#scope-meter-usage)  
-    * [6.10. Aggregation Inclusion](#scope-aggregation-inclusion)  
-    * [6.11. Accounts Query](#scope-accounts-query)  
-    * [6.12. Service Contracts Query](#scope-service-contracts-query)  
-    * [6.13. Service Points Query](#scope-service-points-query)  
-    * [6.14. Meters Devices Query](#scope-meter-devices-query)  
-    * [6.15. Bill Statements Query](#scope-bill-statements-query)  
-    * [6.16. Bill Sections Query](#scope-bill-sections-query)  
-    * [6.17. Aggregations Query](#scope-aggregations-query)  
-    * [6.18. Usage Query](#scope-usage-query)  
+    * [6.1. Customer Consent Scopes](#scopes-customer-consent)  
+        * [6.1.1. Rate Plan](#scope-rate-plan)  
+        * [6.1.2. Account Program Participation](#scope-account-program-participation)  
+        * [6.1.3. Service Program Participation](#scope-service-program-participation)  
+        * [6.1.4. Account List](#scope-account-list)  
+        * [6.1.5. Service List](#scope-service-list)  
+        * [6.1.6. Meter List](#scope-meter-list)  
+        * [6.1.7. Bill Statements](#scope-bill-statements)  
+        * [6.1.8. Service Bills](#scope-service-bills)  
+        * [6.1.9. Meter Usage](#scope-meter-usage)  
+        * [6.1.10. Aggregation Inclusion](#scope-aggregation-inclusion)  
+    * [6.2. Direct Access Scopes](#scopes-direct-access)  
+        * [6.2.1. Accounts Query](#scope-accounts-query)  
+        * [6.2.2. Service Contracts Query](#scope-service-contracts-query)  
+        * [6.2.3. Service Points Query](#scope-service-points-query)  
+        * [6.2.4. Meters Devices Query](#scope-meter-devices-query)  
+        * [6.2.5. Bill Statements Query](#scope-bill-statements-query)  
+        * [6.2.6. Bill Sections Query](#scope-bill-sections-query)  
+        * [6.2.7. Aggregations Query](#scope-aggregations-query)  
+        * [6.2.8. Usage Query](#scope-usage-query)  
+    * [6.3. Scope Extensions](#scope-extensions)  
 * [7. Authorization Details Fields](#auth-details-fields)  
     * [7.1. Preselection Fields](#auth-details-preselection)  
         * [7.1.1. Preselect Account Numbers](#auth-details-account-numbers)  
@@ -352,6 +355,8 @@ This specification in subsequent sections extends the CDS's Client Registration 
 
 This specification extends CDS's Authorization Server Metadata object [[CDS-WG1-02 Section 3.2](#ref-cds-wg1-02-metadata)] to include the following named values:
 
+<span style="background-color:yellow">TODO: check this list</span>
+
 * `cds_accounts_api` - _[URL](#url)_ - (OPTIONAL) The base url for the [Accounts API](#accounts-api).
   This is REQUIRED if a [Rate Plan](#scope-rate-plan), [Self-Access](#scope-rate-plan), or [Accounts Query](#scope-accounts-query) Scope is included in the Server Metadata object's `scopes_supported` field.
 * `cds_servicecontracts_api` - _[URL](#url)_ - (OPTIONAL) The base url for the [Service Contracts API](#service-contracts-api).
@@ -394,26 +399,16 @@ To support a Scope defined in this section, in addition to that Scope's defined 
     * When the Server completes its asynchronous tasks for making data available, the Server MUST update the `status` value from `pending` to the appropriate status value based on the asynchronous task's results.
       The Server MUST also update the `enabled_scope` and `enabled_authorization_details` values to the appropriate access now available to the Client.
 
-While this specification defines Scopes that can meet many use cases, extensions to this specifications are encouraged to modify Scopes or define additional Scopes to meet other use cases.
-However, it is RECOMMENDED that if extensions or use cases can define their needs using existing Scopes defined in this specification, combined with authorization details requirements, that they define those authorization details requirements, rather than creating a new Scope with new requirements.
-The [Scenarios](#scenarios) section of this specification are some examples of how to defined combined Scope and authorization details requirements.
-This is so that Clients who support the Scopes and authorization details defined in this specification will already be compatible with extensions and new use cases.
+Additionally, the Server MAY include other [Authorization Details Fields](#auth-details-fields) beyond what is required in the `authorization_details_types_supported` array as needed to support the Server's use cases.
 
-Extensions that modify a Scope defined in this specification MUST define those modifications as a new Scope with a new Scope Type identifier that references the existing Scope in this specification followed by the description of modifications.
-This is so that Clients do not mix up the Scope defined in this specification with the modified Scope defined in an extension.
+### 6.1. Customer Consent Scopes <a id="scopes-customer-consent" href="#scopes-customer-consent" class="permalink">🔗</a>
 
-It is RECOMMENDED that extensions that create new Scopes define them in the same same format structure as those defined in this specification.
-This is so that Client developers who are familiar with this specification can easily add support for other Scopes in extensions.
-The format for Scope definitions in this specification use the following structure:
+The Scopes defined in this section proves a means by which a Client can request authorization from a Customer, for situations where Customer consent is required to be able to access data on the Server.
+The Customer authorization process uses the Server's OAuth Authorization Code Grant flow [[RFC 6749 Section 4.1](#ref-rfc6749-code-grant)], so these the Scopes in this section require at least the `"code"` response type to be available in the Server's Scope Description object for the supported Scope.
 
-* Brief explanation and example of the use cases the Scope is intending to address.
-  This allows Clients to understand why this Scope exists.
-* Definition of Scope Description [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)] requirements.
-  This allows Clients to understand how to use this Scope in their requests to Servers.
-* Definition of Server access and behavior requirements.
-  This allows Clients to understand what access and behavior Servers will provide when this Scope is part of a request or Grant.
+In addition to defining the scopes in this section, this specification also defines [Customer Authorization](#customer-authorizations) interface requirements (authorization form layout, error pages, etc.).
 
-### 6.1. Rate Plan <a id="scope-rate-plan" href="#scope-rate-plan" class="permalink">🔗</a>
+#### 6.1.1. Rate Plan <a id="scope-rate-plan" href="#scope-rate-plan" class="permalink">🔗</a>
 
 For some use cases, a Client only needs to obtain a Customer's rate plans (i.e. the tariffs they are assigned for their utility services).
 For example, a demand response app Client may need the rate plan for a Customer in order to determine if the Customer has any services that could join a demand response aggregation program.
@@ -454,7 +449,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 * The Server MUST include any fields or objects as set by the Grant's authorization details fields.
 * The Server MUST NOT include [Preselection Fields](#auth-details-preselection) in the Server response's and Grant object's `authorization_details` arrays.
 
-### 6.2. Account Program Participation <a id="scope-account-program-participation" href="#scope-account-program-participation" class="permalink">🔗</a>
+#### 6.1.2. Account Program Participation <a id="scope-account-program-participation" href="#scope-account-program-participation" class="permalink">🔗</a>
 
 For some use cases, a Client only needs to obtain a list of which [Account-level programs](#TODO-account-program-format) which apply to a Customer.
 For example, a utility rebate program contractor Client may need to know if a Customer is on low-income assistance for their  utility account in order to know if they are qualified for a specific set of utility rebates.
@@ -494,7 +489,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 * It is RECOMMENDED for the Server to have a Client-specific `cds_server_metadata` URL value for Client objects in the Client API [[CDS-WG1-02 Section 5.1](#ref-cds-wg1-02-grant-object)] where this scope is included in the Client object's `scope` value, rather than a generic public CDS Server Metadata endpoint.
   That way the Server can customize the list of Choice objects in the `choices` list for the `account_programs` Authorization Details Field object in this Scope's `authorization_details_types_supported` field, which lets the Server tailor which Program objects are available for sharing based on which Client is requesting access.
 
-### 6.3. Service Program Participation <a id="scope-service-program-participation" href="#scope-service-program-participation" class="permalink">🔗</a>
+#### 6.1.3. Service Program Participation <a id="scope-service-program-participation" href="#scope-service-program-participation" class="permalink">🔗</a>
 
 For some use cases, a Client only needs to obtain a list of which [Service Contract-level programs](#TODO-service-program-format) which apply to a Customer.
 For example, a demand response app Client may need to know if an enterprise Customer is already signed up for a demand response program for their buildings.
@@ -542,7 +537,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 * It is RECOMMENDED for the Server to have a Client-specific `cds_server_metadata` URL value for Client objects in the Client API [[CDS-WG1-02 Section 5.1](#ref-cds-wg1-02-grant-object)] where this scope is included in the Client object's `scope` value, rather than a generic public CDS Server Metadata endpoint.
   That way the Server can customize the list of Choice objects in the `choices` list for the `service_programs` Authorization Details Field object in this Scope's `authorization_details_types_supported` field, which lets the Server tailor which Program objects are available for sharing based on which Client is requesting access.
 
-### 6.4. Account List <a id="scope-account-list" href="#scope-account-list" class="permalink">🔗</a>
+#### 6.1.4. Account List <a id="scope-account-list" href="#scope-account-list" class="permalink">🔗</a>
 
 For some use cases, a Client needs access to the Customer's account list.
 For example, a financial auditor Client may need to know the full list of Accounts for an enterprise Customer as part of their accounting audit of the enterprise's organization.
@@ -565,6 +560,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"addresses"`](#auth-details-addresses)
     * [`"include_account_details"`](#auth-details-include-account-details)
     * [`"include_account_programs"`](#auth-details-include-account-programs)
+    * [`"include_aggregations"`](#auth-details-include-aggregations)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain only one object, and that object MUST have its `id` value be [`"account_selection"`](#account-selection).
@@ -577,7 +573,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 * The Server MUST include any fields or objects as set by the Grant's authorization details fields.
 * The Server MUST NOT include [Preselection Fields](#auth-details-preselection) in the Server response's and Grant object's `authorization_details` arrays.
 
-### 6.5. Service List <a id="scope-service-list" href="#scope-service-list" class="permalink">🔗</a>
+#### 6.1.5. Service List <a id="scope-service-list" href="#scope-service-list" class="permalink">🔗</a>
 
 For some use cases, a Client needs access to the Customer's list of Service Contracts (e.g. their list of electric and gas services from a utility).
 For example, an energy consultant Client working with an enterprise Customer may need to review which of the business's buildings have which utility services.
@@ -601,7 +597,6 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"account_numbers"`](#auth-details-account-numbers)
     * [`"meter_numbers"`](#auth-details-meter-numbers)
     * [`"addresses"`](#auth-details-addresses)
-    * [`"include_accounts"`](#auth-details-include-accounts)
     * [`"include_account_numbers"`](#auth-details-include-account-numbers)
     * [`"include_account_details"`](#auth-details-include-account-details)
     * [`"include_account_programs"`](#auth-details-include-account-programs)
@@ -610,6 +605,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_service_programs"`](#auth-details-include-service-programs)
     * [`"include_meter_devices"`](#auth-details-include-meter-devices)
     * [`"include_meter_numbers"`](#auth-details-include-meter-numbers)
+    * [`"include_aggregations"`](#auth-details-include-aggregations)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain objects with the following `id` values:
@@ -620,13 +616,14 @@ To support this Scope, the Scope Description object MUST meet the following requ
 Additionally, to support this Scope, the Server MUST implement the following requirements:
 
 * The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
+    * [`include_accounts`](#auth-details-include-accounts)
     * [`include_service_contracts`](#auth-details-include-service-contracts)
 * The Server MUST make available the Service Contract objects that were selected by the Customer during authorization.
     * If the Account Selection Component was used to select Accounts for this scope, selected Service Contracts are any with `cds_account_id` values that match the selected Accounts from the Account Selection Component.
 * The Server MUST include any fields or objects as set by the Grant's authorization details fields.
 * The Server MUST NOT include [Preselection Fields](#auth-details-preselection) in the Server response's and Grant object's `authorization_details` arrays.
 
-### 6.6. Meter List <a id="scope-meter-list" href="#scope-meter-list" class="permalink">🔗</a>
+#### 6.1.6. Meter List <a id="scope-meter-list" href="#scope-meter-list" class="permalink">🔗</a>
 
 For some use cases, a Client needs access to a Customer's list of Meters Devices.
 For example, an energy auditor Client working with an enterprise Customer may need to review which of the meters are at which building for the utility.
@@ -667,6 +664,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_premises"`](#auth-details-include-premises)
     * [`"include_service_point_addresses"`](#auth-details-include-service-point-addresses)
     * [`"include_coordinates"`](#auth-details-include-coordinates)
+    * [`"include_aggregations"`](#auth-details-include-aggregations)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain objects with the following `id` values:
@@ -689,7 +687,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 * The Server MUST include any fields or objects as set by the Grant's authorization details fields.
 * The Server MUST NOT include [Preselection Fields](#auth-details-preselection) in the Server response's and Grant object's `authorization_details` arrays.
 
-### 6.7. Bill Statements <a id="scope-bill-statements" href="#scope-bill-statements" class="permalink">🔗</a>
+#### 6.1.7. Bill Statements <a id="scope-bill-statements" href="#scope-bill-statements" class="permalink">🔗</a>
 
 For some use cases, a Client needs access to a Customer's Bill Statements.
 For example, a financial auditor Client may need to review a Customer's utility bills as part of a business's financial audit.
@@ -730,7 +728,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 * The Server MUST include any fields or objects as set by the Grant's authorization details fields (e.g. `include_bill_statement_files`) and MUST NOT include any fields or objects that are constrained by the Grant's authorization details fields (e.g. `statement_date_start`).
 * The Server MUST NOT include [Preselection Fields](#auth-details-preselection) in the Server response's and Grant object's `authorization_details` arrays.
 
-### 6.8. Service Bills <a id="scope-service-bills" href="#scope-service-bills" class="permalink">🔗</a>
+#### 6.1.8. Service Bills <a id="scope-service-bills" href="#scope-service-bills" class="permalink">🔗</a>
 
 For some use cases, a Client needs access to a breakdown of bill charges for a Customer's set of Service Contracts.
 For example, an energy service company Client that is working with an enterprise Customer may need to analyze the historical energy charges for some of the Customer's utility services for a building.
@@ -762,6 +760,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_bill_statement_charges"`](#auth-details-include-bill-statement-charges)
     * [`"include_bill_statement_programs"`](#auth-details-include-bill-statement-programs)
     * [`"include_bill_section_line_items"`](#auth-details-include-bill-section-line-items)
+    * [`"include_aggregations"`](#auth-details-include-aggregations)
     * [`"include_service_points"`](#auth-details-include-service-points)
     * [`"include_meter_devices"`](#auth-details-include-meter-devices)
     * [`"include_meter_numbers"`](#auth-details-include-meter-numbers)
@@ -788,7 +787,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 * The Server MUST include any fields or objects as set by the Grant's authorization details fields (e.g. `include_bill_section_line_items`) and MUST NOT include any fields or objects that are constrained by the Grant's authorization details fields (e.g. `start_date`).
 * The Server MUST NOT include [Preselection Fields](#auth-details-preselection) in the Server response's and Grant object's `authorization_details` arrays.
 
-### 6.9. Meter Usage <a id="scope-meter-usage" href="#scope-meter-usage" class="permalink">🔗</a>
+#### 6.1.9. Meter Usage <a id="scope-meter-usage" href="#scope-meter-usage" class="permalink">🔗</a>
 
 For some use cases, a Client needs access to the usage data for a Customer's set of Meter Devices.
 For example, a building energy management platform Client being used by an enterprise Customer may need to collect and monitor the meter usage for the Customer's properties.
@@ -880,7 +879,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 * The Server MUST include any fields or objects as set by the Grant's authorization details fields (e.g. `include_contract_numbers`) and MUST NOT include any fields or objects that are constrained by the Grant's authorization details fields (e.g. `segment_start`).
 * The Server MUST NOT include [Preselection Fields](#auth-details-preselection) in the Server response's and Grant object's `authorization_details` arrays.
 
-### 6.10. Aggregation Inclusion <a id="scope-aggregation-inclusion" href="#scope-aggregation-inclusion" class="permalink">🔗</a>
+#### 6.1.10. Aggregation Inclusion <a id="scope-aggregation-inclusion" href="#scope-aggregation-inclusion" class="permalink">🔗</a>
 
 For some use cases, a Client needs a Customer to approve being included in an Aggregation.
 For example, a building owner Client needs to get the aggregated energy usage for their property, but the number of tenants in the property falls below a privacy threshold and individual tenant Customer consent is required, so the Server needs the Client to request individual authorizations from Customers.
@@ -916,7 +915,35 @@ Additionally, to support this Scope, the Server MUST implement the following req
 * The Server MUST reject Client authorization requests with an `invalid_authorization_details` error [[RFC 9396 Section 5](#ref-rfc9396-error-response)] where the `error_if_no_preselections` authorization details field is set to `false`, meaning that Customer MUST have an applicable Aggregation in the `aggregation_numbers` included in the authorization request's authorization details.
 * The Server MUST reject Client authorization requests with an `invalid_authorization_details` error [[RFC 9396 Section 5](#ref-rfc9396-error-response)] where the `allow_scope_modifications` authorization details field is set to `true`, meaning that the Customer MUST NOT be able to edit the authorization request's scope, since the request is specifically for requesting consent to be included in a set of Aggregations.
 
-### 6.11. Accounts Query <a id="scope-accounts-query" href="#scope-accounts-query" class="permalink">🔗</a>
+### 6.2. Direct Access Scopes <a id="scopes-direct-access" href="#scopes-direct-access" class="permalink">🔗</a>
+
+The Scopes defined in this section proves a means by which a Client can directly query the Server for Customer Data, for situations where the Client does not first need Customer consent before accessing the Customer Data.
+For the Scopes defined in this section, the Client uses the Server's OAuth Client Credentials Grant flow [[RFC 6749 Section 4.4](#ref-rfc6749-client-credentials)], so these the Scopes in this section require at least the `"client_credentials"` grant type to be available in the Server's Scope Description object for the supported Scope.
+
+The following are examples of situations where Customer Data access can be provided by a utility without Customer consent:
+
+* Situations where the Customer is themselves registered as a Client, and using that Client to query and access their own Customer Data.
+  For example, a large datacenter owner (the Client) wants to automate retrieving their own interval energy usage from the utility (the Server) on a regular basis.
+* Situations where the Client is a directly contracted vendor and has met the utility's security requirements, so their data access is considered "internal" to the utility, and thus Customer consent is not required for access.
+  For example, a utility vendor (the Client) needs to download a limited set of energy usage data for a subset of accounts in order to analyze as part of their contracted project with the utility.
+* Situations where the Client is accessing data that has been generated or aggregated or properly anonymized such that individual Customer consent is not required by local regulatory requirements.
+  For example, an academic institution (the Client) may be able to access energy usage that has been aggregated across a large region of the utility's territory (the Server).
+
+
+For direct access Scopes defined in this section, the Server MUST implement the following:
+
+* If any [Preselection Fields](#auth-details-preselection) are included in a Grant's authorization details, the Server MUST constrain responses to only contain objects matching those preselection fields.
+
+For direct access Scopes defined in this section, the Server MAY impose additional request restrictions for Clients that further limit access beyond what is defined in this section.
+The following are some examples of possible additional restrictions:
+
+* If the Server has limited the Client to only be able to access objects for Grants with [Preselection Fields](#auth-details-preselection), the Server MAY reject Client Credentials requests [[RFC 6749 Section 4.4](#ref-rfc6749-client-credentials)] that do not have or have invalid Preselection Field values.
+  For example, if a utility vendor Client is only permitted to access [Accounts](#account-api) for which they have obtained the Account number (e.g. as part of a rebate program verification contract), the utility Server can limit the vendor's Client by requiring they always include the `account_numbers` preselection field in Client Credentials requests, so if the vendor Client requests to create an access token that is unbounded (i.e. no `account_numbers` included), the Server is able to reject the request.
+* If the Server wants to limit a Client's ability to enumerate all objects on an API, the Server MAY return an error response for API requests that do not have granular enough request parameters.
+  For example, if a building owner Client has been given the ability to search a Server's list of building identifiers (stored by the server as [Aggregation](#aggregation-format) objects with the building ID as the `aggregation_number`) for their own building, the Server can limit the [Aggregations listing API](#aggregation-list) to only respond successfully to requests that use request parameters (e.g. `q={building_address}`) and return a limited number of results, and return an error response if there are too many results.
+  By imposing this limitation, in combination with [Rate Limiting](#TODO-rate-limiting), the Client will not be able to enumerate all building IDs stored on the Server.
+
+#### 6.2.1. Accounts Query <a id="scope-accounts-query" href="#scope-accounts-query" class="permalink">🔗</a>
 
 For some use cases, a Client needs to be able to access a list of Accounts.
 For example, an enterprise Customer, acting as the Client, may need to review their list of utility accounts from the utility, acting as the Server.
@@ -929,65 +956,174 @@ To support this Scope, the Scope Description object MUST meet the following requ
 * The `response_types_supported` value must be an empty array (`[]`).
 * The `grant_types_supported` value MUST contain at least the value `"client_credentials"`.
 * The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
-    * [`"account_numbers"`](#auth-details-account-numbers)
-    * [`"include_account_numbers"`](#auth-details-include-account-numbers)
     * [`"sync_until"`](#auth-details-sync-until)
-    * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
-* The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
-    * [`"addresses"`](#auth-details-addresses)
-    * [`"account_programs"`](#auth-details-account-programs)
-    * [`"include_account_details"`](#auth-details-include-account-details)
-    * [`"include_account_programs"`](#auth-details-include-account-programs)
 
 Additionally, to support this Scope, the Server MUST implement the following requirements:
 
 * The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
     * [`include_accounts`](#auth-details-include-accounts)
-* The Server MUST make available the Account objects that the Client is allowed to access, in accordance with the following requirements:
-    * The Server MUST include any fields or objects as set by the Grant's authorization details fields.
-    * If any [Preselection Fields](#auth-details-preselection) are included, the Server MUST constrain the results to only object selected by those preselection fields.
 
-### 6.12. Service Contracts Query <a id="scope-service-contracts-query" href="#scope-service-contracts-query" class="permalink">🔗</a>
+#### 6.2.2. Service Contracts Query <a id="scope-service-contracts-query" href="#scope-service-contracts-query" class="permalink">🔗</a>
 
-`cds_query_service_contracts`
+For some use cases, a Client needs to be able to access a list of Service Contracts.
+For example, a utility vendor Client working with the utility Server may need to be able to look up a specific set of utility services for analysis as part of their project with the utility.
+In these relevant use cases, Clients need access to a set of Service Contract objects directly, so this Scope provides the ability for Servers to offer managed access to Service Contract objects.
 
-<span style="background-color:yellow">TODO</span>
+To support this Scope, the Scope Description object MUST meet the following requirements:
 
-### 6.13. Service Points Query <a id="scope-service-points-query" href="#scope-service-points-query" class="permalink">🔗</a>
+* The `type` value MUST be `"cds_query_service_contracts"`.
+* The `response_types_supported` value must be an empty array (`[]`).
+* The `grant_types_supported` value MUST contain at least the value `"client_credentials"`.
+* The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
+    * [`"sync_until"`](#auth-details-sync-until)
 
-`cds_query_service_points`
+Additionally, to support this Scope, the Server MUST implement the following requirements:
 
-<span style="background-color:yellow">TODO</span>
+* The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
+    * [`include_accounts`](#auth-details-include-accounts)
+    * [`include_service_contracts`](#auth-details-include-service-contracts)
 
-### 6.14. Meter Devices Query <a id="scope-meter-devices-query" href="#scope-meter-devices-query" class="permalink">🔗</a>
+#### 6.2.3. Service Points Query <a id="scope-service-points-query" href="#scope-service-points-query" class="permalink">🔗</a>
 
-`cds_query_meters`
+For some use cases, a Client needs to be able to access a list of Service Points.
+For example, a utility vendor Client working with the utility Server may need to be able to look up a specific set of service locations in order to create a map as part of their project with the utility.
+In these relevant use cases, Clients need access to a set of Service Point objects directly, so this Scope provides the ability for Servers to offer managed access to Service Point objects.
 
-<span style="background-color:yellow">TODO</span>
+To support this Scope, the Scope Description object MUST meet the following requirements:
 
-### 6.15. Bill Statements Query <a id="scope-bill-statements-query" href="#scope-bill-statements-query" class="permalink">🔗</a>
+* The `type` value MUST be `"cds_query_service_points"`.
+* The `response_types_supported` value must be an empty array (`[]`).
+* The `grant_types_supported` value MUST contain at least the value `"client_credentials"`.
+* The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
+    * [`"sync_until"`](#auth-details-sync-until)
 
-`cds_query_bill_statements`
+Additionally, to support this Scope, the Server MUST implement the following requirements:
 
-<span style="background-color:yellow">TODO</span>
+* The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
+    * [`include_service_points`](#auth-details-include-service-points)
 
-### 6.16. Bill Sections Query <a id="scope-bill-sections-query" href="#scope-bill-sections-query" class="permalink">🔗</a>
+#### 6.2.4. Meter Devices Query <a id="scope-meter-devices-query" href="#scope-meter-devices-query" class="permalink">🔗</a>
 
-`cds_query_bill_sections`
+For some use cases, a Client needs to be able to access a list of Meter Devices.
+For example, a utility vendor Client working with the utility Server may need to be able to look up if a meter exists for a given `meter_number` in the utility's system.
+In these relevant use cases, Clients need access to a set of Meter Device objects directly, so this Scope provides the ability for Servers to offer managed access to Meter Device objects.
 
-<span style="background-color:yellow">TODO</span>
+To support this Scope, the Scope Description object MUST meet the following requirements:
 
-### 6.17. Aggregations Query <a id="scope-aggregations-query" href="#scope-aggregations-query" class="permalink">🔗</a>
+* The `type` value MUST be `"cds_query_meter_devices"`.
+* The `response_types_supported` value must be an empty array (`[]`).
+* The `grant_types_supported` value MUST contain at least the value `"client_credentials"`.
+* The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
+    * [`"sync_until"`](#auth-details-sync-until)
 
-`cds_query_aggregations`
+Additionally, to support this Scope, the Server MUST implement the following requirements:
 
-<span style="background-color:yellow">TODO</span>
+* The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
+    * [`include_meter_devices`](#auth-details-include-meter-devices)
 
-### 6.18. Usage Query <a id="scope-usage-query" href="#scope-usage-query" class="permalink">🔗</a>
+#### 6.2.5. Bill Statements Query <a id="scope-bill-statements-query" href="#scope-bill-statements-query" class="permalink">🔗</a>
 
-`cds_query_usage`
+For some use cases, a Client needs to be able to access a list of Bill Statements.
+For example, a technical support contractor Client working with the utility Server may need to look up a Customer's bills while while investigating a customer support ticket.
+In these relevant use cases, Clients need access to a set of Bill Statement objects directly, so this Scope provides the ability for Servers to offer managed access to Bill Statement objects.
 
-<span style="background-color:yellow">TODO</span>
+To support this Scope, the Scope Description object MUST meet the following requirements:
+
+* The `type` value MUST be `"cds_query_bill_statements"`.
+* The `response_types_supported` value must be an empty array (`[]`).
+* The `grant_types_supported` value MUST contain at least the value `"client_credentials"`.
+* The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
+    * [`"sync_until"`](#auth-details-sync-until)
+    * [`"statement_date_start"`](#auth-details-statement-start)
+    * [`"statement_date_end"`](#auth-details-statement-end)
+
+Additionally, to support this Scope, the Server MUST implement the following requirements:
+
+* The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
+    * [`include_bill_statements`](#auth-details-include-bill-statements)
+
+#### 6.2.6. Bill Sections Query <a id="scope-bill-sections-query" href="#scope-bill-sections-query" class="permalink">🔗</a>
+
+For some use cases, a Client needs to be able to access a list of Bill Sections.
+For example, a technical support contractor Client working on customer support ticket for the utility Server may need to look up a Customer's charges for a specific service to understand why a Customer was charged a certain amount for their electric service last month.
+In these relevant use cases, Clients need access to a set of Bill Section objects directly, so this Scope provides the ability for Servers to offer managed access to Bill Section objects.
+
+To support this Scope, the Scope Description object MUST meet the following requirements:
+
+* The `type` value MUST be `"cds_query_bill_sections"`.
+* The `response_types_supported` value must be an empty array (`[]`).
+* The `grant_types_supported` value MUST contain at least the value `"client_credentials"`.
+* The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
+    * [`"sync_until"`](#auth-details-sync-until)
+    * [`"start_date"`](#auth-details-bill-section-start)
+    * [`"end_date"`](#auth-details-bill-section-end)
+
+Additionally, to support this Scope, the Server MUST implement the following requirements:
+
+* The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
+    * [`include_bill_sections`](#auth-details-include-bill-sections)
+
+#### 6.2.7. Aggregations Query <a id="scope-aggregations-query" href="#scope-aggregations-query" class="permalink">🔗</a>
+
+For some use cases, a Client needs to be able to access a list of Aggregations.
+For example, an academic researcher Client that needs to look up aggregated energy usage on a utility Server would need to query the list of available regional aggregations available for download.
+Another example is a building owner Client needing to search for their property's building identifier, which the Server is storing as an Aggregation with the `aggregation_number` as the building ID, so that the owner can download the whole-building energy usage for benchmarking reporting.
+In these relevant use cases, Clients need access to a set of Aggregation objects directly, so this Scope provides the ability for Servers to offer managed access to Aggregation objects.
+
+To support this Scope, the Scope Description object MUST meet the following requirements:
+
+* The `type` value MUST be `"cds_query_aggregations"`.
+* The `response_types_supported` value must be an empty array (`[]`).
+* The `grant_types_supported` value MUST contain at least the value `"client_credentials"`.
+* The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
+    * [`"sync_until"`](#auth-details-sync-until)
+
+Additionally, to support this Scope, the Server MUST implement the following requirements:
+
+* The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
+    * [`include_aggregations`](#auth-details-include-aggregations)
+
+#### 6.2.8. Usage Query <a id="scope-usage-query" href="#scope-usage-query" class="permalink">🔗</a>
+
+For some use cases, a Client needs to be able to access a list of Usage Segments.
+For example, an enterprise Customer, acting as the Client, needs to access their latest month of energy usage from the utility Server so that they can run their monthly energy report for the company's leadership.
+In these relevant use cases, Clients need access to a set of Usage Segment objects directly, so this Scope provides the ability for Servers to offer managed access to Usage Segment objects.
+
+To support this Scope, the Scope Description object MUST meet the following requirements:
+
+* The `type` value MUST be `"cds_query_usage"`.
+* The `response_types_supported` value must be an empty array (`[]`).
+* The `grant_types_supported` value MUST contain at least the value `"client_credentials"`.
+* The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
+    * [`"sync_until"`](#auth-details-sync-until)
+    * [`"segment_start"`](#auth-details-usage-segment-start)
+    * [`"segment_end"`](#auth-details-usage-segment-end)
+
+Additionally, to support this Scope, the Server MUST implement the following requirements:
+
+* The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
+    * [`include_usage_segments`](#auth-details-include-bill-sections)
+
+### 6.3. Scope Extensions <a id="scope-extensions" href="#scope-extensions" class="permalink">🔗</a>
+
+While this specification defines [Scopes](#scopes) that can meet many use cases, extensions to this specifications are encouraged to modify Scopes or define additional Scopes to meet other use cases.
+However, it is RECOMMENDED that if extensions or use cases can define their needs using existing Scopes defined in this specification, combined with authorization details requirements, that they define those authorization details requirements, rather than creating a new Scope with new requirements.
+The [Scenarios](#scenarios) section of this specification are some examples of how to defined combined Scope and authorization details requirements.
+This is so that Clients who support the Scopes and authorization details defined in this specification will already be compatible with extensions and new use cases.
+
+Extensions that modify a Scope defined in this specification MUST define those modifications as a new Scope with a new Scope Type identifier that references the existing Scope in this specification followed by the description of modifications.
+This is so that Clients do not mix up the Scope defined in this specification with the modified Scope defined in an extension.
+
+It is RECOMMENDED that extensions that create new Scopes define them in the same same format structure as those defined in this specification.
+This is so that Client developers who are familiar with this specification can easily add support for other Scopes in extensions.
+The format for Scope definitions in this specification use the following structure:
+
+* Brief explanation and example of the use cases the Scope is intending to address.
+  This allows Clients to understand why this Scope exists.
+* Definition of Scope Description [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)] requirements.
+  This allows Clients to understand how to use this Scope in their requests to Servers.
+* Definition of Server access and behavior requirements.
+  This allows Clients to understand what access and behavior Servers will provide when this Scope is part of a request or Grant.
 
 ## 7. Authorization Details Fields <a id="auth-details-fields" href="#auth-details-fields" class="permalink">🔗</a>
 
@@ -1048,9 +1184,12 @@ When rendering [Service Contract Selections](#contract-selection) for this field
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array and the scope uses Accounts as the primary filter, Accounts are selected that match their `account_number` to any of the array's values.
-* If the value is an array and the scope uses Service Contracts as the primary filter, Service Contracts are selected that match their `account_number` to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Account objects in API responses that do not match their `account_number` to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Accounts that are included:
+        * Aggregation `grouped_accounts`
+        * Usage Segment `related_accounts`
 
 #### 7.1.2. Preselect Account Programs <a id="auth-details-account-programs" href="#auth-details-account-programs" class="permalink">🔗</a>
 
@@ -1071,8 +1210,12 @@ When rendering [Account Selections](#account-selection) for this field's scope a
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array, Accounts are selected that contain Account Program objects that have a matching `program_number` value to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Account objects in API responses that do not contain Account Program objects that have a matching `program_number` value to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Accounts that are included:
+        * Aggregation `grouped_accounts`
+        * Usage Segment `related_accounts`
 
 #### 7.1.3. Preselect Contract Numbers <a id="auth-details-contract-numbers" href="#auth-details-contract-numbers" class="permalink">🔗</a>
 
@@ -1101,8 +1244,15 @@ When rendering [Service Contract Selections](#contract-selection) for this field
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array, Service Contracts are selected that match their `contract_number` to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Service Contract objects in API responses that do not match their `contract_number` to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Service Contracts that are included:
+        * Service Point `current_servicecontracts`
+        * Service Point `previous_servicecontracts`
+        * Bill Section `related_servicecontracts`
+        * Aggregation `grouped_servicecontracts`
+        * Usage Segment `related_servicecontracts`
 
 #### 7.1.4. Preselect Service Types <a id="auth-details-service-types" href="#auth-details-service-types" class="permalink">🔗</a>
 
@@ -1127,8 +1277,15 @@ When rendering [Service Contract Selections](#contract-selection) for this field
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array, Service Contracts are selected that match their `service_type` to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Service Contract objects in API responses that do not match their `service_type` to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Service Contracts that are included:
+        * Service Point `current_servicecontracts`
+        * Service Point `previous_servicecontracts`
+        * Bill Section `related_servicecontracts`
+        * Aggregation `grouped_servicecontracts`
+        * Usage Segment `related_servicecontracts`
 
 #### 7.1.5. Preselect Service Programs <a id="auth-details-service-programs" href="#auth-details-service-programs" class="permalink">🔗</a>
 
@@ -1149,8 +1306,15 @@ When rendering [Service Contract Selections](#contract-selection) for this field
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array, Service Contracts are selected that contain Service Program objects that have a matching `program_number` value to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Service Contract objects in API responses that do not contain Service Program objects that have a matching `program_number` value to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Service Contracts that are included:
+        * Service Point `current_servicecontracts`
+        * Service Point `previous_servicecontracts`
+        * Bill Section `related_servicecontracts`
+        * Aggregation `grouped_servicecontracts`
+        * Usage Segment `related_servicecontracts`
 
 #### 7.1.6. Preselect Service Point Numbers <a id="auth-details-servicepoint-numbers" href="#auth-details-servicepoint-numbers" class="permalink">🔗</a>
 
@@ -1184,8 +1348,15 @@ When rendering [Meter Device Selections](#meter-selection) for this field's scop
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array, Service Points are selected that match their `servicepoint_number` to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Service Point objects in API responses that do not match their `servicepoint_number` to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Service Points that are included:
+        * Meter Device `current_servicepoints`
+        * Meter Device `previous_servicepoints`
+        * Bill Section `related_servicepoints`
+        * Aggregation `grouped_servicepoints`
+        * Usage Segment `related_servicepoints`
 
 #### 7.1.7. Preselect Service Point Types <a id="auth-details-servicepoint-types" href="#auth-details-servicepoint-types" class="permalink">🔗</a>
 
@@ -1218,8 +1389,15 @@ When rendering [Meter Device Selections](#meter-selection) for this field's scop
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array, Service Points are selected that match their `servicepoint_type` to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Service Point objects in API responses that do not match their `servicepoint_type` to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Service Points that are included:
+        * Meter Device `current_servicepoints`
+        * Meter Device `previous_servicepoints`
+        * Bill Section `related_servicepoints`
+        * Aggregation `grouped_servicepoints`
+        * Usage Segment `related_servicepoints`
 
 #### 7.1.8. Preselect Premise Numbers <a id="auth-details-premise-numbers" href="#auth-details-premise-numbers" class="permalink">🔗</a>
 
@@ -1252,8 +1430,15 @@ When rendering [Meter Device Selections](#meter-selection) for this field's scop
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array, Service Points are selected that contain Premise objects that have a matching `premise_number` value to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Service Point objects in API responses that do not match their `premise_number` to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Service Points that are included:
+        * Meter Device `current_servicepoints`
+        * Meter Device `previous_servicepoints`
+        * Bill Section `related_servicepoints`
+        * Aggregation `grouped_servicepoints`
+        * Usage Segment `related_servicepoints`
 
 #### 7.1.9. Preselect Meter Numbers <a id="auth-details-meter-numbers" href="#auth-details-meter-numbers" class="permalink">🔗</a>
 
@@ -1287,10 +1472,13 @@ When rendering [Meter Device Selections](#meter-selection) for this field's scop
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array and the scope uses Service Contracts as the primary filter, Service Contracts are selected that have a Meter Device with a matching `meter_number` to any of the array's values and a Service Point is listed in the Meter Device's `current_servicepoints` array that also has the Service Contract listed in that Service Point's `current_servicecontracts`.
-* If the value is an array and the scope uses Service Points as the primary filter, Service Points are selected that have a Meter Device with a matching `meter_number` to any of the array's values and the Service Point is listed in the Meter Device's `current_servicepoints` array.
-* If the value is an array and the scope uses Meter Devices as the primary filter, Meter Devices are selected that match their `meter_number` to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Meter Device objects in API responses that do not match their `meter_number` to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Meter Devices that are included:
+        * Bill Section `related_meterdevices`
+        * Aggregation `grouped_meterdevices`
+        * Usage Segment `related_meterdevices`
 
 #### 7.1.10. Preselect Meter Device Types <a id="auth-details-meter-types" href="#auth-details-meter-types" class="permalink">🔗</a>
 
@@ -1323,8 +1511,13 @@ When rendering [Service Point Selections](#servicepoint-selection) for this fiel
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array, Meter Devices are selected that match their `meter_type` to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Meter Device objects in API responses that do not match their `meter_type` to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Meter Devices that are included:
+        * Bill Section `related_meterdevices`
+        * Aggregation `grouped_meterdevices`
+        * Usage Segment `related_meterdevices`
 
 #### 7.1.11. Preselect Aggregation Numbers <a id="auth-details-aggregation-numbers" href="#auth-details-premise-numbers" class="permalink">🔗</a>
 
@@ -1361,12 +1554,12 @@ When rendering [Aggregation Selections](#aggregation-selection) for this field's
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array and the scope uses Accounts as the primary filter, Accounts are selected that have an Aggregation with a matching `aggregation_number` to any of the array's values and the Account is listed in the Aggregation's `grouped_accounts` array.
-* If the value is an array and the scope uses Service Contracts as the primary filter, Service Contracts are selected that have an Aggregation with a matching `aggregation_number` to any of the array's values and the Service Contract is listed in the Aggregation's `grouped_servicecontracts` array.
-* If the value is an array and the scope uses Service Points as the primary filter, Service Points are selected that have an Aggregation with a matching `aggregation_number` to any of the array's values and the Service Point is listed in the Aggregation's `grouped_servicepoints` array.
-* If the value is an array and the scope uses Meter Devices as the primary filter, Meter Devices are preselected that have an Aggregation with a matching `aggregation_number` to any of the array's values and the Meter Device is listed in the Aggregation's `grouped_meterdevices` array.
-* If the value is an array and the scope uses Aggregations as the primary filter, Aggregations are selected that match their `aggregation_number` to any of the array's values.
+* If the value is `null`, this field has no effect on the filtering API responses.
+* If the value is an array, the following filters MUST be applied for API responses:
+    * Aggregation objects in API responses that do not match their `aggregation_number` to any of the array's values MUST NOT be included.
+    * The following arrays MUST only include references to Aggregations that are included:
+        * Aggregation `grouped_aggregations`
+        * Usage Segment `related_aggregations`
 
 #### 7.1.12. Preselect Addresses <a id="auth-details-addresses" href="#auth-details-addresses" class="permalink">🔗</a>
 
@@ -1380,6 +1573,8 @@ To support this authorization details field, the Authorization Details Field Obj
 * The `format` value MUST be `"string_list_or_null"` or `"choice_list_or_null"`.
 * If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
     * The `is_required` value MUST be `false`.
+* This object MUST NOT be included in a Scope Description where the `response_types_supported` field is an empty array.
+  This means that that limiting objects by address using this preselection field is not available on [Direct Access Scopes](#scopes-direct-access).
 
 When rendering [Account Selections](#account-selection) for this field's scope and this field is included, the Server MUST preselect Accounts based on the following criteria:
 
@@ -1400,15 +1595,6 @@ When rendering [Meter Device Selections](#meter-selection) for this field's scop
 When rendering [Aggregation Selections](#aggregation-selection) for this field's scope and this field is included, the Server MUST preselect Aggregations based on the following criteria:
 
 * If the value is an array, Aggregations are preselected that match any of their `addresses` values to any of the array's values.
-
-For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
-
-* If the value is `null`, all resources for this field's scope are selected.
-* If the value is an array and the scope uses Accounts as the primary filter, Accounts are selected that match their `account_address` to any of the array's values.
-* If the value is an array and the scope uses Service Contracts as the primary filter, Service Contracts are selected that match their `contract_address` to any of the array's values.
-* If the value is an array and the scope uses Service Points as the primary filter, Service Points are selected that match their `servicepoint_address` to any of the array's values.
-* If the value is an array and the scope uses Meter Devices as the primary filter, Meter Devices are selected that have a Service Point with a matching `servicepoint_address` to any of the array's values and the Service Point is listed in the Meter Devices's `current_servicepoints` array.
-* If the value is an array and the scope uses Aggregations as the primary filter, Aggregations are selected that match any of their `addresses` to any of the array's values.
 
 ##### 7.1.12.1. Address Matching <a id="auth-details-address-matching" href="#auth-details-address-matching" class="permalink">🔗</a>
 

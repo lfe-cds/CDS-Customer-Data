@@ -938,22 +938,14 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"account_programs"`](#auth-details-account-programs)
     * [`"include_account_details"`](#auth-details-include-account-details)
     * [`"include_account_programs"`](#auth-details-include-account-programs)
-* The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
-    * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
-        * The `choices` array MUST contain only one object, and that object MUST have its `id` value be [`"account_selection"`](#account-selection).
 
 Additionally, to support this Scope, the Server MUST implement the following requirements:
 
 * The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
     * [`include_accounts`](#auth-details-include-accounts)
-* The Server MUST make available the Account objects that were selected by the Customer during authorization.
-* The Server MUST include any fields or objects as set by the Grant's authorization details fields.
-* The Server MUST NOT include [Preselection Fields](#auth-details-preselection) in the Server response's and Grant object's `authorization_details` arrays.
-
-
-`cds_query_accounts`
-
-<span style="background-color:yellow">TODO</span>
+* The Server MUST make available the Account objects that the Client is allowed to access, in accordance with the following requirements:
+    * The Server MUST include any fields or objects as set by the Grant's authorization details fields.
+    * If any [Preselection Fields](#auth-details-preselection) are included, the Server MUST constrain the results to only object selected by those preselection fields.
 
 ### 6.12. Service Contracts Query <a id="scope-service-contracts-query" href="#scope-service-contracts-query" class="permalink">🔗</a>
 

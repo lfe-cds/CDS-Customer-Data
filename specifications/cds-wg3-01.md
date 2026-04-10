@@ -116,18 +116,26 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
         * [7.4.4. Allow Scope Modifications](#auth-details-allow-scope-modifications)  
 * [8. Client Registration Requirements](#client-registration-requirements)  
 * [9. Customer Authorizations](#customer-authorizations)  
-    * [9.1. Authorization Form Layout](#auth-form-layout)  
-    * [9.2. Authorization Form Segments](#auth-form-layout)  
+    * [9.1. Authorization Process](#auth-process)  
+        * [9.1.1. Authorization Requests](#auth-requests)  
+        * [9.1.2. Customer Authentication](#customer-authentication)  
+        * [9.1.3. Authorization Process Diagram](#auth-diagram)  
+    * [9.2. Authorization Form](#auth-form)  
+    * [9.2.1. Authorization Form Layout](#auth-form-layout)  
+    * [9.2.2. Authorization Form Components](#auth-form-components)  
         * [9.2.1. Data Component](#data-component)  
         * [9.2.2. Duration Component](#duration-component)  
         * [9.2.3. Selection Component](#selection-component)  
-            * [9.2.3.1. Account Selection](#account-selection)  
-            * [9.2.3.2. Service Contract Selection](#contract-selection)  
-            * [9.2.3.3. Service Point Selection](#servicepoint-selection)  
-            * [9.2.3.4. Meter Device Selection](#meter-selection)  
-            * [9.2.3.5. Aggregation Selection](#aggregation-selection)  
+    * [9.2.3. Authorization Form Selections](#auth-form-components)  
+        * [9.2.3.1. Account Selection](#account-selection)  
+        * [9.2.3.2. Service Contract Selection](#contract-selection)  
+        * [9.2.3.3. Service Point Selection](#servicepoint-selection)  
+        * [9.2.3.4. Meter Device Selection](#meter-selection)  
+        * [9.2.3.5. Aggregation Selection](#aggregation-selection)  
     * [9.3. Authorization Errors](#auth-errors)  
         * [9.3.1. Preselection Error](#preselection-error)  
+        * [9.3.2. Invalid Request Error](#request-error)  
+    * [9.4. Authorization Receipt](#auth-receipt)  
 * [10. Accounts API](#accounts-api)  
     * [10.1. Account Object Format](#account-format)  
     * [10.2. Listing Accounts](#accounts-list)  
@@ -406,7 +414,9 @@ Additionally, the Server MAY include other [Authorization Details Fields](#auth-
 The Scopes defined in this section proves a means by which a Client can request authorization from a Customer, for situations where Customer consent is required to be able to access data on the Server.
 The Customer authorization process uses the Server's OAuth Authorization Code Grant flow [[RFC 6749 Section 4.1](#ref-rfc6749-code-grant)], so these the Scopes in this section require at least the `"code"` response type to be available in the Server's Scope Description object for the supported Scope.
 
-In addition to defining the scopes in this section, this specification also defines [Customer Authorization](#customer-authorizations) interface requirements (authorization form layout, error pages, etc.).
+When a Server supports any of the Scopes in this section, the Server MUST implement the following:
+
+* The Server MUST implement the [Customer Authorizations](#customer-authorizations) framework, which defines the process and user interfaces for a Server obtaining Customer consent.
 
 #### 6.1.1. Rate Plan <a id="scope-rate-plan" href="#scope-rate-plan" class="permalink">🔗</a>
 
@@ -928,7 +938,6 @@ The following are examples of situations where Customer Data access can be provi
   For example, a utility vendor (the Client) needs to download a limited set of energy usage data for a subset of accounts in order to analyze as part of their contracted project with the utility.
 * Situations where the Client is accessing data that has been generated or aggregated or properly anonymized such that individual Customer consent is not required by local regulatory requirements.
   For example, an academic institution (the Client) may be able to access energy usage that has been aggregated across a large region of the utility's territory (the Server).
-
 
 For direct access Scopes defined in this section, the Server MUST implement the following:
 
@@ -2364,7 +2373,7 @@ To support this authorization details field, the Authorization Details Field Obj
 Additionally, Servers MUST implement the following behavior to support this authorization details field:
 
 * When a Grant is created with this field as an authorization details field, provided that all scope and authorization details are valid, the Server MUST set to the Grant's `expires` value to this field's value.
-* When the Grant expires, the Server MUST remove the Client's access that was provided by the Grant. 
+* When the Grant expires, the Server MUST remove the Client's access that was provided by the Grant.
 
 ### 7.4. Other Fields <a id="auth-details-other" href="#auth-details-other" class="permalink">🔗</a>
 
@@ -2479,25 +2488,241 @@ When this authorization field is included in an authorization request, Servers M
 
 ## 9. Customer Authorizations <a id="customer-authorizations" href="#customer-authorizations" class="permalink">🔗</a>
 
+This section defines a set of requirements that Servers MUST follow when implementing the Customer authorization process required for [Customer Consent Scopes](#scopes-customer-consent).
+Requirements include how authorization requests are handled and the layout of the authorization form page.
+
+In addition to the requirements defined in this section, Servers MUST implement required authorization functionality defined in specification on which this specification is based (e.g. supporting OAuth's Rich Authorization Requests [[RFC 9396](#ref-rfc9396)], which is required by [[CDS-WG1-02](#ref-cds-wg1-02)]).
+Servers MAY add additional functionality beyond the requirements defined in this section, so long as the authorization process continues to comply with the requirements of this section.
+
+These requirements are intended to help clarify and streamline the request handling and user interface aspects of the Customer authorization process, so that Servers can start with a base set of functionality onto which they can build their implementations and do not have to figure out the entire authorization process from scratch.
+
+### 9.1. Authorization Process <a id="auth-process" href="#auth-process" class="permalink">🔗</a>
+
+[Customer Consent Scopes](#scopes-customer-consent) defined in this specification require that Servers implement the OAuth Authorization Code Grant flow [[RFC 6749 Section 4.1](#ref-rfc6749-code-grant)] as the protocol by which Clients may request authorizations from Customers.
+Servers MAY implement additional authorization protocols to accommodate specific use cases (e.g. the Device Authorization Grant [[RFC 8628](#ref-rfc8628-device-grant)]), but at minimum they MUST implement the Authorization Code Grant flow.
+This specification only defines requirements for Servers when implementing the Authorization Code Grant flow process, and defining requirements for supporting other authorization processes is outside the scope of this specification.
+
+#### 9.1.1. Authorization Requests <a id="auth-requests" href="#auth-requests" class="permalink">🔗</a>
+
+The first step of the OAuth Authorization Code Grant flow is the Authorization Request [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)], where the authorizing user (i.e. Customer in this specification) opens a URL to the Server's Authorization Endpoint [[RFC 6749 Section 3.1](#ref-rfc6749-auth-endpoint)].
+
+When a authorization request is received by a Server, the Server MUST implement the following:
+
+* Upon receiving an authorization request, prior to the [Customer Authentication](#customer-authentication) process, the Server MUST:
+    * Validate at least the following URL parameters:
+        * `response_type` - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)]
+        * `client_id` - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)]
+        * `scope` (if included) - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)] insofar as the Server is able without knowing Customer's identity
+            * Validation includes checking each Scope for syntax and schema errors and whether the Client can use the Scope
+        * `authorization_details` (if included) - validate as defined in [[RFC 9396](#ref-rfc9396)] insofar as the Server is able without knowing Customer's identity
+            * Validation includes checking authorization details for syntax and schema errors and whether the Client can use the authorization details types included
+        * `redirect_uri` (if included) - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)]
+        * `request_uri` (if included) - validate as defined in [[RFC 9126](#ref-9126-pushed-auth-requests)]
+    * If the `response_type`, `response_type`, or `redirect_uri` parameters in the authorization request are invalid, the Server MUST show the Customer a [Invalid Request Error](#request-error).
+    * If any other parameters are invalid, the Server MUST redirect the user back to the Client's `redirect_uri` with an Error Response as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
+* If the URL parameters for the authorization request pass the Server's initial validation, the Server MUST:
+    * Perform the [Customer Authentication](#customer-authentication) process.
+* If the user completes the Customer Authentication process, the Server MUST:
+    * Validate the authorization request URL parameters again, now under the context of knowing the Customer's identity.
+    * If any parameters are invalid, the Server MUST redirect the user back to the Client's `redirect_uri` with an Error Response as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
+    * If the [`error_if_no_preselections`](#auth-details-error-if-no-preselections) authorization details field is enabled, the Server MUST evaluate if the Customer has any resources selected by default.
+      If there are no [selections](#selection-component), the Server MUST show the user a [Preselection Error](#preselection-error).
+* If the URL parameters for the authorization request are valid, the Server MUST:
+    * Render and show the user the [Authorization Form](#auth-form).
+* If the user declines the authorization request, the Server MUST:
+    * Redirect the user back to the Client's `redirect_uri` with an `access_denied` error as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
+* If the user authorizes the authorization request, the Server MUST:
+    * Create a Grant as defined by the authorized [Scopes](#scopes).
+    * Send the Customer an [Authorization Receipt](#auth-receipt), if the Server has the ability to contact the Customer.
+    * Redirect the user back to the Client's `redirect_uri` with an Authorization Response as defined in [[RFC 6749 Section 4.1.2](#ref-rfc6749-auth-response)].
+
+#### 9.1.2. Customer Authentication <a id="customer-authentication" href="#customer-authentication" class="permalink">🔗</a>
+
+Because the OAuth authorization process can be initiated by unauthenticated users (e.g. a Customer clicking on the authorization request URL in a Client app), Servers will need to authenticate the user as a Customer before being able to render the [Authorization Form](#auth-form).
+
+The actual processes and methods of authenticating Customers is outside the scope of this specification.
+So, for the purposes of defining the requirements in this section, when the Server needs to authenticate a user as a Customer, it is assumed that they will "redirect" the user to an authentication provider.
+The term "redirect" in this context means user is shown the start of an authentication process that they can follow to verify their identity as a Customer.
+Then, when the user has been authenticated as a Customer, the authentication provider will "redirect" the Customer back to the Server, and it is assumed that the Server has some means of determining which Customer has been authenticated.
+This "redirect" is dependent on the authentication process, which could be an actual redirect (i.e. `302 Found` response), or some other means of presenting and completing the authentication process (e.g. using an iframe popup or embedded library with events instead of page redirects).
+
+Given the assumptions in the previous paragraph, the Server MUST implement the following when needing to complete the Customer Authentication process as defined in handling [Authorization Requests](#auth-requests):
+
+* If the Server can immediately authenticate the user as a Customer (e.g. the user has an authenticated session cookie), and the authentication is still valid, based on session timeout and policy requirements, the Server MUST continue on to the next step of the request handling process with the Customer as authenticated.
+* If the Server cannot immediately authenticate the user as a Customer (e.g. because the user does not have a session or the user's session has expired), the Server MUST redirect the user to the start of the authentication process.
+  Which authentication processes are used is outside of the scope of this specification, so the following examples of common authentication processes are not endorsements of their preference:
+    * Integration with an Identify Provider (IdP) using OpenID Connect (OIDC) for a Single Sign-On (SSO) process
+    * Using contact information, such as phone or email, to send a One-Time Passcode (OTP) to verify the Customer's identity
+* If the user is unable to successfully complete the authentication process (e.g. can't remember their password), the authentication process SHOULD have a way for the user to be redirected back to the Server, such that the Server can determine that the authentication process failed.
+    * When the Server receives a redirect back from an authentication process indicating that the authentication process did not complete, the Server MUST redirect the user back to the Client's `redirect_uri` with an `access_denied` error as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
+      This treats authentication failures the same as if the Customer declined the authorization request.
+    * If an Identity Provider or authentication process does not have a means of redirecting the user back when they are unable to authenticate, the user MAY have to stop the authorization process at this point and the Client will never see the user return to their `redirect_uri` endpoint.
+      In these cases, the Server MUST include a note of this limitation in their documentation linked by their Scope Description's `documentation` URL [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)], so that Clients can be prepared to handle this scenario.
+* When the Customer successfully completes the authentication process and is redirected back to the Server, the Server MUST be able determine the Customer's identity so that the Server can render the [Authorization Form](#auth-form).
+
+#### 9.1.3. Authorization Process Diagram <a id="auth-diagram" href="#auth-diagram" class="permalink">🔗</a>
+
+Below is a sequence diagram showing the overall Customer authorization process, including possible error and failure sequences.
+
+```mermaid
+---
+config:
+    themeCSS: '
+        /* Invalid Request Error page  */
+        g[data-id=i6] rect.note { fill: #faa; stroke: #f00; };
+        g[data-id=i37] rect.note { fill: #faa; stroke: #f00; };
+        /* Error redirects  */
+        g[data-id=i13] rect.note { fill: #fdd1a1; stroke: #9f5404; };
+        g[data-id=i33] rect.note { fill: #fdd1a1; stroke: #9f5404; };
+        g[data-id=i52] rect.note { fill: #fdd1a1; stroke: #9f5404; };
+        g[data-id=i68] rect.note { fill: #fdd1a1; stroke: #9f5404; };
+        g[data-id=i81] rect.note { fill: #fdd1a1; stroke: #9f5404; };
+        /* Success redirect  */
+        g[data-id=i91] rect.note { fill: #93ea93; stroke: #080; };
+        /* Page loads  */
+        line[data-id=i5] { stroke-width: 4; };
+        line[data-id=i36] { stroke-width: 4; };
+        line[data-id=i56] { stroke-width: 4; };
+        line[data-id=i72] { stroke-width: 4; };
+    '
+---
+
+sequenceDiagram
+    participant USER_AGENT as Customer<br/>(e.g. user's browser)
+    participant CLIENT as Client<br/>(e.g. energy app website)
+    participant SERVER as Server<br/>(e.g. utility website)
+    participant IDP as Authentication<br/>(e.g. utility's SSO)
+
+    CLIENT ->> USER_AGENT: Provide authorization request URL<br/>(e.g. .../authorize?response_type=...)
+
+    Note over USER_AGENT: Customer<br/>clicks on URL
+
+    USER_AGENT ->> SERVER: GET authorization request URL
+
+    Note over SERVER: Server validates<br/>request parameters<br/>(prior to knowing the<br/>Customer's identity)
+
+    alt Error: Invalid response_type / client_id / redirect_uri
+        SERVER ->> USER_AGENT: [PAGE LOAD]<br/>Invalid Request Error
+        Note over USER_AGENT: STOP<br/>Customer cannot proceed
+    end
+
+    alt Error: Invalid other parameters
+        SERVER -->>+ USER_AGENT: 302 redirect to redirect_uri with error
+        USER_AGENT ->>- CLIENT: GET redirect_uri with error
+        Note over CLIENT: STOP<br/>Client handles error as appropriate
+    end
+
+    Note over SERVER: Server determines if<br/>Customer is authenticated
+
+    alt Customer is not yet authenticated
+        SERVER -->>+ USER_AGENT: 302 redirect to Authentication provider URL
+        USER_AGENT ->>- IDP: GET Authentication provider URL
+        Note over IDP: Customer Authentication<br/>(e.g. Customer login)
+        IDP <<->> USER_AGENT: Customer authentication occurs<br/>(can be multiple steps)
+
+        Note over IDP: (if necessary)<br/>Authentication failure<br/>handled by (a) or (b)
+
+        alt Error: (a) Authentication failure with decline option
+            IDP -->>+ USER_AGENT: 302 redirect to Server continuation URL with decline result
+            USER_AGENT ->>- SERVER: GET Server continuation URL with decline result
+            SERVER -->>+ USER_AGENT: 302 redirect to redirect_uri with error
+            USER_AGENT ->>- CLIENT: GET redirect_uri with error
+            Note over CLIENT: STOP<br/>Client handles error as appropriate
+        end
+
+        alt Error: (b) Authentication failure without decline option
+            IDP ->> USER_AGENT: [PAGE LOAD]<br/>Failed Authentication Error
+            Note over USER_AGENT: STOP<br/>Customer cannot proceed
+        end
+
+        Note over IDP: Authentication success
+        IDP -->>+ USER_AGENT: 302 redirect to Server continuation URL
+        USER_AGENT ->>- SERVER: GET Server continuation URL
+    end
+
+    Note over SERVER: Customer is authenticated
+
+    Note over SERVER: Server validates<br/>request parameters<br/>(now knowing the<br>Customer's identity)
+
+    alt Error: Invalid request parameters
+        SERVER -->>+ USER_AGENT: 302 redirect to redirect_uri with error
+        USER_AGENT ->>- CLIENT: GET redirect_uri with error
+        Note over CLIENT: STOP<br/>Client handles error as appropriate
+    end
+
+    Note over SERVER: Determine<br/>preselections<br/>(if any)
+
+    loop Error: No preselections and error_if_no_preselections is enabled
+        SERVER ->> USER_AGENT: [PAGE LOAD]<br/>Preselection Error
+        Note over USER_AGENT: Customer can choose<br/>to (c) reauthenticate<br/>or (d) decline the request
+
+        alt (c) Preselection reauthentication
+            USER_AGENT ->> SERVER: POST reauthenticate choice
+            SERVER ->> SERVER: GO TO<br/>"Customer is not yet authenticated"
+        end
+
+        alt (d) Preslection decline
+            USER_AGENT ->> SERVER: POST decline choice
+            SERVER -->>+ USER_AGENT: 302 redirect to redirect_uri with error
+            USER_AGENT ->>- CLIENT: GET redirect_uri with error
+            Note over CLIENT: STOP<br/>Client handles error as appropriate
+        end
+    end
+
+    Note over SERVER: Server renders<br/>Authorization Form
+
+    SERVER ->> USER_AGENT: [PAGE LOAD]<br/>Authorization Form
+
+    Note over USER_AGENT: Customer reviews the<br/>Authorization Form,<br/>selecting items as needed<br/><br/>[can be multiple steps]
+
+    alt Declined authorization
+        Note over USER_AGENT: Customer declines<br/>authorization
+        USER_AGENT ->> SERVER: POST decline request
+        SERVER -->>+ USER_AGENT: 302 redirect to redirect_uri with error
+        USER_AGENT ->>- CLIENT: GET redirect_uri with error
+        Note over CLIENT: STOP<br/>Client handles error as appropriate
+    end
+
+    Note over USER_AGENT: Customer accepts<br/>authorization
+
+    USER_AGENT ->> SERVER: POST accept request
+
+    Note over SERVER: Server creates a Grant<br/>for the authorization
+
+    Note over SERVER: (if necessary)<br/>Server starts asynchronous<br/>tasks to enable data access
+
+    SERVER -->>+ USER_AGENT: 302 redirect to redirect_uri with code
+
+    USER_AGENT ->>- CLIENT: GET redirect_uri with code
+
+    Note over CLIENT: DONE<br/>Client uses code in<br/>OAuth token request<br/>(typical OAuth protocol)
+```
+
+### 9.2. Authorization Form <a id="auth-form" href="#auth-form" class="permalink">🔗</a>
+
 <span style="background-color:yellow">TODO</span>
 
-### 9.1. Authorization Form Layout <a id="auth-form-layout" href="#auth-form-layout" class="permalink">🔗</a>
+#### 9.2.1. Authorization Form Layout <a id="auth-form-layout" href="#auth-form-layout" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 9.2. Authorization Form Segments <a id="auth-form-segments" href="#auth-form-segments" class="permalink">🔗</a>
+#### 9.2.2. Authorization Form Components <a id="auth-form-components" href="#auth-form-components" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-#### 9.2.1. Data Component <a id="data-component" href="#data-component" class="permalink">🔗</a>
+##### 9.2.2.1. Data Component <a id="data-component" href="#data-component" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-#### 9.2.2. Duration Component <a id="duration-component" href="#duration-component" class="permalink">🔗</a>
+##### 9.2.2.2. Duration Component <a id="duration-component" href="#duration-component" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-#### 9.2.3. Selection Component <a id="selection-component" href="#selection-component" class="permalink">🔗</a>
+##### 9.2.2.3. Selection Component <a id="selection-component" href="#selection-component" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 9.2.3. Authorization Form Selections <a id="auth-form-selections" href="#auth-form-selections" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
@@ -2526,6 +2751,14 @@ When this authorization field is included in an authorization request, Servers M
 <span style="background-color:yellow">TODO</span>
 
 #### 9.3.1. Preselection Error <a id="preselection-error" href="#preselection-error" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 9.3.2. Invalid Request Error <a id="request-error" href="#request-error" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+### 9.4. Authorization Receipt <a id="auth-receipt" href="#auth-errors" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
@@ -3227,9 +3460,25 @@ In situations where relevant EACs have the same `period_start` and `cds_created`
 `RFC 3986 Section 1.1.3` - Section 1.1.3. URI, URL, and URN, "Uniform Resource Identifier (URI): Generic Syntax", RFC 3986, Internet Engineering Task Force (IETF),  
 [https://www.rfc-editor.org/rfc/rfc3986#section-1.1.3](https://www.rfc-editor.org/rfc/rfc3986#section-1.1.3)
 
+<a id="ref-rfc6749-auth-endpoint" href="#ref-rfc6749-auth-endpoint" class="permalink">🔗</a>
+`RFC 6749 Section 3.1` - Section 3.1. Authorization Endpoint, "The OAuth 2.0 Authorization Framework", RFC 6749, Internet Engineering Task Force (IETF),  
+[https://www.rfc-editor.org/rfc/rfc6749#section-3.1](https://www.rfc-editor.org/rfc/rfc6749#section-3.1)
+
 <a id="ref-rfc6749-code-grant" href="#ref-rfc6749-code-grant" class="permalink">🔗</a>
 `RFC 6749 Section 4.1` - Section 4.1. Authorization Code Grant, "The OAuth 2.0 Authorization Framework", RFC 6749, Internet Engineering Task Force (IETF),  
 [https://www.rfc-editor.org/rfc/rfc6749#section-4.1](https://www.rfc-editor.org/rfc/rfc6749#section-4.1)
+
+<a id="ref-rfc6749-auth-request" href="#ref-rfc6749-auth-request" class="permalink">🔗</a>
+`RFC 6749 Section 4.1.1` - Section 4.1.1. Authorization Request, "The OAuth 2.0 Authorization Framework", RFC 6749, Internet Engineering Task Force (IETF),  
+[https://www.rfc-editor.org/rfc/rfc6749#section-4.1.1](https://www.rfc-editor.org/rfc/rfc6749#section-4.1.1)
+
+<a id="ref-rfc6749-auth-response" href="#ref-rfc6749-auth-response" class="permalink">🔗</a>
+`RFC 6749 Section 4.1.2` - Section 4.1.2. Authorization Response, "The OAuth 2.0 Authorization Framework", RFC 6749, Internet Engineering Task Force (IETF),  
+[https://www.rfc-editor.org/rfc/rfc6749#section-4.1.2](https://www.rfc-editor.org/rfc/rfc6749#section-4.1.2)
+
+<a id="ref-rfc6749-error-response" href="#ref-rfc6749-error-response" class="permalink">🔗</a>
+`RFC 6749 Section 4.1.2.1` - Section 4.1.2.1. Error Response, "The OAuth 2.0 Authorization Framework", RFC 6749, Internet Engineering Task Force (IETF),  
+[https://www.rfc-editor.org/rfc/rfc6749#section-4.1.2.1](https://www.rfc-editor.org/rfc/rfc6749#section-4.1.2.1)
 
 <a id="ref-rfc6749-client-credentials" href="#ref-rfc6749-client-credentials" class="permalink">🔗</a>
 `RFC 6749 Section 4.4` - Section 4.4. Client Credentials Grant, "The OAuth 2.0 Authorization Framework", RFC 6749, Internet Engineering Task Force (IETF),  
@@ -3263,6 +3512,10 @@ In situations where relevant EACs have the same `period_start` and `cds_created`
 `RFC 8259 Section 7` - Section 7. Strings, "The JavaScript Object Notation (JSON) Data Interchange Format", RFC 8259, Internet Engineering Task Force (IETF),  
 [https://www.rfc-editor.org/rfc/rfc8259#section-7](https://www.rfc-editor.org/rfc/rfc8259#section-7)
 
+<a id="ref-rfc8628-device-grant" href="#ref-rfc8628-device-grant" class="permalink">🔗</a>
+`RFC 8628` - "OAuth 2.0 Device Authorization Grant", RFC 8628, Internet Engineering Task Force (IETF),  
+[https://www.rfc-editor.org/rfc/rfc8628](https://www.rfc-editor.org/rfc/rfc8628)
+
 <a id="ref-rfc9110-https" href="#ref-rfc9110-https" class="permalink">🔗</a>
 `RFC 9110 Section 4.2.2` - Section 4.2.2. https URI Scheme, "HTTP Semantics", RFC 9110, Internet Engineering Task Force (IETF),  
 [https://www.rfc-editor.org/rfc/rfc9110#section-4.2.2](https://www.rfc-editor.org/rfc/rfc9110#section-4.2.2)
@@ -3274,6 +3527,10 @@ In situations where relevant EACs have the same `period_start` and `cds_created`
 <a id="ref-rfc9110-codes" href="#ref-rfc9110-codes" class="permalink">🔗</a>
 `RFC 9110 Section 15` - Section 15. Status Codes, "HTTP Semantics", RFC 9110, Internet Engineering Task Force (IETF),  
 [https://www.rfc-editor.org/rfc/rfc9110#section-15](https://www.rfc-editor.org/rfc/rfc9110#section-15)
+
+<a id="ref-9126-pushed-auth-requests" href="#ref-9126-pushed-auth-requests" class="permalink">🔗</a>
+`RFC 9126` - "OAuth 2.0 Pushed Authorization Requests", RFC 9126, Internet Engineering Task Force (IETF),  
+[https://www.rfc-editor.org/rfc/rfc9126](https://www.rfc-editor.org/rfc/rfc9126)
 
 <a id="ref-rfc9396" href="#ref-rfc9396" class="permalink">🔗</a>
 `RFC 9396` - "OAuth 2.0 Rich Authorization Requests", RFC 9396, Internet Engineering Task Force (IETF),  

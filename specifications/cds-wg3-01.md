@@ -121,17 +121,23 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
         * [9.1.2. Customer Authentication](#customer-authentication)  
         * [9.1.3. Authorization Process Diagram](#auth-diagram)  
     * [9.2. Authorization Form](#auth-form)  
-    * [9.2.1. Authorization Form Layout](#auth-form-layout)  
-    * [9.2.2. Authorization Form Components](#auth-form-components)  
-        * [9.2.1. Data Component](#data-component)  
-        * [9.2.2. Duration Component](#duration-component)  
-        * [9.2.3. Selection Component](#selection-component)  
-    * [9.2.3. Authorization Form Selections](#auth-form-components)  
-        * [9.2.3.1. Account Selection](#account-selection)  
-        * [9.2.3.2. Service Contract Selection](#contract-selection)  
-        * [9.2.3.3. Service Point Selection](#servicepoint-selection)  
-        * [9.2.3.4. Meter Device Selection](#meter-selection)  
-        * [9.2.3.5. Aggregation Selection](#aggregation-selection)  
+        * [9.2.1. Authorization Form Layout](#auth-form-layout)  
+            * [9.2.1.1. Authorization Form Header Section](#auth-form-header)  
+            * [9.2.1.2. Authorization Form Requester Section](#auth-form-requester)  
+            * [9.2.1.3. Authorization Form Segments Section](#auth-form-segments)  
+            * [9.2.1.4. Authorization Form Closing Section](#auth-form-closing)  
+            * [9.2.1.5. Authorization Form Approval Section](#auth-form-approval)  
+            * [9.2.1.6. Authorization Form Footer Section](#auth-form-footer)  
+        * [9.2.2. Authorization Form Components](#auth-form-components)  
+            * [9.2.2.1. Data Component](#data-component)  
+            * [9.2.2.2. Duration Component](#duration-component)  
+            * [9.2.2.3. Selection Component](#selection-component)  
+        * [9.2.3. Authorization Form Selections](#auth-form-components)  
+            * [9.2.3.1. Account Selection](#account-selection)  
+            * [9.2.3.2. Service Contract Selection](#contract-selection)  
+            * [9.2.3.3. Service Point Selection](#servicepoint-selection)  
+            * [9.2.3.4. Meter Device Selection](#meter-selection)  
+            * [9.2.3.5. Aggregation Selection](#aggregation-selection)  
     * [9.3. Authorization Errors](#auth-errors)  
         * [9.3.1. Preselection Error](#preselection-error)  
         * [9.3.2. Invalid Request Error](#request-error)  
@@ -2553,12 +2559,16 @@ Given the assumptions in the previous paragraph, the Server MUST implement the f
   Which authentication processes are used is outside of the scope of this specification, so the following examples of common authentication processes are not endorsements of their preference:
     * Integration with an Identify Provider (IdP) using OpenID Connect (OIDC) for a Single Sign-On (SSO) process
     * Using contact information, such as phone or email, to send a One-Time Passcode (OTP) to verify the Customer's identity
-* If the user is unable to successfully complete the authentication process (e.g. can't remember their password), the authentication process SHOULD have a way for the user to be redirected back to the Server, such that the Server can determine that the authentication process failed.
+* If the user is unable to successfully complete the authentication process (e.g. can't remember their password), the authentication process SHOULD have a way for the user to decline to continue (e.g. click "Cancel") or be automatically redirected back (e.g. after too many failed login attempts) to the Server, so that the Server knows that the authentication process failed.
     * When the Server receives a redirect back from an authentication process indicating that the authentication process did not complete, the Server MUST redirect the user back to the Client's `redirect_uri` with an `access_denied` error as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
       This treats authentication failures the same as if the Customer declined the authorization request.
     * If an Identity Provider or authentication process does not have a means of redirecting the user back when they are unable to authenticate, the user MAY have to stop the authorization process at this point and the Client will never see the user return to their `redirect_uri` endpoint.
       In these cases, the Server MUST include a note of this limitation in their documentation linked by their Scope Description's `documentation` URL [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)], so that Clients can be prepared to handle this scenario.
 * When the Customer successfully completes the authentication process and is redirected back to the Server, the Server MUST be able determine the Customer's identity so that the Server can render the [Authorization Form](#auth-form).
+  Additionally, the Server MUST retain an authenticated session for the Customer for no less than 10 minutes, so that if the Customer returns to the Authorization Form again within a few minutes, they are not required to login again.
+  Exceptions to the 10 minute minimum duration for the Customer's authenticated session are as follows:
+    * If the Customer logs out of their session, the Server MUST immediately invalidate the Customer's authenticated session.
+    * If the Server's regulatory or legal jurisdiction requirements set a shorter time period for authenticated sessions, the Server MUST follow the regulatory or legal requirements for authenticated session duration instead of this specification's requirements.
 
 #### 9.1.3. Authorization Process Diagram <a id="auth-diagram" href="#auth-diagram" class="permalink">🔗</a>
 
@@ -2700,9 +2710,150 @@ sequenceDiagram
 
 ### 9.2. Authorization Form <a id="auth-form" href="#auth-form" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+After a Customer is authenticated, the Server presents to the Customer an Authorization Form for the user to review and approve or decline.
+To help streamline Server development and prevent Customer confusion, this specification has created a framework and set of requirements that Servers MUST follow when implementing the Customer Authorization Form.
+The main goal of these requirements is to prevent Customers from being redirected to the Authorization Form and the Customer getting confused or lost and not being able to complete the authorization request with a simple approve or decline selection.
+
+The following are requirements the Server MUST implement for the Authorization Form user interface and behavior:
+
+* The Server MUST format the Authorization Form as defined in the [Authorization Form Layout](#auth-form-layout) section.
+* The Server MUST render the Authorization Form as a single web page that is tailored to the Customer's device screen size.
+  This means that the Server MUST have a mobile compatible version of the Authorization Form for Customers who open an authorization request on their mobile devices, and the Server MUST have a desktop compatible version of the Authorization Form for Customers who open an authorization request on their laptop or desktop computer.
+  The Server MAY implement the Authorization Form in such a way that the same page is responsive to both mobile and desktop scenarios.
+  The Server MAY asynchronously load parts of the page (e.g. use javascript to fetch the Customer's Account list) or embed sections of the page (e.g. load the Account list as an iframe), as long as from the Customer's perspective the interface appears to be a single continuous page.
+  The Server MAY collapse sections of the page that are for optional functionality (e.g. an "advanced options" toggle) or more detailed information (e.g. "read more") that are not required for the Customer to open to approve the Authorization Form.
+  The Server MAY have independently scrolling sections of the Authorization Form for embedding longer passages of text (e.g. if the Server is required to display their Terms and Conditions on the Authorization Form instead of linking to it).
+  The Server MAY add optional functionality to the Authorization Form (e.g. rename an Account), so long as it is not required for the Customer to approve or decline the Authorization Form.
+* The Server MUST implement the Authorization Form such that the Customer is not required to navigate away from the page in order to approve or decline the Authorization Form.
+  The Server MAY navigate the Customer away from the Authorization Form in order to perform optional functionality (e.g. submitting a message to the Server's technical support team), so long the Customer is returned to the Authorization Form after the optional task is completed.
+* For any links or buttons on the Authorization Form that navigate the Customer away from the Authorization Form (e.g. linking to the Terms and Conditions), the Server MUST configure them to open in a new tab or window so that the Customer does not lose their place on the Authorization Form.
+* When a Customer approves or declines the Authorization Form, the Server MUST complete the standard OAuth authorization process and redirect the Customer back to the Client's `redirect_uri` endpoint.
 
 #### 9.2.1. Authorization Form Layout <a id="auth-form-layout" href="#auth-form-layout" class="permalink">🔗</a>
+
+This section defines a required layout for the format of Authorization Forms.
+
+The following are requirements the Server MUST implement for the Authorization Form layout:
+
+* The Server MUST divide the Authorization Form into the following ordered sections:
+    * [Header Section](#auth-form-header)
+    * [Requester Section](#auth-form-requester)
+    * [Segments Section](#auth-form-segments)
+    * [Closing Section](#auth-form-closing)
+    * [Approval Section](#auth-form-approval)
+    * [Footer Section](#auth-form-footer)
+
+Below is a diagram showing the overall layout of the Authorization Form.
+
+```mermaid
+flowchart TB
+    subgraph overall ["`*Authorization Form*`"]
+        direction TB
+
+        headerSection[<a href="#auth-form-header">Header Section</a>]
+        headerSection ~~~ requesterSection
+
+        requesterSection[<a href="#auth-form-requester">Requester Section</a>]
+        requesterSection ~~~ segmentsSection
+
+        subgraph segmentsSection [<a href="#auth-form-segments">Segments Section</a>]
+            style segmentsSection fill:#eeee20
+            direction TB
+
+            subgraph segment ["`*Individual Segment*`"]
+                style segment fill:#ffffde
+                direction TB
+
+                dataComponent[<a href="#data-component">Data Component</a>]
+                dataComponent ~~~ durationComponent
+
+                durationComponent[<a href="#duration-component">Duration Component</a>]
+                durationComponent ~~~ selectionComponent
+
+                selectionComponent[<a href="#selection-component">Selection Component</a>]
+            end
+            segment ~~~ segmentCont
+
+            segmentCont["`*...more Segments (if any)*`"]
+        end
+        segmentsSection ~~~ closingSection
+
+        closingSection[<a href="#auth-form-closing">Closing Section</a>]
+        closingSection ~~~ approvalSection
+
+        approvalSection[<a href="#auth-form-approval">Approval Section</a>]
+        approvalSection ~~~ footerSection
+
+        footerSection[<a href="#auth-form-footer">Footer Section</a>]
+    end
+```
+
+Below is a non-normative example of an Authorization Form with the same color coded sections as the layout diagram above.
+
+```mermaid
+flowchart TB
+    subgraph overall [" "]
+        direction TB
+
+        headerSection["`**[Example Utility logo]**<br/>Example Utility Authorization Form`"]
+        headerSection ~~~ requesterSection
+
+        requesterSection["`<a href="https://example.com/" target="_blank">Acme Energy Auditors</a> is requesting your authorization to access the following information from your accounts:`"]
+        style requesterSection text-align:left
+        requesterSection ~~~ segmentsSection
+
+        subgraph segmentsSection [" "]
+            style segmentsSection fill:#eeee20
+            direction TB
+
+            subgraph segment [" "]
+                style segment fill:#ffffde
+                direction TB
+
+                dataComponent["`* Your electric service details [<a href="#">details</a>]<br/><br/>* Your interval energy usage [<a href="#">details</a>]<br/><br/>[<a href="#">edit</a>]`"]
+                style dataComponent text-align:left
+                dataComponent ~~~ durationComponent
+
+                durationComponent["`For this duration:<br/>1 year of historical energy usage intervals and 3 years of ongoing access to your service details<br/><br/>[<a href="#">edit</a>]`"]
+                style dataComponent text-align:left
+                durationComponent ~~~ selectionComponent
+
+                selectionComponent["`For these services:<br/>[x] 123 Main St (electric)<br/>[ ] 123 Main St (gas)`"]
+            end
+        end
+        segmentsSection ~~~ closingSection
+
+        closingSection["`When you authorize this access, you are agreeing to our <a href="https://example.com/" target="_blank">Terms of Service</a>.`"]
+        closingSection ~~~ approvalSection
+
+        approvalSection["`**[Authorize]**    **[Decline]**`"]
+        approvalSection ~~~ footerSection
+
+        footerSection["`Need to login as another account? <a href="#">Re-login</a><br/><br/>Need some help with this form? <a href="https://example.com/" target="_blank">Contact Support</a><br/><br/>Copyright <a href="https://example.com/" target="_blank">Example Utility</a>, 2026`"]
+    end
+```
+
+##### 9.2.1.1. Authorization Form Header Section <a id="auth-form-header" href="#auth-form-header" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 9.2.1.2. Authorization Form Requester Section <a id="auth-form-requester" href="#auth-form-requester" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 9.2.1.3. Authorization Form Segments Section <a id="auth-form-segments" href="#auth-form-segments" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 9.2.1.4. Authorization Form Closing Section <a id="auth-form-closing" href="#auth-form-closing" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 9.2.1.5. Authorization Form Approval Section <a id="auth-form-approval" href="#auth-form-approval" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 9.2.1.6. Authorization Form Footer Section <a id="auth-form-footer" href="#auth-form-footer" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 

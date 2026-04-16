@@ -2425,7 +2425,7 @@ So even if a Server supports only one of the Selections listed as possibilities 
 
 When this authorization field is included in an authorization request, Servers MUST implement the following requirements:
 
-* The Server MUST render the chosen Selection as the Selection Component for that scope's Authorization Segment.
+* The Server MUST render the chosen Selection as the Selection Component for that scope's [Request Section](#auth-form-request).
 
 #### 7.4.2. Merge Selections <a id="auth-details-merge-selections" href="#auth-details-merge-selections" class="permalink">🔗</a>
 
@@ -2450,13 +2450,15 @@ When this authorization field is included in an authorization request, Servers M
     * If there are multiple matches in the authorization request, the Server MUST choose the first matched scope as the one intended to be grouped with this authorization details' scope.
     * When a match is found for this field's string value, the Server MUST require the matches pass the following validation requirements:
         * Matches MUST have a non-`null` value for that scope's `merge_selection_with` authorization details field.
-        * Matches MUST have the same Selection type to be rendered on the authorization form, so that the Selection Component can be unified.
+        * Matches MUST have the same Selection type to be rendered on the authorization form, so that the [Selection Component](#selection-component) can be unified.
+        * Matches MUST have the same `purpose` value, if used, so that the [Purpose Component](#purpose-component) can be unified.
+        * Matches MUST have the same `allow_scope_modifications`, if used, so that the Server can render the [Request Section](#auth-form-request) as editable or non-editable.
         * For preselection authorization details fields that exist both in both match's Scope Description `authorization_details_fields_supported`, the field's object MUST have the same values, so that the field's value in the request has the same validation process for both scopes.
         * For preselection authorization details fields that only exist in one or the other Scope Descriptions `authorization_details_fields_supported`, the field's value in the request MUST be `null` or `null` by default, so that there is no preselection impact for combining the Scopes into a single Selection Component.
     * If a match does not pass validation, the Server MUST reject the authorization request with an `invalid_authorization_details` error.
-    * If a match passes validation, the Server MUST render the [Authorization Segments](#auth-form-segment) for this field's scope and the matched scope as having a single Selection Component, such that the User only needs to select the resources in that Selection and those resources will be applied to all of the scopes grouped together via this authorization details field.
+    * If a match passes validation, the Server MUST render the [Request Section](#auth-form-request) for this field's scope and the matched scope as having a single Selection Component, such that the User only needs to select the resources in that Selection and those resources will be applied to all of the scopes grouped together via this authorization details field.
     * Servers MUST support merging the any number of scopes together that reference each other via this authorization details field, so that Clients can group any number of scopes together into a single Selection Component for an authorization form.
-* When the field value is `null`, Servers MUST treat the scope for this authorization details field as an individually rendered Authorization Segment with an individual Selection Component.
+* When the field value is `null`, Servers MUST treat the scope for this authorization details field as an individually rendered [Request Section](#auth-form-request) with an individual Selection Component.
   This means that when a scope uses this authorization details field to reference another scope, that other scope MUST also have a non-`null` value for its `merge_selection_with` authorization details field.
 
 #### 7.4.3. Error If No Preselections <a id="auth-details-error-if-no-preselections" href="#auth-details-error-if-no-preselections" class="permalink">🔗</a>
@@ -3004,7 +3006,7 @@ The following are requirements and recommendations for the Server when implement
 
 The Requests Container is where the Server communicates to the Customer what data access is being requested from the Client.
 This block of the Authorization Form includes one or more [Request Sections](#auth-form-request).
-A multiple entry container for Request Sections is needed because the Client MAY include multiple [Scope](#scopes) that do not have the same [Selection Component](#selection-component) and thus need the Customer to select from multiple lists of resources.
+A multiple entry container for Request Sections is needed because the Client MAY include multiple [Scopes](#scopes) that do not have the same [Selection Component](#selection-component) and thus need the Customer to select from multiple lists of resources.
 
 The following are requirements and recommendations for the Server when implementing the Requests Container:
 
@@ -3021,6 +3023,13 @@ Each Request Section MUST be composed of the following [Components](#auth-form-c
 * [Duration Component](#duration-component)
 * [Selection Component](#selection-component)
 * [Purpose Component](#purpose-component) (if any)
+
+The following are requirements and recommendations for the Server when implementing the Request Section:
+
+* The Server MUST render one Request Section for each Scope included in an authorization request's `scope` parameter, unless the Client has included the [`auth-details-merge-selections`](#auth-details-merge-selections) authorization details field to combine multiple Scopes into one Request Section.
+* If the Server supports the [`allow_scope_modifications`](#auth-details-allow-scope-modifications) authorization details field for the Scope(s) included in the Request Section, the Server MUST render the Request Section with or without Customer modification functionality according to the value of this authorization details field.
+* If the Server supports the [`purpose`](#auth-details-purpose) authorization details field for the Scope(s) included in the Request Section and the `purpose` value is non-`null`, the Server MUST include the [Purpose Component](#purpose-component) when rendering the Request Section.
+* If the Server does not support the `purpose` authorization details field or if the value is `null`, the Server MUST NOT include the Purpose Component when rendering the Request Section.
 
 ##### 9.2.1.5. Authorization Form Closing Section <a id="auth-form-closing" href="#auth-form-closing" class="permalink">🔗</a>
 
@@ -3071,11 +3080,24 @@ The following are requirements and recommendations for the Server when implement
 
 #### 9.2.2. Authorization Form Components <a id="auth-form-components" href="#auth-form-components" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+Each [Request Section](#auth-form-request) is made up of Components, which are defined in this section.
 
 ##### 9.2.2.1. Data Component <a id="data-component" href="#data-component" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Data Component of a Request Section is where the Server communicates to the Customer what data is being requested for access by the Client.
+
+The following are requirements and recommendations for the Server when implementing the Data Component:
+
+* The Server MUST clearly communicate, in terms the Customer is likely to understand, to the Customer to what types of data the Scope(s) will enable access if the Customer approves the authorization request.
+  The Server MUST NOT use terminology or language, when communicating what types of data to the Customer, that the Customer is not likely to understand.
+  The Server MAY use different terminology or language depending on the type of Customer, since some Customers could have more sophisticated knowledge of what each type of data is.
+  For example, if the Client is requesting access to a residential Customer's Usage Segments, the Customer is unlikely to understand what a "Usage Segment" is (because that is a term specific to this specification and not widely known by homeowners), so the Server MUST change the term used to something more familiar to the Customer, such as "access to your meter's usage data."
+* When the Scope(s) provide access to many types of data (e.g. multiple object types and data fields are included), the Server MUST communicate an succinct summary of the types of data and also include an informational toggle that the Customer can select to learn more about the details and specifics of the access.
+  This is to prevent the Customer from being overwhelmed by a long list of data fields and not understanding the overall summary of what these data fields represent.
+  For example, if a Client requests access to a Customer's Account details using the `cds_accounts` Scope plus the `include_account_details` and `include_account_programs` authorization details field, the Server could render the summary as a the short phrase "access to your list of accounts, including your address and utility programs you've signed up for [see details]", were the `[see details]` toggle could open an expanded section with the list of specific data fields that will be included.
+* For the details section linked to or opened by the informational toggle, the Server MUST disclose the data fields included using terminology and language the Customer is likely to understand and not only the field names defined in this specification.
+  Additionally, the Server MUST include an example of what those data fields could be, so that Customer can better understand to what information they are providing access.
+* When multiple Scopes have been merged into the same Request Section, it is RECOMMENDED that the Data Component be rendered as a list of the overall categories of data to be included, rather than a multiple line paragraph that communicates the summary of types of data being requested.
 
 ##### 9.2.2.2. Duration Component <a id="duration-component" href="#duration-component" class="permalink">🔗</a>
 

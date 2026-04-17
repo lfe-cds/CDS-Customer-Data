@@ -474,6 +474,10 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_account_numbers"`](#auth-details-include-account-numbers)
     * [`"include_meter_devices"`](#auth-details-include-meter-devices)
     * [`"include_meter_numbers"`](#auth-details-include-meter-numbers)
+* The `authorization_details_types_supported` array MUST NOT contain any the following values:
+    * [`"include_bill_statements"`](#auth-details-include-bill-statements)
+    * [`"include_bill_sections"`](#auth-details-include-bill-sections)
+    * [`"include_usage_segments"`](#auth-details-include-usage-segments)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain only one object, and that object MUST have its `id` value be [`"service_contract_selection"`](#contract-selection).
@@ -509,6 +513,10 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"addresses"`](#auth-details-addresses)
+* The `authorization_details_types_supported` array MUST NOT contain any the following values:
+    * [`"include_bill_statements"`](#auth-details-include-bill-statements)
+    * [`"include_bill_sections"`](#auth-details-include-bill-sections)
+    * [`"include_usage_segments"`](#auth-details-include-usage-segments)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain only one object, and that object MUST have its `id` value be [`"account_selection"`](#account-selection).
@@ -557,6 +565,10 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_rate_plans"`](#auth-details-include-rate-plans)
     * [`"include_meter_devices"`](#auth-details-include-meter-devices)
     * [`"include_meter_numbers"`](#auth-details-include-meter-numbers)
+* The `authorization_details_types_supported` array MUST NOT contain any the following values:
+    * [`"include_bill_statements"`](#auth-details-include-bill-statements)
+    * [`"include_bill_sections"`](#auth-details-include-bill-sections)
+    * [`"include_usage_segments"`](#auth-details-include-usage-segments)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain only one object, and that object MUST have its `id` value be -[`"service_contract_selection"`](#contract-selection).
@@ -599,6 +611,10 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_account_details"`](#auth-details-include-account-details)
     * [`"include_account_programs"`](#auth-details-include-account-programs)
     * [`"include_aggregations"`](#auth-details-include-aggregations)
+* The `authorization_details_types_supported` array MUST NOT contain any the following values:
+    * [`"include_bill_statements"`](#auth-details-include-bill-statements)
+    * [`"include_bill_sections"`](#auth-details-include-bill-sections)
+    * [`"include_usage_segments"`](#auth-details-include-usage-segments)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain only one object, and that object MUST have its `id` value be [`"account_selection"`](#account-selection).
@@ -644,6 +660,10 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_meter_devices"`](#auth-details-include-meter-devices)
     * [`"include_meter_numbers"`](#auth-details-include-meter-numbers)
     * [`"include_aggregations"`](#auth-details-include-aggregations)
+* The `authorization_details_types_supported` array MUST NOT contain any the following values:
+    * [`"include_bill_statements"`](#auth-details-include-bill-statements)
+    * [`"include_bill_sections"`](#auth-details-include-bill-sections)
+    * [`"include_usage_segments"`](#auth-details-include-usage-segments)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain objects with the following `id` values:
@@ -703,6 +723,10 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_service_point_addresses"`](#auth-details-include-service-point-addresses)
     * [`"include_coordinates"`](#auth-details-include-coordinates)
     * [`"include_aggregations"`](#auth-details-include-aggregations)
+* The `authorization_details_types_supported` array MUST NOT contain any the following values:
+    * [`"include_bill_statements"`](#auth-details-include-bill-statements)
+    * [`"include_bill_sections"`](#auth-details-include-bill-sections)
+    * [`"include_usage_segments"`](#auth-details-include-usage-segments)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain objects with the following `id` values:
@@ -738,7 +762,6 @@ To support this Scope, the Scope Description object MUST meet the following requ
 * The `grant_types_supported` value MUST contain at least the values `"authorization_code"` and `"refresh_token"` and MUST NOT contain the value `"client_credentials"`.
 * The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
     * [`"account_numbers"`](#auth-details-account-numbers)
-    * [`"sync_until"`](#auth-details-sync-until)
     * [`"statement_date_start"`](#auth-details-statement-start)
     * [`"statement_date_end"`](#auth-details-statement-end)
     * [`"authorization_form_selection_type"`](#auth-details-selection-type)
@@ -752,6 +775,8 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_bill_statement_files"`](#auth-details-include-bill-statement-files)
     * [`"include_bill_statement_charges"`](#auth-details-include-bill-statement-charges)
     * [`"include_bill_statement_programs"`](#auth-details-include-bill-statement-programs)
+* The `authorization_details_types_supported` array MUST NOT contain any the following values:
+    * [`"include_usage_segments"`](#auth-details-include-usage-segments)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain only one object, and that object MUST have its `id` value be [`"account_selection"`](#account-selection).
@@ -780,7 +805,6 @@ To support this Scope, the Scope Description object MUST meet the following requ
 * The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
     * [`"contract_numbers"`](#auth-details-contract-numbers)
     * [`"service_types"`](#auth-details-service-types)
-    * [`"sync_until"`](#auth-details-sync-until)
     * [`"start_date"`](#auth-details-bill-section-start)
     * [`"end_date"`](#auth-details-bill-section-end)
     * [`"authorization_form_selection_type"`](#auth-details-selection-type)
@@ -802,6 +826,8 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_service_points"`](#auth-details-include-service-points)
     * [`"include_meter_devices"`](#auth-details-include-meter-devices)
     * [`"include_meter_numbers"`](#auth-details-include-meter-numbers)
+* The `authorization_details_types_supported` array MUST NOT contain any the following values:
+    * [`"include_usage_segments"`](#auth-details-include-usage-segments)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain objects with the following `id` values:
@@ -838,7 +864,6 @@ To support this Scope, the Scope Description object MUST meet the following requ
 * The `grant_types_supported` value MUST contain at least the values `"authorization_code"` and `"refresh_token"` and MUST NOT contain the value `"client_credentials"`.
 * The `authorization_details_types_supported` array MUST contain at least the following values and support those authorization details fields as defined in the [Authorization Details Fields](#auth-details-fields) section:
     * [`"include_usage_segment_formats"`](#auth-details-include-usage-segment-formats)
-    * [`"sync_until"`](#auth-details-sync-until)
     * [`"segment_start"`](#auth-details-usage-segment-start)
     * [`"segment_end"`](#auth-details-usage-segment-end)
     * [`"authorization_form_selection_type"`](#auth-details-selection-type)
@@ -879,10 +904,12 @@ To support this Scope, the Scope Description object MUST meet the following requ
             * [`"meter_device_selection"`](#meter-selection)
             * [`"aggregation_selection"`](#aggregation-selection)
     * If the Server includes `account_selection` as a choice in the `authorization_form_selection_type` authorization details object, the Server MUST include the following values in the `authorization_details_types_supported` array:
+        * `"sync_until"`
         * `"account_numbers"`
         * `"include_accounts"`
         * `"include_account_numbers"`
     * If the Server includes `"service_contract_selection"` as a choice in the `authorization_form_selection_type` authorization details object, the Server MUST include the following values in the `authorization_details_types_supported` array:
+        * `"sync_until"`
         * `"account_numbers"`
         * `"contract_numbers"`
         * `"include_accounts"`
@@ -890,6 +917,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
         * `"include_service_contracts"`
         * `"include_contract_numbers"`
     * If the Server includes `"servicepoint_selection"` as a choice in the `authorization_form_selection_type` authorization details object, the Server MUST include the following values in the `authorization_details_types_supported` array:
+        * `"sync_until"`
         * `"servicepoint_numbers"`
         * `"include_service_points"`
     * If the Server includes `"meter_device_selection"` as a choice in the `authorization_form_selection_type` authorization details object, the Server MUST include the following values in the `authorization_details_types_supported` array:
@@ -903,7 +931,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
 Additionally, to support this Scope, the Server MUST implement the following requirements:
 
 * The Server MUST treat this Scope as having included `true` values for the following authorization details fields, so that the data defined by those fields is included (this is the default access granted by this Scope):
-    * [`include_usage_segments`](#auth-details-include-bill-sections)
+    * [`include_usage_segments`](#auth-details-include-usage-segments)
 * If the Customer used the [Account Selection](#account-selection) Component for an authorization Grant, the Server MUST treat the Accounts that were selected as the basis for determining which objects to include.
     * Included Usage Segments are those which have a selected Account listed in the Usage Segment's `related_accounts` array.
 * If the Customer used the [Service Contract Selection](#contract-selection) Component for an authorization Grant, the Server MUST treat the Service Contracts that were selected as the basis for determining which objects to include.
@@ -1556,7 +1584,7 @@ For scopes where the Scope Description's `response_types_supported` array is emp
         * Aggregation `grouped_meterdevices`
         * Usage Segment `related_meterdevices`
 
-#### 7.1.11. Preselect Aggregation Numbers <a id="auth-details-aggregation-numbers" href="#auth-details-premise-numbers" class="permalink">🔗</a>
+#### 7.1.11. Preselect Aggregation Numbers <a id="auth-details-aggregation-numbers" href="#auth-details-aggregation-numbers" class="permalink">🔗</a>
 
 For some use cases, a Client may need to request access to datasets for a specific list of Aggregations.
 For example, an energy auditor may need request access to a list of whole-building energy usage aggregrations for region to do a benchmarking analysis for the local municipality.
@@ -2571,8 +2599,12 @@ Purpose objects are formatted as JSON objects and contain the following named va
 * `name` - _[string](#string)_ - (REQUIRED) The display name for the Client's own reference.
   This is not shown to the Customer when rendering the [Purpose Component](#purpose-component).
 * `content` - _[string](#string)_ - (REQUIRED) The contents to be rendered in the [Purpose Component](#purpose-component) when this Purpose is configured to be included using the [Purpose Identifier](#auth-details-purpose) authorization details field.
+  This value MUST contain at least one non-whitespace character and MAY contain line breaks.
 * `related_uri` - _[URL](#url) or `null`_ - (REQUIRED) An additional link that Clients can provide to include in the [Purpose Component](#purpose-component) for Customers to review along with the `content`.
   This is typically a link to the terms of service for a Client or more detailed documentation about how a Customer's data will be used for this Purpose.
+* `related_name` - _[string](#string) or `null`_ - (OPTIONAL) This is the content to be rendered in the [Purpose Component](#purpose-component) for the link to the `related_uri`.
+  This is typically a description of what the `related_uri` links (e.g. `See our full Terms of Service`).
+  If the `related_uri` is not `null`, this value is REQUIRED and MUST contain at least one non-whitespace character and MUST NOT contain line breaks.
 * `scopes_supported` - _Array[[string](#string)]_ - (REQUIRED) The list of [Scope](#scopes) values for which this Purpose can be included using the [Purpose Identifier](#auth-details-purpose) authorization details field.
   If the Purpose is not available for use in any Scopes, this value can be an empty list (`[]`).
 
@@ -3028,6 +3060,7 @@ The following are requirements and recommendations for the Server when implement
 
 * The Server MUST render one Request Section for each Scope included in an authorization request's `scope` parameter, unless the Client has included the [`auth-details-merge-selections`](#auth-details-merge-selections) authorization details field to combine multiple Scopes into one Request Section.
 * If the Server supports the [`allow_scope_modifications`](#auth-details-allow-scope-modifications) authorization details field for the Scope(s) included in the Request Section, the Server MUST render the Request Section with or without Customer modification functionality according to the value of this authorization details field.
+  If the `allow_scope_modifications` value is `true`, the Server MUST render the Request Section with the set of values that are configured in the authorization request, so that if the Customer does not want to modify anything they are not required to.
 * If the Server supports the [`purpose`](#auth-details-purpose) authorization details field for the Scope(s) included in the Request Section and the `purpose` value is non-`null`, the Server MUST include the [Purpose Component](#purpose-component) when rendering the Request Section.
 * If the Server does not support the `purpose` authorization details field or if the value is `null`, the Server MUST NOT include the Purpose Component when rendering the Request Section.
 
@@ -3085,7 +3118,6 @@ Each [Request Section](#auth-form-request) is made up of Components, which are d
 ##### 9.2.2.1. Data Component <a id="data-component" href="#data-component" class="permalink">🔗</a>
 
 The Data Component of a Request Section is where the Server communicates to the Customer what data is being requested for access by the Client.
-
 The following are requirements and recommendations for the Server when implementing the Data Component:
 
 * The Server MUST clearly communicate, in terms the Customer is likely to understand, to the Customer to what types of data the Scope(s) will enable access if the Customer approves the authorization request.
@@ -3097,55 +3129,289 @@ The following are requirements and recommendations for the Server when implement
   For example, if a Client requests access to a Customer's Account details using the `cds_accounts` Scope plus the `include_account_details` and `include_account_programs` authorization details field, the Server could render the summary as a the short phrase "access to your list of accounts, including your address and utility programs you've signed up for [see details]", were the `[see details]` toggle could open an expanded section with the list of specific data fields that will be included.
 * For the details section linked to or opened by the informational toggle, the Server MUST disclose the data fields included using terminology and language the Customer is likely to understand and not only the field names defined in this specification.
   Additionally, the Server MUST include an example of what those data fields could be, so that Customer can better understand to what information they are providing access.
-* When multiple Scopes have been merged into the same Request Section, it is RECOMMENDED that the Data Component be rendered as a list of the overall categories of data to be included, rather than a multiple line paragraph that communicates the summary of types of data being requested.
+* When multiple Scopes have been merged into the same Request Section, it is RECOMMENDED that the Data Component be rendered as a list of the overall categories of data to be included, rather than a multiple line paragraph, that communicates the summary of types of data being requested.
 
 ##### 9.2.2.2. Duration Component <a id="duration-component" href="#duration-component" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Duration Component of a Request Section is where the Server communicates to the Customer the duration of the authorization being requested.
+The following are requirements and recommendations for the Server when implementing the Duration Component:
+
+* The Server MUST NOT use terminology or language, when communicating what types of data to the Customer, that the Customer is not likely to understand.
+  The Server MAY use different terminology or language depending on the type of Customer, since some Customers could have more sophisticated knowledge of what each type of data is.
+  For example, if the Client is requesting access to the past year of residential Customer's Usage Segments, the Customer is unlikely to understand what `segment_start` and `P1Y` is (because those are technical terms in this specification and not generally known by residential Customers), so the Server MUST change the term used to something more familiar to the Customer, such as "your meter usage for the past year."
+* If [Account](#account-format), [Service Contract](#service-contract-format), [Service Point](#service-point-format), [Meter Device](#meter-device-format), or [Aggregation](#aggregation-format) objects will be included in the Scope's data, the Server MUST communicate for how long the Server will update the data (i.e. when the [`sync_until`](#auth-details-sync-until) authorization details field is set to end).
+  If the `sync_until` value is `"infinite"`, the Server MUST communicate that the access will continue to be updated until the Customer chooses to stop the authorization from their settings.
+  If the `sync_until` value ends immediately (e.g. `P0S`), the Server MUST communicate that the access will only be for the current set of the Customer's data with no updates going forward.
+* If [Bill Statement](#bill-statement-format) objects will be included in the Scope's data, the Server MUST communicate the date range of bill statements that will be made accessible (i.e. the range of the [`statement_date_start`](#auth-details-statement-start) and [`statement_date_end`](#auth-details-statement-end) authorization details fields' values).
+  If the `statement_date_start` value is for the current date or in the future (e.g. `P0S`), the Server MUST communicate that the access will only be for bills issued going forward but not any historical bills.
+  If the `statement_date_end` value is `"infinite"`, the Server MUST communicate that the access will continue until the Customer chooses to stop the authorization from their settings.
+  If the `statement_date_end` value ends immediately (e.g. `P0S`), the Server MUST communicate that the access will only be for historical bills but not any bills going forward.
+* If [Bill Section](#bill-section-format) objects will be included in the Scope's data, the Server MUST communicate the date range of bill details that will be made accessible (i.e. the range of the [`start_date`](#auth-details-bill-section-start) and [`end_date`](#auth-details-bill-section-start) authorization details fields' values).
+  If the `start_date` value is for the current date or in the future (e.g. `P0S`), the Server MUST communicate that the access will only be for bill data going forward but not any historical data.
+  If the `end_date` value is `"infinite"`, the Server MUST communicate that the access will continue until the Customer chooses to stop the authorization from their settings.
+  If the `end_date` value ends immediately (e.g. `P0S`), the Server MUST communicate that the access will only be for historical bill data but not any data going forward.
+* If [Usage Segment](#usage-segment-format) objects will be included in the Scope's data, the Server MUST communicate the time range of usage data that will be made accessible (i.e. the range of the `segment_start` and `segment_end` authorization details fields' values).
+  If the `segment_start` value is for the current date or in the future (e.g. `P0S`), the Server MUST communicate that the access will only be for usage data going forward but not any historical data.
+  If the `segment_end` value is `"infinite"`, the Server MUST communicate that the access will continue until the Customer chooses to stop the authorization from their settings.
+  If the `segment_end` value ends immediately (e.g. `P0S`), the Server MUST communicate that the access will only be for historical usage data but not any data going forward.
+* For the Scope [`cds_aggregation_consent`](#scope-aggregation-inclusion), the Server MUST communicate for how long the authorization will be valid (i.e. when the [`expires`](#auth-details-expires) authorization details field is set to end).
+  If the `expires` value is `"infinite"`, the Server MUST communicate that the authorization will continue to be valid until the Customer chooses to stop it in their settings.
+  If the `expires` value ends immediately (e.g. `P0S`), the Server MUST communicate that the authorization is only be for the current request, and the Customer will need to authorize again if the Client needs updates in the future.
+* If there are multiple Scopes merged into the Request Section and those Scopes have the same duration (e.g. the same `sync_until`), the Server MUST combine the communications for the duration of each Scope into a single statement.
+  For example, if the Client is requesting 3 years of access to both the `cds_meters` and `cds_accounts` Scopes (i.e. `sync_until` is set to `P3Y` for both Scopes), the Server could render a statement such as "Access to your meter and account details for 3 years", but could not render this duration as two separate statements (e.g. "Access to your meter details for 3 years" and "Access to your account details for 3 years").
+* If the Scope(s) included in the Request Section have multiple durations, it is RECOMMENDED that the Server render the the Duration Component be rendered as a list of statements, rather than a multiple line paragraph, that communicates the summary of types of data being requested.
+  For example, if the Client is requesting `cds_usage` with the `include_service_contracts` authorization details field (i.e. meter usage plus service contract details), the Server could render a list of two statements such as:
+    * "Access to your meter usage for the past year and going forward for 1 year" (if the `segment_start` is `P1Y` and `segment_end` is `P1Y`)
+    * "Access to your service details from now going forward for 1 year" (if the `sync_until` is `P1Y`)
 
 ##### 9.2.2.3. Selection Component <a id="selection-component" href="#selection-component" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Selection Component content is the [Authorization Form Selection](#auth-form-selections) that is set in the Scope(s) [`authorization_form_selection_type`](#auth-details-selection-type) authorization details field value.
 
 ##### 9.2.2.4. Purpose Component <a id="purpose-component" href="#purpose-component" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Purpose Component of a Request Section is where the Server communicates the [Purpose](#purpose-format) for which the Scope(s) in that Request Section will be used, if any.
+The following are requirements and recommendations for the Server when implementing the Purpose Component:
+
+* The Server MUST communicate to the user that the included content is disclosing how the data access will be used by the Client (e.g. "For this purpose:" followed by the Purpose's content).
+* If the Purpose was written by the Client (i.e. was not one of the Server's default Purposes), the Server MUST communicate to the Customer that the included purpose was written by the Client.
+* The Server MUST include the full content of the Purpose's `content` value as text only, to prevent the Client from being able to inject malicious content.
+* If the Purpose has `related_uri` and `related_uri` values, the Server MUST append a link to the `related_uri` to the end of the block where the Purpose's `content` will be rendered.
+  The Server MUST set the display of the link to be the Purpose's `related_name` value.
+  The Server MUST configure the link to open in a new window or tab (e.g. `target="_blank") and configure the link to include the `noopener` in the `rel` property.
+* The Server MUST NOT set a minimum height for the block where the Purpose's `content` will be rendered.
+* The Server MUST set a maximum height of 10 lines of text for the block where the Purpose's `content` will be rendered.
+  If the Purpose's `content` exceeds this maximum, including any wrapped text and `related_uri` link, the Server MUST configure the block to be independently scrolling in the vertical direction.
+* If rendering the Authorization Form as HTML, the Server MUST implement the following requirements:
+    * The Server MUST set the rendered Purpose's `content` as having a CSS values of `white-space: pre-wrap;`, so that line breaks and indentations in the content are rendered appropriately.
+    * The Server MUST set the rendered Purpose's `content` as having a CSS values of `word-break: break-word;`, so that very long words do not overflow horizontally.
+    * The Server MUST set the rendered Purpose's `content` as having a CSS value of `overflow: scroll;`, so that the block becomes independently scrolling if the content is too long.
 
 #### 9.2.3. Authorization Form Selections <a id="auth-form-selections" href="#auth-form-selections" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Authorization Form Selection is the rendered content of the [Selection Component](#selection-component) that displays a list of the Customer's resources from which they can select to apply to the Request Section's Scope(s).
+The type of Customer resources listed depends on which type of Selection defined in this section is set by the Scope(s) [`authorization_form_selection_type`](#auth-details-selection-type) authorization details field value.
 
 ##### 9.2.3.1. Account Selection <a id="account-selection" href="#account-selection" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Account Selection is rendered in the [Selection Component](#selection-component) if the [`authorization_form_selection_type`](#auth-details-selection-type) value is `"account_selection"`.
+The Server MUST implement the following to support the Account Selection type:
+
+* The Server MUST configure the Choice value for the Account Selection to have an `id` value of `"account_selection"`.
+* When the `authorization_form_selection_type` value for the Request Section's Scope(s) is `"account_selection"`, the Server MUST implement the following:
+    * If the Server has access to the list of the Customer's [Accounts](#account-format), the Server MUST implement the following:
+        * The Server MUST render the Selection Component as a list of the Customer's Accounts that are available for selection for the Scope(s).
+        * Each entry in the Account list MUST display the following:
+            * The Server MUST display the Account's `account_number`.
+            * If the Server has access to the Account's display name as the Customer would see it in their online profile, the Server MUST display that value.
+            * If the Server has access to the Account's `account_address`, the Server MUST display that value.
+        * The Server MAY include other values for the entries, such as primary contact or number of services under the Account.
+        * The Server MUST allow the Customer to select and deselect individual Account entries that will be subject the the Scope(s).
+        * The Server MUST include the ability for the Customer to select or deselect all Account entries.
+        * The Server MUST include the ability for the Customer to select and deselect the option to include future Accounts added under the Customer's control.
+        * If there are more than 10 Account entries, the Server MUST implement the following requirements:
+            * The Server MUST include the ability for the Customer to search for specific Accounts by their `account_number`, name (if displayed), and address (if displayed).
+            * The Server MUST display the Account entries within an independently scrolling block, so that the Customer does not have to scroll through their entire Account list to reach the bottom of the Authorization Form.
+            * The Server MUST include a summary of the number of currently selected entries at the top of the list and MUST update this number dynamically as the Customer selects or deselects entries.
+            * The Server MUST include the ability for the Customer to hide and unhide unselected entries, so that the Customer can see just the entries they have selected.
+        * The Server MAY include the ability for Customers to search for Accounts by other values, such as contact phone number.
+        * If the Scope(s) include any [preselection fields](#auth-details-preselection), the Server MUST implement the following:
+            * The Server MUST select the Account entries that match the preselection field's values, according to the requirements of the preselection field.
+            * If the `"_all"` value is included in the [`"account_numbers"`](#auth-details-account-numbers) or [`"contract_numbers"`](#auth-details-contract-numbers) preselection fields, the Server MUST select all entries by default.
+            * If the `"_include_future"` value is included in the [`"account_numbers"`](#auth-details-account-numbers) or [`"contract_numbers"`](#auth-details-contract-numbers) preselection fields, the Server MUST select the option to include future Accounts by default.
+    * If the Server does not have access to the list of the Customer's [Accounts](#account-format), the Server MUST implement the following:
+        * The Server MUST include the ability for a Customer to manually enter one or more Account `account_number` values for which the Scope(s) will apply.
+        * If the Scope(s) include the [`"account_numbers"`](#auth-details-account-numbers) preselection field, the Server MUST initially populate the list of added Accounts with the `account_numbers` values.
+          The `account_numbers` preslection values include `"_all"`, the Server MUST populate the list with an entry communicating that all applicable Accounts will be selected.
+          The `account_numbers` preslection values include `"_include_future"`, the Server MUST populate the list with an entry communicating that Accounts added in the future will also have the Scope(s) applied.
+        * The Server MAY include the ability for a Customer upload a document containing the list of Account `account_number` values for which the Scope(s) will apply.
+        * The Server MAY include the ability for a Customer connect another online profile to the Request Section from which the Server can pull the list of Account `account_number` values.
 
 ##### 9.2.3.2. Service Contract Selection <a id="contract-selection" href="#contract-selection" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Service Contract Selection is rendered in the [Selection Component](#selection-component) if the [`authorization_form_selection_type`](#auth-details-selection-type) value is `"service_contract_selection"`.
+The Server MUST implement the following to support the Service Contract Selection type:
+
+* The Server MUST configure the Choice value for the Service Contract Selection to have an `id` value of `"service_contract_selection"`.
+* When the `authorization_form_selection_type` value for the Request Section's Scope(s) is `"service_contract_selection"`, the Server MUST implement the following:
+    * If the Server has access to the list of the Customer's [Service Contracts](#service-contract-format), the Server MUST implement the following:
+        * The Server MUST render the Selection Component as a list of the Customer's Service Contracts that are available for selection for the Scope(s).
+        * Each entry in the Service Contract list MUST display the following:
+            * The Server MUST display the Service Contract's `contract_number`.
+            * The Server MUST display the Service Contract's `service_type`.
+            * The Server MUST display the Service Contract's `account_number`.
+            * If the Server has access to the Service Contract's display name as the Customer would see it in their online profile, the Server MUST display that value.
+            * If the Server has access to the Service Contract's `contract_address`, the Server MUST display that value.
+        * The Server MAY include other values for the entries, such as rate plan under the Service Contract.
+        * The Server MUST allow the Customer to select and deselect individual Service Contract entries that will be subject the the Scope(s).
+        * The Server MUST include the ability for the Customer to select or deselect all Service Contract entries.
+        * The Server MUST include the ability for the Customer to select and deselect the option to include future Service Contracts added under the Customer's control.
+        * If there are more than 10 Service Contract entries, the Server MUST implement the following requirements:
+            * The Server MUST include the ability for the Customer to search for specific Service Contracts by their `account_number`, `contract_number`, name (if displayed), and address (if displayed).
+            * The Server MUST display the Service Contract entries within an independently scrolling block, so that the Customer does not have to scroll through their entire Service Contract list to reach the bottom of the Authorization Form.
+            * The Server MUST include a summary of the number of currently selected entries at the top of the list and MUST update this number dynamically as the Customer selects or deselects entries.
+            * The Server MUST include the ability for the Customer to hide and unhide unselected entries, so that the Customer can see just the entries they have selected.
+        * The Server MAY include the ability for Customers to search for Service Contracts by other values, such as meter number.
+        * If the Scope(s) include any [preselection fields](#auth-details-preselection), the Server MUST implement the following:
+            * The Server MUST select the Service Contract entries that match the preselection field's values, according to the requirements of the preselection field.
+            * If the `"_all"` value is included in the [`"account_numbers"`](#auth-details-account-numbers) or [`"contract_numbers"`](#auth-details-contract-numbers) preselection fields, the Server MUST select all entries by default.
+            * If the `"_include_future"` value is included in the [`"account_numbers"`](#auth-details-account-numbers) or [`"contract_numbers"`](#auth-details-contract-numbers) preselection fields, the Server MUST select the option to include future Service Contracts by default.
+    * If the Server does not have access to the list of the Customer's [Service Contracts](#service-contract-format), the Server MUST implement the following:
+        * The Server MUST include the ability for a Customer to manually enter one or more Service Contract `contract_number` values for which the Scope(s) will apply.
+        * If the Scope(s) include the [`"contract_numbers"`](#auth-details-contract-numbers) preselection field, the Server MUST initially populate the list of added Service Contracts with the `contract_numbers` values.
+          The `contract_numbers` preslection values include `"_all"`, the Server MUST populate the list with an entry communicating that all applicable Service Contracts will be selected.
+          The `contract_numbers` preslection values include `"_include_future"`, the Server MUST populate the list with an entry communicating that Service Contracts added in the future will also have the Scope(s) applied.
+        * The Server MAY include the ability for a Customer upload a document containing the list of Service Contract `contract_number` values for which the Scope(s) will apply.
+        * The Server MAY include the ability for a Customer connect another online profile to the Request Section from which the Server can pull the list of Service Contract `contract_number` values.
 
 ##### 9.2.3.3. Service Point Selection <a id="servicepoint-selection" href="#servicepoint-selection" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Service Point Selection is rendered in the [Selection Component](#selection-component) if the [`authorization_form_selection_type`](#auth-details-selection-type) value is `"servicepoint_selection"`.
+The Server MUST implement the following to support the Service Point Selection type:
+
+* The Server MUST configure the Choice value for the Service Point Selection to have an `id` value of `"servicepoint_selection"`.
+* When the `authorization_form_selection_type` value for the Request Section's Scope(s) is `"servicepoint_selection"`, the Server MUST implement the following:
+    * If the Server has access to the list of the Customer's [Service Points](#service-point-format), the Server MUST implement the following:
+        * The Server MUST render the Selection Component as a list of the Customer's Service Points that are available for selection for the Scope(s).
+        * Each entry in the Service Point list MUST display the following:
+            * The Server MUST display the Service Point's `servicepoint_number`.
+            * The Server MUST display the Service Point's `servicepoint_type`.
+            * If the Server has access to the Service Point's display name as the Customer would see it in their online profile, the Server MUST display that value.
+            * If the Server has access to the Service Point's `servicepoint_address`, the Server MUST display that value.
+        * The Server MAY include other values for the entries, such as [Premise](#TODO-premise-format) `premise_number` under the Service Point.
+        * The Server MUST allow the Customer to select and deselect individual Service Point entries that will be subject the the Scope(s).
+        * The Server MUST include the ability for the Customer to select or deselect all Service Point entries.
+        * If there are more than 10 Service Point entries, the Server MUST implement the following requirements:
+            * The Server MUST include the ability for the Customer to search for specific Service Points by their `servicepoint_number`, name (if displayed), and address (if displayed).
+            * The Server MUST display the Service Point entries within an independently scrolling block, so that the Customer does not have to scroll through their entire Service Point list to reach the bottom of the Authorization Form.
+            * The Server MUST include a summary of the number of currently selected entries at the top of the list and MUST update this number dynamically as the Customer selects or deselects entries.
+            * The Server MUST include the ability for the Customer to hide and unhide unselected entries, so that the Customer can see just the entries they have selected.
+        * The Server MAY include the ability for Customers to search for Service Points by other values, such as meter number.
+        * If the Scope(s) include any [preselection fields](#auth-details-preselection), the Server MUST implement the following:
+            * The Server MUST select the Service Point entries that match the preselection field's values, according to the requirements of the preselection field.
+            * If the `"_all"` value is included in the [`"servicepoint_numbers"`](#auth-details-servicepoint-numbers) preselection field, the Server MUST select all entries by default.
+    * If the Server does not have access to the list of the Customer's [Service Points](#service-point-format), the Server MUST implement the following:
+        * The Server MUST include the ability for a Customer to manually enter one or more Service Point `servicepoint_number` values for which the Scope(s) will apply.
+        * If the Scope(s) include the [`"servicepoint_numbers"`](#auth-details-servicepoint-numbers) preselection field, the Server MUST initially populate the list of added Service Points with the `servicepoint_numbers` values.
+          The `servicepoint_numbers` preslection values include `"_all"`, the Server MUST populate the list with an entry communicating that all applicable Service Points will be selected.
+        * The Server MAY include the ability for a Customer upload a document containing the list of Service Point `servicepoint_number` values for which the Scope(s) will apply.
+        * The Server MAY include the ability for a Customer connect another online profile to the Request Section from which the Server can pull the list of Service Point `servicepoint_number` values.
 
 ##### 9.2.3.4. Meter Device Selection <a id="meter-selection" href="#meter-selection" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Meter Device Selection is rendered in the [Selection Component](#selection-component) if the [`authorization_form_selection_type`](#auth-details-selection-type) value is `"meter_device_selection"`.
+The Server MUST implement the following to support the Meter Device Selection type:
+
+* The Server MUST configure the Choice value for the Meter Device Selection to have an `id` value of `"meter_device_selection"`.
+* When the `authorization_form_selection_type` value for the Request Section's Scope(s) is `"meter_device_selection"`, the Server MUST implement the following:
+    * If the Server has access to the list of the Customer's [Meter Devices](#meter-device-format), the Server MUST implement the following:
+        * The Server MUST render the Selection Component as a list of the Customer's Meter Devices that are available for selection for the Scope(s).
+        * Each entry in the Meter Device list MUST display the following:
+            * The Server MUST display the Meter Device's `meter_number`.
+            * The Server MUST display the Meter Device's `meter_type`.
+            * If the Server has access to the Meter Device's display name as the Customer would see it in their online profile, the Server MUST display that value.
+        * The Server MAY include other values for the entries, such as the currently related Service Contract `contract_number`.
+        * The Server MUST allow the Customer to select and deselect individual Meter Device entries that will be subject the the Scope(s).
+        * The Server MUST include the ability for the Customer to select or deselect all Meter Device entries.
+        * If there are more than 10 Meter Device entries, the Server MUST implement the following requirements:
+            * The Server MUST include the ability for the Customer to search for specific Meter Devices by their `meter_number` and name (if displayed).
+            * The Server MUST display the Meter Device entries within an independently scrolling block, so that the Customer does not have to scroll through their entire Meter Device list to reach the bottom of the Authorization Form.
+            * The Server MUST include a summary of the number of currently selected entries at the top of the list and MUST update this number dynamically as the Customer selects or deselects entries.
+            * The Server MUST include the ability for the Customer to hide and unhide unselected entries, so that the Customer can see just the entries they have selected.
+        * The Server MAY include the ability for Customers to search for Meter Devices by other values, such as the currently related Service Point's `servicepoint_address`.
+        * If the Scope(s) include any [preselection fields](#auth-details-preselection), the Server MUST implement the following:
+            * The Server MUST select the Meter Device entries that match the preselection field's values, according to the requirements of the preselection field.
+            * If the `"_all"` value is included in the [`"meter_numbers"`](#auth-details-meter-numbers) preselection field, the Server MUST select all entries by default.
+    * If the Server does not have access to the list of the Customer's [Meter Devices](#meter-device-format), the Server MUST implement the following:
+        * The Server MUST include the ability for a Customer to manually enter one or more Meter Device `meter_number` values for which the Scope(s) will apply.
+        * If the Scope(s) include the [`"meter_numbers"`](#auth-details-meter-numbers) preselection field, the Server MUST initially populate the list of added Meter Devices with the `meter_numbers` values.
+          The `meter_numbers` preslection values include `"_all"`, the Server MUST populate the list with an entry communicating that all applicable Meter Devices will be selected.
+        * The Server MAY include the ability for a Customer upload a document containing the list of Meter Device `meter_number` values for which the Scope(s) will apply.
+        * The Server MAY include the ability for a Customer connect another online profile to the Request Section from which the Server can pull the list of Meter Device `meter_number` values.
 
 ##### 9.2.3.5. Aggregation Selection <a id="aggregation-selection" href="#aggregation-selection" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Aggregation Selection is rendered in the [Selection Component](#selection-component) if the [`authorization_form_selection_type`](#auth-details-selection-type) value is `"aggregation_selection"`.
+The Server MUST implement the following to support the Aggregation Selection type:
+
+* The Server MUST configure the Choice value for the Aggregation Selection to have an `id` value of `"aggregation_selection"`.
+* If the Aggregation Selection is for the [`cds_aggregation_consent`](#scope-aggregation-inclusion) Scope, the Server MUST implement the following:
+    * The Server MUST render the Selection Component as non-editable list of the preselected `aggregation_numbers` values
+    * The Server MUST implement the following for each entry in the list:
+        * The Server MUST display the Aggregation's `aggregation_number`.
+          The Server MAY include additional information about the Aggregation, but in doing so the Server MUST only display information which the Customer is permitted to see.
+        * The Server MUST display the Customer's related resources for the entry.
+          Related resources are what the Server has associated the Customer with the Aggregation, which may be any of the Aggregation's related Accounts, Service Contracts, Service Points, Meter Devices, other Aggregations, addresses, or other factors.
+          The Server MUST display the related resources in terms in which the Customer will likely understand, so that the Customer is able to understand what is being included with the Aggregation if they authorize.
+* When the `authorization_form_selection_type` value for the Request Section's Scope(s) is `"aggregation_selection"` and the Scope is not `cds_aggregation_consent`, the Server MUST implement the following:
+    * If the Server has access to the list of the Customer's [Aggregations](#aggreation-format), the Server MUST implement the following:
+        * The Server MUST render the Selection Component as a list of the Customer's Aggregations that are available for selection for the Scope(s).
+        * Each entry in the Aggregation list MUST display the following:
+            * The Server MUST display the Aggregation's `aggregation_number`.
+            * The Server MUST display the Aggregation's `aggregation_type`.
+            * If the Server has access to the Aggregation's display name as the Customer would see it in their online profile, the Server MUST display that value.
+            * If the Server has access to the Aggregation's `grouped_addresses`, the Server MUST display at least one of those values per entry, if it has any.
+        * The Server MAY include other values for the entries, such as related `premise_number` values.
+        * The Server MUST allow the Customer to select and deselect individual Aggregation entries that will be subject the the Scope(s).
+        * The Server MUST include the ability for the Customer to select or deselect all Aggregation entries.
+        * If there are more than 10 Aggregation entries, the Server MUST implement the following requirements:
+            * The Server MUST include the ability for the Customer to search for specific Aggregations by their `aggregation_number` and name (if displayed).
+            * The Server MUST display the Aggregation entries within an independently scrolling block, so that the Customer does not have to scroll through their entire Aggregation list to reach the bottom of the Authorization Form.
+            * The Server MUST include a summary of the number of currently selected entries at the top of the list and MUST update this number dynamically as the Customer selects or deselects entries.
+            * The Server MUST include the ability for the Customer to hide and unhide unselected entries, so that the Customer can see just the entries they have selected.
+        * The Server MAY include the ability for Customers to search for Aggregations by other values, such as the currently related Service Point's `servicepoint_address`.
+        * If the Scope(s) include any [preselection fields](#auth-details-preselection), the Server MUST implement the following:
+            * The Server MUST select the Aggregation entries that match the preselection field's values, according to the requirements of the preselection field.
+    * If the Server does not have access to the list of the Customer's [Aggregations](#aggregation-format), the Server MUST implement the following:
+        * The Server MUST include the ability for a Customer to manually enter one or more Aggregation `aggregation_number` values for which the Scope(s) will apply.
+        * If the Scope(s) include the [`"aggregation_numbers"`](#auth-details-aggregation-numbers) preselection field, the Server MUST initially populate the list of added Aggregations with the `aggregation_numbers` values.
+        * The Server MAY include the ability for a Customer upload a document containing the list of Aggregation `aggregation_number` values for which the Scope(s) will apply.
+        * The Server MAY include the ability for a Customer connect another online profile to the Request Section from which the Server can pull the list of Aggregation `aggregation_number` values.
 
 ### 9.3. Authorization Errors <a id="auth-errors" href="#auth-errors" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+In most error and failure situations, the Customer is redirected back to the Client's `redirect_uri`, so the Client is responsible for handling those situations.
+However, in a few situations the Server itself needs to display an error, and this specification has included requirements and recommendations for Servers implementing these errors.
 
 #### 9.3.1. Preselection Error <a id="preselection-error" href="#preselection-error" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+If the authorization request includes [Preselection Fields](#auth-details-preselection), as well as the [`error_if_no_preselections`](#auth-details-error-if-no-preselections) field, and the authenticated Customer does not have any resources that can be preselected, the Customer cannot complete the Authorization Form as requested by the Client.
+Rather than automatically redirecting back to Client's `redirect_uri` with an error parameter, this specification requires that the Customer be shown a Preselection Error page defined in this section.
+
+There are two primary reasons this specification defines the Preselection Error:
+
+* Since preselection fields match against the Customer's resources, if the Server automatically redirected back to the Client if there are no matches, the Client could potentially secretly enumerate which resources are not under a Customer's profile without the Customer's authorization.
+  By adding a Preselection Error page, the Customer is given a chance to review the authorization request and what preselected resources have been requested and must choose to be redirected back to the Client.
+* It is a common situation for enterprise Customers with many properties in a utility territory to to have multiple logins and online profiles for their various properties and utility Accounts.
+  So if a Client is requesting a specific set of resources using preselection fields (e.g. a specific set of `account_numbers`), it is entirely likely that the Customer could be already authenticated or accidentally authenticates with the wrong online profile that does not have access to that specific set of preselected resources.
+  Rather than redirecting back to the Client with an error, the specification instead shows the Customer this Preselection Error and gives the Customer a chance to try to authenticate as another user that may have the appropriate resources matching the requested preselection fields.
+
+The following are requirements and recommendations for the Server when implementing the Preselection Error:
+
+* The Server MUST render an error message that clearly communicates to the Customer that the Client has requested access to some resources that the Customer does not appear to have under their profile.
+  When communicating this message, the Server MUST implement the following:
+    * The Server MUST display the Client's `client_name` value.
+    * The Server MUST display the specific list of resources that are being requested in terms the Customer is likely to understand.
+      For example, if the Client is requesting access to Service Contracts with `contract_numbers` values of `"111111"` and `"222222"`, the Server MUST display that information in terms that are familiar to the Customer.
+      So if the Customer typically knows Service Contracts by the term "Service Accounts", the Server needs to communicate that the Client's authorization request is for "Service Accounts" (e.g. "For the following Service Accounts: 111111, 222222").
+* Below the error message, the Server MUST display two options rendered as buttons or links, from which the Customer may select:
+    * The Server MUST provide an option for the Customer to decline the authorization request.
+      This option would redirect the Customer back to the Client's `redirect_uri` with an `invalid_authorization_details` error parameter.
+    * The Server MUST provide an option for the Customer to authenticate as a different user.
+      If the Server offers the ability to be authenticated as multiple profiles and switch between those profiles, the Server MAY include functionality for switching profiles on the Preselection Error page, in addition to the ability to authenticate as another user.
+      This option would redirect the Customer back to the authentication process, where they are allowed to authenticate as another user, after which they are again redirected to the Authorization Form as a different authenticated Customer.
+* The Server MAY include a [Header Section](#auth-form-header) above the error message, so long as it does not hide the required error message and two options for resolving the issue.
+* Below the required options, the Server MAY include additional content and functionality, so long as it appears secondary to the required error message and two options for resolving the issue.
 
 #### 9.3.2. Invalid Request Error <a id="request-error" href="#request-error" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+If the Server receives an authorization request with invalid `response_type`, `response_type`, or `redirect_uri` parameters, the Server cannot determine the correct `redirect_uri` to which the user should be redirected with an error parameter.
+In these situations the Server MUST display an Invalid Request Error page to the user, and the following are requirements and recommendations for the Server when implementing the Invalid Request Error:
+
+* The Server MUST render an error message that clearly communicates to the user that the authorization request does not have the correct parameters, so the Server is unable to complete the request.
+* The Server MUST communicate to the user the they should contact the website or app that provided them with the link to this authorization request and let that entity know their link is invalid.
+* The Server MAY include a [Header Section](#auth-form-header) above the error message, so long as it does not hide the required error message.
+* Below the required options, the Server MAY include additional content and functionality, so long as it appears secondary to the required error message.
 
 ### 9.4. Authorization Receipt <a id="auth-receipt" href="#auth-errors" class="permalink">🔗</a>
 
@@ -3173,7 +3439,7 @@ Account objects are formatted as JSON objects and contain the following named va
 * `account_number` - _[string](#string)_ - (OPTIONAL) The number that a Customer sees on their bill and online user interface as the identifier for this Account.
 * `account_name` - _[string](#string)_ - (OPTIONAL) The name that a Customer sees on their bill and online user interface as the name for this Account, if available.
 * `account_address` - _[string](#string)_ - (OPTIONAL) The address that a Customer sees on their bill and online user interface as the address for this Account, if available.
-  This string MAY have linebreaks, such as when the address is multiple lines.
+  This string MAY have line breaks, such as when the address is multiple lines.
 * `account_type` - _[AccountType](#TODO-account-types)_ - (OPTIONAL) What type of Account this is.
 * `account_status` - _[AccountStatus](#TODO-account-status)_ - (OPTIONAL) What the Account's status is.
 * `account_contacts` - _Array[[AccountContact](#TODO-account-contact-format)]_ - (OPTIONAL) A list of Account Contacts for the Account.
@@ -3232,7 +3498,7 @@ Service Contract objects are formatted as JSON objects and contain the following
 * `contract_number` - _[string](#string) or `null`_ - (OPTIONAL) The identifier that a Customer sees on their bill or online user interface as the identifier for this Service Contract.
   If a Server does not have a Customer-facing identifier for a Service Contract and the Client is not authorized to see the Server's internal identifier for this Service Contract, this value is `null`.
 * `contract_address` - _[string](#string)_ - (OPTIONAL) The address that a Customer sees on their bill or online user interface as the address for this Service Contract, if available.
-  This string MAY have linebreaks, such as when the address is multiple lines.
+  This string MAY have line breaks, such as when the address is multiple lines.
 * `contract_status` - _[ContractStatus](#TODO-contract-statuses)_ - (REQUIRED) The current status of the Service Contract.
 * `contract_type` - _[ContractType](#TODO-contract-types)_ - (REQUIRED) The type of agreement that this Service Contract represents.
 * `contract_entity` - _[string](#string)_ - (REQUIRED) With which entity the Customer has agreement for this Service Contract.
@@ -3297,7 +3563,7 @@ Service Point objects are formatted as JSON objects and contain the following na
   If a Server does not have a Customer-facing identifier for a Service Point and the Client is not authorized to see the Server's internal identifier for this Service Point, this value is `null`.
 * `servicepoint_type` - _[ServicePointType](#TODO-service-point-types)_ - (REQUIRED) The type of service point that this Service Point represents.
 * `servicepoint_address` - _[string](#string) or `null`_ - (OPTIONAL) The address that a Customer sees on their bill or online user interface as the address for this Service Point, if available.
-  Strings MAY have linebreaks, such as when the address is multiple lines.
+  Strings MAY have line breaks, such as when the address is multiple lines.
   If a Server does not have a Customer-facing address for a Service Point and the Client is not authorized to see the Server's internal address for this Service Point, this value is `null`.
 * `latitude` - _[decimal](#decimal)_ - (OPTIONAL) The latitude that a Customer sees on their bill or online user interface as the latitude for this Service Point.
   If a Server does not have a Customer-facing latitude for a Service Point and the Client is not authorized to see the Server's internal latitude for this Service Point, or the Server does not have latitude stored for this Server Point, this value is `null`.

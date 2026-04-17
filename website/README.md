@@ -34,3 +34,20 @@ jekyll serve
 Then, you will need to re-copy them to the `spec_copies/` folder for the changes to show up on your local website.
 Finally, when you're done with your changes, you need to commit changes in the `specifications/` folder and not commit any changes to the `spec_copies/` folder.
 Our automated build process for the official website will automatically copy over the specifications when a new version is built.
+
+#### Watching for changes
+
+When doing local development of the specifications, it's nice to automate rebuilding the website when the specification changes.
+The following is an example command line loop to run that watches for changes, then copies the changes to the relevant website folder.
+
+```
+# via linux terminal in the repo root directory
+
+cp specifications/cds-wg3-01.md website/_includes/spec_copies/placeholder_cds-wg3-01.md
+
+while true; do
+    while inotifywait -e close_write specifications/cds-wg3-01.md; do
+        read -p "pause" -t 0.1 || cp specifications/cds-wg3-01.md website/_includes/spec_copies/placeholder_cds-wg3-01.md;
+    done;
+done
+```

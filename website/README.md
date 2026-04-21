@@ -47,7 +47,7 @@ cp specifications/cds-wg3-01.md website/_includes/spec_copies/placeholder_cds-wg
 
 while true; do
     while inotifywait -e close_write specifications/cds-wg3-01.md; do
-        read -p "pause" -t 0.1 || cp specifications/cds-wg3-01.md website/_includes/spec_copies/placeholder_cds-wg3-01.md;
+        read -p "pause" -t 0.3 || cp specifications/cds-wg3-01.md website/_includes/spec_copies/placeholder_cds-wg3-01.md;
     done;
 done
 ```

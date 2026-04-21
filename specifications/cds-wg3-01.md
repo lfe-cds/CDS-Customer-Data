@@ -2636,18 +2636,26 @@ When a authorization request is received by a Server, the Server MUST implement 
 
 * Upon receiving an authorization request, prior to the [Customer Authentication](#customer-authentication) process, the Server MUST:
     * Validate at least the following URL parameters:
-        * `response_type` - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)]
-        * `client_id` - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)]
-        * `scope` (if included) - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)] insofar as the Server is able without knowing Customer's identity
-            * Validation includes checking each Scope for syntax and schema errors and whether the Client can use the Scope
-        * `authorization_details` (if included) - validate as defined in [[RFC 9396](#ref-rfc9396)] insofar as the Server is able without knowing Customer's identity
-            * Validation includes checking authorization details for syntax and schema errors and whether the Client can use the authorization details types included
-        * `redirect_uri` (if included) - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)]
-        * `request_uri` (if included) - validate as defined in [[RFC 9126](#ref-9126-pushed-auth-requests)]
+        * `response_type` - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)].
+        * `client_id` - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)].
+        * `scope` - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)] insofar as the Server is able without knowing Customer's identity.
+            * Validation includes checking each Scope for syntax and schema errors and whether the Client can use the Scope.
+            * If the `scope` parameter is not included in the authorization request, the Server MUST use the `cds_default_scope` value in the Client's Client object [[CDS-WG1-02 Section 5.1](#ref-cds-wg1-02-client-object)] as the default `scope` value.
+        * `authorization_details` - validate as defined in [[RFC 9396](#ref-rfc9396)] insofar as the Server is able without knowing Customer's identity.
+            * Validation includes checking authorization details for syntax and schema errors and whether the Client can use the authorization details types included.
+            * If the `authorization_details` parameter is not included in the authorization request, the Server MUST use the `cds_default_authorization_details` value in the Client's Client object [[CDS-WG1-02 Section 5.1](#ref-cds-wg1-02-client-object)] as the default `authorization_details` value.
+        * `redirect_uri` - validate as defined in [[RFC 6749 Section 4.1.1](#ref-rfc6749-auth-request)].
+            * If the `redirect_uri` parameter is not included in the authorization request, the Server MUST use the `cds_default_redirect_uri` value in the Client's Client object [[CDS-WG1-02 Section 5.1](#ref-cds-wg1-02-client-object)] as the default `redirect_uri` value.
+        * `request_uri` (if included) - validate as defined in [[RFC 9126](#ref-9126-pushed-auth-requests)].
     * If the `response_type`, `response_type`, or `redirect_uri` parameters in the authorization request are invalid, the Server MUST show the Customer a [Invalid Request Error](#request-error).
     * If any other parameters are invalid, the Server MUST redirect the user back to the Client's `redirect_uri` with an Error Response as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
 * If the URL parameters for the authorization request pass the Server's initial validation, the Server MUST:
-    * Perform the [Customer Authentication](#customer-authentication) process.
+    * Determine if the [Authorization Form](#auth-form) requires [Customer Authentication](#customer-authentication).
+      Customer Authentication MUST be required when the Authorization Form will render with Customer details that are sourced from a confidential dataset, such as rendering the Customer's full list of accounts in the [Account Selection](#account-selection).
+      Customer Authentication MAY not be required if the Authorization Form is only rendering information that is provided by the Client, such as the `client_name` and any prefilled fields (e.g. [`account_numbers`](#auth-details-account-numbers)).
+      It is RECOMMENDED that Customer Authentication is required when the Server has the ability to authenticate the Customer (e.g. when the Server is integrated wit a utility's Single Sign-On (SSO)) and the Server has access to render the Customer's list of resources for the [Selection Component](#selection-component) of the Authorization.
+        * If Customer Authentication is required, the Server MUST follow the [Customer Authentication](#customer-authentication) process.
+        * If Customer Authentication is not required, the Server MUST skip the Customer Authentication process and proceed to rendering the Authorization Form.
 * If the user completes the Customer Authentication process, the Server MUST:
     * Validate the authorization request URL parameters again, now under the context of knowing the Customer's identity.
     * If any parameters are invalid, the Server MUST redirect the user back to the Client's `redirect_uri` with an Error Response as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
@@ -2658,25 +2666,26 @@ When a authorization request is received by a Server, the Server MUST implement 
 * If the user declines the authorization request, the Server MUST:
     * Redirect the user back to the Client's `redirect_uri` with an `access_denied` error as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
 * If the user authorizes the authorization request, the Server MUST:
-    * Create a Grant as defined by the authorized [Scopes](#scopes).
-    * Send the Customer an [Authorization Receipt](#auth-receipt), if the Server has the ability to contact the Customer.
+    * Create a Grant as defined by the authorized [Scopes](#scopes), or if the request is a Grant Authorization Request [[CDS-WG1-02 Section 8.3](#ref-cds-wg1-02-grant-auth-requests)], update the referenced Grant.
+    * If the Server has the ability to contact the Customer, send the Customer an [Authorization Receipt](#auth-receipt).
+    * If the Customer has an associated online profile or user account, include in the Customer's authenticated interface (e.g. their user settings) a location where the Customer can open and view the [Authorization Receipt](#auth-receipt) for the Grant.
     * Redirect the user back to the Client's `redirect_uri` with an Authorization Response as defined in [[RFC 6749 Section 4.1.2](#ref-rfc6749-auth-response)].
 
 #### 9.1.2. Customer Authentication <a id="customer-authentication" href="#customer-authentication" class="permalink">🔗</a>
 
-Because the OAuth authorization process can be initiated by unauthenticated users (e.g. a Customer clicking on the authorization request URL in a Client app), Servers will need to authenticate the user as a Customer before being able to render the [Authorization Form](#auth-form).
+Because the OAuth authorization process can be initiated by unauthenticated users (e.g. a Customer clicking on the authorization request URL in a Client app), Servers MAY authenticate the user as a Customer before rendering the [Authorization Form](#auth-form).
 
 The actual processes and methods of authenticating Customers is outside the scope of this specification.
 So, for the purposes of defining the requirements in this section, when the Server needs to authenticate a user as a Customer, it is assumed that they will "redirect" the user to an authentication provider.
 The term "redirect" in this context means user is shown the start of an authentication process that they can follow to verify their identity as a Customer.
 Then, when the user has been authenticated as a Customer, the authentication provider will "redirect" the Customer back to the Server, and it is assumed that the Server has some means of determining which Customer has been authenticated.
-This "redirect" is dependent on the authentication process, which could be an actual redirect (i.e. `302 Found` response), or some other means of presenting and completing the authentication process (e.g. using an iframe popup or embedded library with events instead of page redirects).
+This "redirect" is dependent on the authentication process, which could be an actual HTTP redirect (i.e. `302 Found` response), or some other means of presenting and completing the authentication process (e.g. using an iframe popup or embedded resource with events instead of page redirects).
 
 Given the assumptions in the previous paragraph, the Server MUST implement the following when needing to complete the Customer Authentication process as defined in handling [Authorization Requests](#auth-requests):
 
 * If the Server can immediately authenticate the user as a Customer (e.g. the user has an authenticated session cookie), and the authentication is still valid, based on session timeout and policy requirements, the Server MUST continue on to the next step of the request handling process with the Customer as authenticated.
 * If the Server cannot immediately authenticate the user as a Customer (e.g. because the user does not have a session or the user's session has expired), the Server MUST redirect the user to the start of the authentication process.
-  Which authentication processes are used is outside of the scope of this specification, so the following examples of common authentication processes are not endorsements of their preference:
+  Which authentication processes are used is outside of the scope of this specification, so the following examples of common authentication processes are not endorsements of preference:
     * Integration with an Identify Provider (IdP) using OpenID Connect (OIDC) for a Single Sign-On (SSO) process
     * Using contact information, such as phone or email, to send a One-Time Passcode (OTP) to verify the Customer's identity
 * If the user is unable to successfully complete the authentication process (e.g. can't remember their password), the authentication process SHOULD have a way for the user to decline to continue (e.g. click "Cancel") or be automatically redirected back (e.g. after too many failed login attempts) to the Server, so that the Server knows that the authentication process failed.
@@ -2709,8 +2718,9 @@ config:
         g[data-id=i52] rect.note { fill: #fdd1a1; stroke: #9f5404; };
         g[data-id=i68] rect.note { fill: #fdd1a1; stroke: #9f5404; };
         g[data-id=i81] rect.note { fill: #fdd1a1; stroke: #9f5404; };
+        g[data-id=i100] rect.note { fill: #fdd1a1; stroke: #9f5404; };
         /* Success redirect  */
-        g[data-id=i91] rect.note { fill: #93ea93; stroke: #080; };
+        g[data-id=i109] rect.note { fill: #93ea93; stroke: #080; };
         /* Page loads  */
         line[data-id=i5] { stroke-width: 4; };
         line[data-id=i36] { stroke-width: 4; };
@@ -2744,9 +2754,9 @@ sequenceDiagram
         Note over CLIENT: STOP<br/>Client handles error as appropriate
     end
 
-    Note over SERVER: Server determines if<br/>Customer is authenticated
+    Note over SERVER: Server determines if Customer<br/>needs to be authenticated
 
-    alt Customer is not yet authenticated
+    alt Customer needs to be authenticated (example)
         SERVER -->>+ USER_AGENT: 302 redirect to Authentication provider URL
         USER_AGENT ->>- IDP: GET Authentication provider URL
         Note over IDP: Customer Authentication<br/>(e.g. Customer login)
@@ -2772,7 +2782,7 @@ sequenceDiagram
         USER_AGENT ->>- SERVER: GET Server continuation URL
     end
 
-    Note over SERVER: Customer is authenticated
+    Note over SERVER: Customer authentication<br/>complete or skipped
 
     Note over SERVER: Server validates<br/>request parameters<br/>(now knowing the<br>Customer's identity)
 
@@ -2784,13 +2794,13 @@ sequenceDiagram
 
     Note over SERVER: Determine<br/>preselections<br/>(if any)
 
-    loop Error: No preselections and error_if_no_preselections is enabled
+    loop Error: No preselection matches and error_if_no_preselections is enabled
         SERVER ->> USER_AGENT: [PAGE LOAD]<br/>Preselection Error
         Note over USER_AGENT: Customer can choose<br/>to (c) reauthenticate<br/>or (d) decline the request
 
         alt (c) Preselection reauthentication
             USER_AGENT ->> SERVER: POST reauthenticate choice
-            SERVER ->> SERVER: GO TO<br/>"Customer is not yet authenticated"
+            SERVER ->> SERVER: GO TO "Customer needs<br/>to be authenticated"
         end
 
         alt (d) Preslection decline
@@ -2805,7 +2815,7 @@ sequenceDiagram
 
     SERVER ->> USER_AGENT: [PAGE LOAD]<br/>Authorization Form
 
-    Note over USER_AGENT: Customer reviews the<br/>Authorization Form,<br/>selecting items as needed<br/><br/>[can be multiple steps]
+    Note over USER_AGENT: Customer reviews the<br/>Authorization Form,<br/>selecting items as needed<br/><br/>(can be multiple steps)
 
     alt Declined authorization
         Note over USER_AGENT: Customer declines<br/>authorization
@@ -2815,9 +2825,28 @@ sequenceDiagram
         Note over CLIENT: STOP<br/>Client handles error as appropriate
     end
 
-    Note over USER_AGENT: Customer accepts<br/>authorization
+    Note over USER_AGENT: Customer approves<br/>authorization
 
-    USER_AGENT ->> SERVER: POST accept request
+    alt Approval for authenticated Customers
+        USER_AGENT ->> SERVER: POST approval request
+    end
+
+    alt Approval for unauthenticated Customers
+        USER_AGENT ->> SERVER: POST contact information<br/>(e.g. email or phone number)
+        SERVER ->> USER_AGENT: [PAGE LOAD]<br/>Contact verification interface
+        USER_AGENT ->> SERVER: POST contact verification + approval request
+
+        alt Contact verification failure
+            SERVER ->> USER_AGENT: Invalid verification error message
+            Note over USER_AGENT: Customer can (a) reattempt<br/>verification or (b) decline
+            USER_AGENT ->> USER_AGENT: (a) GO TO "Approval for<br/>unauthenticated Customers"
+            USER_AGENT ->> SERVER: (b) POST decline request
+            SERVER -->>+ USER_AGENT: 302 redirect to redirect_uri with error
+            USER_AGENT ->>- CLIENT: GET redirect_uri with error
+            Note over CLIENT: STOP<br/>Client handles error as appropriate
+        end
+
+    end
 
     Note over SERVER: Server creates a Grant<br/>for the authorization
 
@@ -2832,14 +2861,14 @@ sequenceDiagram
 
 ### 9.2. Authorization Form <a id="auth-form" href="#auth-form" class="permalink">🔗</a>
 
-After a Customer is authenticated, the Server presents to the Customer an Authorization Form for the user to review and approve or decline.
+After a Customer is authenticated or if the Customer does not need to be initially authenticated, the Server presents to the Customer an Authorization Form for the user to review and approve or decline.
 To help streamline Server development and prevent Customer confusion, this specification has created a framework and set of requirements that Servers MUST follow when implementing the Customer Authorization Form.
 The main goal of these requirements is to prevent Customers from being redirected to the Authorization Form and the Customer getting confused or lost and not being able to complete the authorization request with a simple approve or decline selection.
 
 The following are requirements the Server MUST implement for the Authorization Form user interface and behavior:
 
 * The Server MUST format the Authorization Form as defined in the [Authorization Form Layout](#auth-form-layout) section.
-* The Server MUST render the Authorization Form as a single web page that is tailored to the Customer's device screen size.
+* The Server MUST render the Authorization Form as a single web page that is tailored to popular Customer device screen sizes.
   This means that the Server MUST have a mobile compatible version of the Authorization Form for Customers who open an authorization request on their mobile devices, and the Server MUST have a desktop compatible version of the Authorization Form for Customers who open an authorization request on their laptop or desktop computer.
   The Server MAY implement the Authorization Form in such a way that the same page is responsive to both mobile and desktop scenarios.
   The Server MAY asynchronously load parts of the page (e.g. use javascript to fetch the Customer's Account list) or embed sections of the page (e.g. load the Account list as an iframe), as long as from the Customer's perspective the interface appears to be a single continuous page.
@@ -2847,9 +2876,12 @@ The following are requirements the Server MUST implement for the Authorization F
   The Server MAY have independently scrolling sections of the Authorization Form for embedding longer passages of text (e.g. if the Server is required to display their Terms and Conditions on the Authorization Form instead of linking to it).
   The Server MAY add optional functionality to the Authorization Form (e.g. rename an Account), so long as it is not required for the Customer to approve or decline the Authorization Form.
 * The Server MUST implement the Authorization Form such that the Customer is not required to navigate away from the page in order to approve or decline the Authorization Form.
-  The Server MAY navigate the Customer away from the Authorization Form in order to perform optional functionality (e.g. submitting a message to the Server's technical support team), so long the Customer is returned to the Authorization Form after the optional task is completed.
+  The Server MAY navigate the Customer away from the Authorization Form in order to perform optional functionality (e.g. submitting a message to the Server's technical support team), as long as the Customer is returned to the Authorization Form after the optional task is completed.
 * For any links or buttons on the Authorization Form that navigate the Customer away from the Authorization Form (e.g. linking to the Terms and Conditions), the Server MUST configure them to open in a new tab or window so that the Customer does not lose their place on the Authorization Form.
-* When a Customer approves or declines the Authorization Form, the Server MUST complete the standard OAuth authorization process and redirect the Customer back to the Client's `redirect_uri` endpoint.
+* If the Server does not require the Customer to initially be authenticated in order to complete the Authorization Form, the Server MUST NOT include any confidential information about the Customer in the Authorization Form, unless the information is included as part of the Client's authorization request parameters.
+  This is to prevent Customer Data or confidential information from being show to anyone except an authenticated Customer before the Customer has authorized access.
+  For example, if the authorization request Scope(s) include an [`"account_numbers"`](#auth-details-account-numbers) preselection field that list some Customer account numbers, in the [Account Selection](#account-selection) the Server MUST only render the included preselected Account numbers, MUST NOT show whether those Account numbers are valid, and MUST NOT include Customer details it may have on file for those Account numbers (e.g. address, contact name, etc.).
+* If the Server does not require the Customer to initially be authenticated in order to view the Authorization Form, the Server MUST collect the Customer's contact information as defined in the [Closing Section](#auth-form-closing) and verify that contact information as defined in the [Approval Section](#auth-form-approval) so that it can send the Customer an [Authorization Receipt](#auth-receipt).
 
 #### 9.2.1. Authorization Form Layout <a id="auth-form-layout" href="#auth-form-layout" class="permalink">🔗</a>
 
@@ -2944,11 +2976,11 @@ flowchart TB
                 style dataComponent text-align:left
                 dataComponent ~~~ durationComponent
 
-                durationComponent["`For this duration:<br/>1 year of historical energy usage intervals and 3 years of ongoing access to your service details`"]
+                durationComponent["`For these durations:<br/>1 year of historical energy usage intervals and 3 years of ongoing access to your service details`"]
                 style dataComponent text-align:left
                 durationComponent ~~~ selectionComponent
 
-                selectionComponent["`For these services:<br/>[x] 123 Main St (electric)<br/>[ ] 123 Main St (gas)`"]
+                selectionComponent["`For these services:<br/>[x] Service #222222 - 123 Main St (electric) - Account #1111-1<br/>[ ] Service #333333 - 123 Main St (gas) - Account #1111-1<br/>[ ] any services you add over the next 3 years`"]
                 selectionComponent ~~~ purposeComponent
 
                 purposeComponent["`For this purpose:<br/>*Written by Acme Energy Auditors:* To calculate your home energy efficiency score. [<a href="https://example.com/" target="_blank" rel="noopener">details</a>]`"]
@@ -2962,7 +2994,7 @@ flowchart TB
         approvalSection["`**[Authorize]** **[Decline]**`"]
         approvalSection ~~~ footerSection
 
-        footerSection["`Need to login as another account? <a href="#">Re-login</a><br/><br/>Need some help with this form? <a href="https://example.com/" target="_blank">Contact Support</a><br/><br/>Copyright <a href="https://example.com/" target="_blank">Example Utility</a>, 2026`"]
+        footerSection["`Logged in as aaa@example.com. Need to login as another account? <a href="#">Re-login</a><br/><br/>Need some help with this form? <a href="https://example.com/" target="_blank">Contact Support</a><br/><br/>Copyright <a href="https://example.com/" target="_blank">Example Utility</a>, 2026`"]
     end
 ```
 
@@ -2982,13 +3014,14 @@ This is typically how a rendered Authorization Form would appear, with the secti
 > * Your electric service details [[details](#)]
 > * Your interval energy usage [[details](#)]
 > 
-> For this duration:
+> For these durations:
 > * 1 year of historical energy usage intervals
 > * 3 years of ongoing access to your service details
 > 
 > For these services:  
-> `[x]` 123 Main St (electric)  
-> `[ ]` 123 Main St (gas)
+> `[x]` Service #222222 - 123 Main St (electric) - Account #1111-1  
+> `[ ]` Service #333333 - 123 Main St (gas) - Account #1111-1  
+> `[ ]` any services you add over the next 3 years
 > 
 > For this purpose:  
 > *Written by Acme Energy Auditors:* To calculate your home energy efficiency score. [<a href="https://example.com/" target="_blank" rel="noopener">details</a>]
@@ -2997,7 +3030,7 @@ This is typically how a rendered Authorization Form would appear, with the secti
 > 
 > **[Authorize]** **[Decline]**
 > 
-> Need to login as another account? [Re-login](#)  
+> Logged in as aaa@example.com. Need to login as another account? [Re-login](#)  
 > Need some help with this form? <a href="https://example.com/" target="_blank">Contact Support</a>  
 > Copyright <a href="https://example.com/" target="_blank">Example Utility</a>, 2026
 
@@ -3082,6 +3115,11 @@ The following are requirements and recommendations for the Server when implement
   For example, if the Client is requesting [Meter Usage](#scope-meter-usage) from a local city government Customer, and sometimes for special facilities such as police departments the Server requires an extra form to be signed to release data, the Server could include a file attachment option for government Customers to attach the signed release form if they already know they need to included it.
 * If the Server is required to include long blocks of content in the Closing Section, the Server MUST embed the long blocks in independently scrolling blocks on the page so that the Customer does not have to scroll for long periods of time if they need to scroll back and forth between Sections as they review the Authorization Form.
   For example, if a Server is required to include a long set of terms and conditions in the Authorization Form page itself, the Server MUST include that content in an independent scrolling block.
+* If the Server does not currently have access to the Customer's contact information, such as email or phone number, and the Server has a requirement of sending the Customer an [Authorization Receipt](#auth-receipt), the Server MAY include an inline request for contact information in the Closing Section.
+  When rendering the request for contact information, the Server MUST communicate that the contact information will only be used to send the Customer a receipt and notify them about any changes to this authorization, so if the Customer changes their mind in the future, they can use the receipt to cancel their authorization.
+  The Server and any entity for which the Authorization Form is branded MUST NOT use the collected contact information for other purpose beyond communicating with the Customer about the authorization, such as advertising utility programs or sharing with other entities for mailing list inclusion, except in cases where there is a regulatory or legal requirement.
+  If the Server or entity for which the Authorization Form is branded has a regulatory or legal requirement for obtaining contact information for purposes outside of strictly communicating about the authorization, the Server MUST communicate to the Customer what these other purposes are when requesting the contact information.
+  If the Server is collecting the contact information in order to be able to send an unauthenticated Customer an [Authorization Receipt](#auth-receipt), the contact information collected MUST be able to be verified before an approved authorization is finalized, so the Server MUST only ask for contact information that the Server can verify immediately, such as email or phone number, and not other non-immediately verifiable information, such as address.
 
 ##### 9.2.1.6. Authorization Form Approval Section <a id="auth-form-approval" href="#auth-form-approval" class="permalink">🔗</a>
 
@@ -3092,14 +3130,27 @@ The following are requirements and recommendations for the Server when implement
 * The Server MUST set the text on the approve and decline buttons to clearly communicate the purpose of the button (e.g. "Approve" and "Decline").
 * The Server MUST allow a Customer to decline the authorization request with only the requirements for declining the authorization request satisfied.
   For example, if the requested Scopes require that the Customer select which Accounts apply to the request before approving, but do not require selecting Accounts before declining, the Server MUST allow the Customer to decline without selecting any Accounts.
+* If the Customer has not completed or has filled in invalid values on the Authorization Form, the Server MUST show an error message to the Customer that communicates where the need to correct the issue, mark that area as errored on the Authorization Form, and allow the Customer to resubmit the form with an approve or decline selection once they have corrected the incomplete or invalid values.
+* The Server MUST ensure that once a Customer selects to submit either approve or decline, that the Customer cannot accidentally resubmit the Authorization Form and create duplicate authorizations.
+* The Server MAY include a message below the buttons that briefly explain what will happen after the approve and/or decline buttons are clicked.
 * The Server MUST NOT require any additional steps beyond clicking the approve or decline buttons to complete the approval or rejection of the authorization request, with the following exceptions:
     * If there are regulatory or legal requirements that explicitly require additional steps, the Server MUST implement those steps.
       For example, if the Server's regulator requires that the Customer type their name as part of the approval, the Server MUST include a form field and instructions for the Customer to type their name in addition to selecting to approve.
       However, if additional steps are not explicitly required by the Server's regulatory or legal jurisdictions, the Server MUST NOT include any additional steps.
       For example, if the Server is not explicitly required by regulatory or legal requirements to add an e-signature step, they cannot add a step where the Customer gets redirected to an e-signature pdf document to complete after they select to approve the authorization request.
-* If the Customer has not completed or has filled in invalid values on the Authorization Form, the Server MUST show an error message to the Customer that communicates where the need to correct the issue, mark that area as errored on the Authorization Form, and allow the Customer to resubmit the form with an approve or decline selection once they have corrected the incomplete or invalid values.
-* The Server MUST ensure that once a Customer selects to submit either approve or decline, that the Customer cannot accidentally resubmit the Authorization Form and create duplicate authorizations.
-* The Server MAY include a message below the buttons that briefly explain what will happen after the approve and/or decline buttons are clicked.
+    * If the Server has not already authenticated the Customer, and the Customer selects to approve the authorization request, the Server MUST verify the Customer's contact information collected in the [Closing Section](#auth-form-closing) with the following requirements:
+        * The Server MUST immediately verify the Customer's provided contaction information, prior to processing the Customer's approval.
+          Which contact information verification process is used is outside of the scope of this specification, so the following examples of common authentication processes are not endorsements of preference:
+            * Sending a One-Time Passcode (OTP) to the provided contact email and on the Authorization Form showing a popup modal that asks to enter the OTP digits.
+            * Sending a One-Time Passcode (OTP) to the provided contact mobile phone number and on the Authorization Form a showing popup modal asking to enter the OTP digits.
+            * Calling the provided contact phone number and using an automated voice prompt that asks the Customer to select to approve using the phone's touchpad.
+        * During the contact information verification process, the Server MUST offer an option for the Customer to decline the authorization request at any time.
+          This allows the Customer to be redirected back to the Client with an error rather than becoming stuck on the Authorization Form.
+        * The Server MUST offer the ability to modify their contact information or reattempt to verify the contact information, up to any required retry limitations of the Server's jurisdiction (e.g. a maximum of 5 unsuccessful verification attempts).
+            * If the Customer is unable to verify their contact information after the maximum allowed retries, the Server MUST treat this the same as if the Customer declined the authorization request.
+        * If the Customer successfully verifies their contact information, the Server MUST immediately process the Customer's approval.
+          This means that the Customer MUST NOT be required to select to approve on the Authorization Form again, because they had already selected to approve the authorization request.
+            * The Server MUST use the successfully verified contact information to send the Customer an [Authorization Receipt](#auth-receipt).
 
 ##### 9.2.1.7. Authorization Form Footer Section <a id="auth-form-footer" href="#auth-form-footer" class="permalink">🔗</a>
 
@@ -3415,7 +3466,109 @@ In these situations the Server MUST display an Invalid Request Error page to the
 
 ### 9.4. Authorization Receipt <a id="auth-receipt" href="#auth-errors" class="permalink">🔗</a>
 
-<span style="background-color:yellow">TODO</span>
+The Authorization Receipt is intended to provide the Customer with a written record of their authorization approval.
+The following are requirements and recommendations for the Server when implementing the Authorization Receipt:
+
+* Immediately after the Customer submits their approval of an authorization request and the submission is accepted by the Server, the Server MUST create an Authorization Receipt.
+  An Authorization Receipt is a HTML website page hosted by the Server that discloses the details of the authorization approval that the Customer submitted.
+  This means that for every Grant in which a Customer successfully submitted an authorization approval, at least one Authorization Receipt MUST be created.
+* The Authorization Receipt MUST have a unique confirmation number to which the Customer can reference if they need to contact customer support for assistance.
+  The confirmation number MUST also be included in the Authorization Receipt's related Grant object's `receipt_confirmations` array.
+  This means both the Customer and the Client know the confirmation number for the Authorization Receipt.
+* The Authorization Receipt page MUST be located at a unique random URL (e.g. example.com/receipts/4de15043ff754bd1bbc5550df69f2e99) that is unrelated to the confirmation number or any other identifiers.
+  This prevents Clients from being able to guess the Authorization Receipt page URL from the confirmation number.
+* The Authorization Receipt page MUST be able to be loaded without any sort of Customer authentication requirement.
+  This is to allow the Customer to view and be able to revoke an authorization with as few barriers as possible.
+* The Authorization Receipt page MUST be configured to be ignored by website search crawlers (e.g a `meta` tag with `name="robots" content="noindex"`).
+  This is to prevent Authorization Receipts from showing up on search results.
+* If the Server is able to contact the Customer, either by already having the Customer's contact information on file or by asking for and verifying the Customer's contact information on the Authorization Form itself, the Server MUST send the Customer a notification (e.g. email or text message) that meets the following requirements:
+    * If the Customer's contact information includes their email address, the Server MUST send the notification via email.
+    * The notification MUST contain the following information:
+        * The entity's name for which the Authorization Form was branded, which could be the Server's name
+        * Authorization Receipt confirmation number
+        * A URL link that takes the Customer directly to the Authorization Receipt
+    * If the notification is an email, it is RECOMMENDED that the email include the following additional information:
+        * Authorization date and time
+        * Client name that has been authorized
+        * Summary of Scope(s) and any authorization details, which can be trimmed for length if too long
+        * Summary of selected resources, which can be trimmed for length if too long
+        * The Purpose content, if any, only if the contents has been reviewed and approved by the Server, which can be trimmed for length if too long.
+          Purpose content MUST NOT be included in the notification email if it has not been reviewed and approved by the Server to prevent the Client from being able to include malicious or spam content into emails sent by the server.
+* If a Customer successfully submits an approval for a Grant Authorization Request [[CDS-WG1-02 Section 8.3](#ref-cds-wg1-02-grant-auth-requests)] that is an update to an existing Grant, the Server MUST create a new Authorization Receipt that is related to the referenced Grant.
+  This means that it is possible for a single Grant to have multiple Authorization Receipts related to it.
+* The Authorization Receipt MUST be branded in the same manner as the Authorization Form.
+* The Authorization Receipt MUST display the following information on the Authorization Receipt page:
+    * The Authorization Receipt's confirmation number.
+    * The date and time for the Authorization Receipt's creation.
+    * The current `status` of the Grant, in terms the Customer would likely understand.
+    * The Client's `client_name` and, if provided, link to the Client's `client_uri`, that was shown to the Customer on the Authorization Form at the time of the authorization approval.
+      The link for the `client_uri` MUST be configured to open a new window or tab and have the `rel="noopener nofollow"` attribute so that the link will not allow the Client's website to control the Authorization Receipt page and will not appear as an endorsement of the Client by Server for search engine algorithms.
+    * The Scope(s) and any authorization details for the Grant, at the time the Authorization Receipt was created.
+      It is RECOMMENDED to use the same terms and language that were displayed on the Authorization Form at the time of the authorization approval.
+      If the Scope(s) or authorization details contain Customer Data (e.g. preselected `meter_numbers`) and the Customer is unauthenticated, the Server MUST NOT display that Customer Data and instead show a button or link to allow the Customer to authenticate themselves and then return to the Authorization Form to view the Customer Data.
+    * The list of resources that were selected from the [Selection Component](#selection-component) of the Authorization Form at the time of the authorization approval.
+      If the list of resources included the `_all` special string, the Server MAY simply display a message that all of the Customer's resource type (e.g. Account, Service Contract, etc.) was included.
+      If the list of resources included the `_include_future` special string, the Server MUST display a message that future additions to the Customer's resource type (e.g. Account, Service Contract, etc.) will be included.
+      If the list of resources contain Customer Data (e.g. a list of `account_number` values) and the Customer is unauthenticated, the Server MUST NOT display that Customer Data and instead show a button or link to allow the Customer to authenticate themselves and then return to the Authorization Form to view the Customer Data.
+    * A copy of the Purpose content, if any, displayed on the Authorization Form at the time of the authorization approval.
+      The Server MUST NOT dynamically load the Client's current Purpose object content for the Authorization Receipt, since the Client may have since changed the Purpose object's content since the authorization was approved.
+    * A message and link to any terms of service or agreements that the Customer approved and was bound to at time of the authorization approval.
+    * A message and link for how to contact customer support for the Customer to use if they have any questions or issues.
+    * If the associated Grant currently has a `status` that enables Customer Data access for the Client (e.g. `active`), the Server MUST include a message and link for how the Customer can revoke the authorization if they change their mind later about approving the authorization request.
+      The Server MUST provide functionality to revoke the authorization and the Customer MUST be able to revoke their approval whether or not they are authenticated, so that there are as few barriers as possible for a Customer being able to revoke the Client's access.
+* The Server MAY display other details about the Client, authorization, or Grant, so long as any confidential Customer Data is not visible unless the Customer authenticates themselves.
+* The Server MUST display the required information on the Authorization Receipt in a manner in which the Customer is likely to understand.
+  It is RECOMMENDED that the Server use the same terms and language that were displayed to the Customer on the Authorization Form at the time of of the authorization approval.
+* If any of the following have changed since the time of authorization approval, the Server MUST display the updated version in addition the information as it was at the time of the authorization approval, so that the Customer can understand what has changed for their Grant since this Authorization Receipt was issued:
+    * Client `client_name`
+    * Client `client_uri` (if any)
+    * Authorized Scope(s) and any authorization details
+    * Selected resources (e.g. Accounts, Service Contracts, etc.)
+    * Terms of service or other agreements that the customer approved for the Server or entity for which the Authorization Form was branded
+* If the Authorization Receipt has been superseded by a newer Authorization Receipt for the Grant (e.g. the Customer has since approved a Grant Authorization Request that extends the duration of the authorization), the Server MUST display a message communicating that this Authorization Receipt has been replaced by a more recent Authorization Receipt and provide a link to the URL of the Authorization Receipt that superseded the currently viewed Authorization Receipt.
+* It is RECOMMENDED that the Authorization Receipt page has a button or link to allow the Customer to print the page for their records.
+
+
+Below is an example rendered Authorization Receipt layout that is rendered when the viewed by an unauthenticated Customer.
+
+**Figure 5: Example Authorization Receipt page** <a id="figure-5" href="#figure-5" class="permalink">🔗</a>
+
+---
+
+> **[Example Utility logo]**
+> 
+> **Example Utility**  
+> **Authorization Receipt**  
+> [[print this receipt](#)]
+> 
+> Current status: Active
+> 
+> Confirmation #: 111111111111  
+> Date: 2026-01-01 11:00am (3 months ago)
+> 
+> Who you authorized: <a href="https://example.com/" target="_blank" rel="noopener nofollow">Acme Energy Auditors</a>
+> 
+> What you approved:
+> * Access to your electric service details [[details](#)]
+> * Access to your interval energy usage [[details](#)]
+> 
+> For these durations:
+> * 1 year of historical energy usage intervals
+> * 3 years of ongoing access to your service details
+> 
+> For these services: 
+> * 1 electric service [[login to see more details](#)]
+> 
+> For this purpose:  
+> *Written by Acme Energy Auditors:* To calculate your home energy efficiency score. [<a href="https://example.com/" target="_blank" rel="noopener nofollow">details</a>]
+> 
+> Under these terms:  
+> [Example Utility's Terms of Service](#)  
+> 
+> Change your mind? [Revoke access](#)  
+> Have a question? [Contact support](#)  
+
+---
 
 ## 10. Accounts API <a id="accounts-api" href="#accounts-api" class="permalink">🔗</a>
 

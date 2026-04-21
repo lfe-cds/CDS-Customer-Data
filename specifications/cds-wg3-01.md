@@ -19,22 +19,22 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
 
 * [1. Introduction](#introduction)  
 * [2. Terminology](#terminology)  
-* [3. Scenarios](#scenarios)  
-    * [3.1. Usage Self-Access](#scenario-usage-self-access)  
-    * [3.2. Billing Self-Access](#scenario-billing-self-access) 
-    * [3.3. Usage and Billing Self-Access](#scenario-self-access)   
-    * [3.4. Meter Data](#scenario-meter-data)  
-    * [3.5. Rate Plan](#scenario-rate-plan)  
-    * [3.6. Program Participation](#scenario-program-participation)  
-    * [3.7. Program Analysis](#scenario-program-analysis)  
-    * [3.8. Bill Amount Due](#scenario-bill-amount-due)  
-    * [3.9. Bill Statements](#scenario-bill-statements)  
-    * [3.10. Service Charges](#scenario-service-charges)  
-    * [3.11. Whole-Building Data](#scenario-building-data)  
-    * [3.12. Aggregated Data](#scenario-aggregated-data)  
-    * [3.13. EAC Data](#scenario-eac-data)  
-    * [3.14. Internal Access](#scenario-internal-access)  
-* [4. CDS-WG1-02 Extension](#cds-wg1-02-extension)  
+* [3. CDS-WG1-02 Extension](#cds-wg1-02-extension)  
+* [4. Scenarios](#scenarios)  
+    * [4.1. Usage Self-Access](#scenario-usage-self-access)  
+    * [4.2. Billing Self-Access](#scenario-billing-self-access) 
+    * [4.3. Usage and Billing Self-Access](#scenario-self-access)   
+    * [4.4. Meter Data](#scenario-meter-data)  
+    * [4.5. Rate Plan](#scenario-rate-plan)  
+    * [4.6. Program Participation](#scenario-program-participation)  
+    * [4.7. Program Analysis](#scenario-program-analysis)  
+    * [4.8. Bill Amount Due](#scenario-bill-amount-due)  
+    * [4.9. Bill Statements](#scenario-bill-statements)  
+    * [4.10. Service Charges](#scenario-service-charges)  
+    * [4.11. Whole-Building Data](#scenario-building-data)  
+    * [4.12. Aggregated Data](#scenario-aggregated-data)  
+    * [4.13. EAC Data](#scenario-eac-data)  
+    * [4.14. Internal Access](#scenario-internal-access)  
 * [5. Server Metadata](#server-metadata)  
     * [5.1. Registration Field Formats Extension](#registration-field-formats-extension)  
 * [6. Scopes Supported](#scopes)  
@@ -120,7 +120,7 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
     * [8.1. Client Object Extension](#client-extension)  
     * [8.2. Modifying Client Objects Extension](#clients-modify-extension)  
     * [8.3. Purpose Object Format](#purpose-format)  
-* [9. Customer Authorizations](#customer-authorizations)  
+* [9. Customer Authorizations](#authorizations)  
     * [9.1. Authorization Process](#auth-process)  
         * [9.1.1. Authorization Requests](#auth-requests)  
         * [9.1.2. Customer Authentication](#customer-authentication)  
@@ -149,44 +149,45 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
         * [9.3.1. Preselection Error](#preselection-error)  
         * [9.3.2. Invalid Request Error](#request-error)  
     * [9.4. Authorization Receipt](#auth-receipt)  
-* [10. Accounts API](#accounts-api)  
-    * [10.1. Account Object Format](#account-format)  
-    * [10.2. Listing Accounts](#accounts-list)  
-* [11. Service Contracts API](#service-contracts-api)  
-    * [11.1. Service Contract Object Format](#service-contract-format)  
-    * [11.2. Listing Service Contracts](#service-contract-list)  
-* [12. Service Points API](#service-points-api)  
-    * [12.1. Service Point Object Format](#service-point-format)  
-    * [12.2. Listing Service Points](#service-point-list)  
-* [13. Meter Devices API](#meter-devices-api)  
-    * [13.1. Meter Device Object Format](#meter-device-format)  
-    * [13.2. Listing Meter Device](#meter-device-list)  
-* [14. Bill Statements API](#bill-statements-api)  
-    * [14.1. Bill Statement Object Format](#bill-statement-format)  
-    * [14.2. Listing Bill Statements](#bill-statement-list)  
-* [15. Bill Sections API](#bill-sections-api)  
-    * [15.1. Bill Section Object Format](#bill-section-format)  
-    * [15.2. Listing Bill Sections](#bill-section-list)  
-* [16. Aggregations API](#aggregations-api)  
-    * [16.1. Aggregation Object Format](#aggregation-format)  
-    * [16.2. Listing Aggregations](#aggregation-list)  
-* [17. Usage Segments API](#usage-segments-api)  
-    * [17.1. Usage Segment Object Format](#usage-segment-format)  
-    * [17.2. Usage Segment Value Formats](#usage-segment-value-format)  
-    * [17.3. Usage Segment Value Set Format](#usage-segment-value-set-format)  
-    * [17.4. Usage Segment Value Object Format](#usage-segment-value-object-format)  
-    * [17.5. Listing Usage Segments](#usage-segment-list)  
-* [18. Energy Attribute Certificates API](#eac-api)  
-    * [18.1. Energy Attribute Certificate Object Format](#eac-format)  
-    * [18.2. Beneficiary Types](#eac-beneficiary-types)  
-    * [18.3. EAC Data Format Description Object](#eac-data-format-descriptions)  
-    * [18.4. Listing Energy Attribute Certificates](#eac-list)  
-* [19. Extensions](#extensions)  
-* [20. Security Considerations](#security)  
-* [21. Examples](#examples)  
-* [22. References](#references)  
-* [23. Acknowledgments](#acknowledgments)  
-* [24. Authors' Addresses](#authors-addresses)  
+* [10. Customer Data API](#api)
+    * [10.1. Accounts API](#accounts-api)  
+        * [10.1.1. Account Object Format](#account-format)  
+        * [10.1.2. Listing Accounts](#accounts-list)  
+    * [10.2. Service Contracts API](#service-contracts-api)  
+        * [10.2.1. Service Contract Object Format](#service-contract-format)  
+        * [10.2.2. Listing Service Contracts](#service-contract-list)  
+    * [10.3. Service Points API](#service-points-api)  
+        * [10.3.1. Service Point Object Format](#service-point-format)  
+        * [10.3.2. Listing Service Points](#service-point-list)  
+    * [10.4. Meter Devices API](#meter-devices-api)  
+        * [10.4.1. Meter Device Object Format](#meter-device-format)  
+        * [10.4.2. Listing Meter Device](#meter-device-list)  
+    * [10.5. Bill Statements API](#bill-statements-api)  
+        * [10.5.1. Bill Statement Object Format](#bill-statement-format)  
+        * [10.5.2. Listing Bill Statements](#bill-statement-list)  
+    * [10.6. Bill Sections API](#bill-sections-api)  
+        * [10.6.1. Bill Section Object Format](#bill-section-format)  
+        * [10.6.2. Listing Bill Sections](#bill-section-list)  
+    * [10.7. Aggregations API](#aggregations-api)  
+        * [10.7.1. Aggregation Object Format](#aggregation-format)  
+        * [10.7.2. Listing Aggregations](#aggregation-list)  
+    * [10.8. Usage Segments API](#usage-segments-api)  
+        * [10.8.1. Usage Segment Object Format](#usage-segment-format)  
+        * [10.8.2. Usage Segment Value Formats](#usage-segment-value-format)  
+        * [10.8.3. Usage Segment Value Set Format](#usage-segment-value-set-format)  
+        * [10.8.4. Usage Segment Value Object Format](#usage-segment-value-object-format)  
+        * [10.8.5. Listing Usage Segments](#usage-segment-list)  
+    * [10.9. Energy Attribute Certificates API](#eac-api)  
+        * [10.9.1. Energy Attribute Certificate Object Format](#eac-format)  
+        * [10.9.2. Beneficiary Types](#eac-beneficiary-types)  
+        * [10.9.3. EAC Data Format Description Object](#eac-data-format-descriptions)  
+        * [10.9.4. Listing Energy Attribute Certificates](#eac-list)  
+* [11. Extensions](#extensions)  
+* [12. Security Considerations](#security)  
+* [13. Examples](#examples)  
+* [14. References](#references)  
+* [15. Acknowledgments](#acknowledgments)  
+* [16. Authors' Addresses](#authors-addresses)  
 
 ## 1. Introduction <a id="introduction" href="#introduction" class="permalink">🔗</a>
 
@@ -194,7 +195,7 @@ This specification was developed as part of the global effort to facilitate grid
 Specifically, in order to scalably deploy and economically operate and analyze new energy technologies, external organizations and Customers need an automated means of requesting access to Customer Data from utilities and other central entities.
 
 There are thousands of utilities serving Customers across the world, and each have their own way of providing access to and formatting Customer Data.
-This specification defines a way for these utilities and other central entities ("Servers") to provide a standardized, structured process for external users and organizations ("Clients") to access Customer Data, requesting consent from Customers if needed.
+This specification defines a way for these utilities and other central entities ("Servers") to provide a standardized, structured process for external companies and organizations ("Clients") to access Customer Data, requesting consent from Customers if needed.
 By offering a standardized a Customer Data access protocol, utilities and other central entities can offer secure, automated, managed means of access to Customer Data.
 
 ## 2. Terminology <a id="terminology" href="#terminology" class="permalink">🔗</a>
@@ -203,14 +204,24 @@ By offering a standardized a Customer Data access protocol, utilities and other 
 A Server can be an energy utility or another type of entity that want to provide access to privileged functionality or data.
 These entities can include, but are not limited to, distribution utilities, grid operators, electric retailers, community choice aggregators, government agencies, data warehouses, and private infrastructure providers.
 
-<a id="client" href="#client" class="permalink">🔗</a> **"Client"** - The entity requesting Server's metadata endpoints.
-A Client can be any organization or user seeking to access Customer data with a Server for a specific scope of access.
+<a id="client" href="#client" class="permalink">🔗</a> **"Client"** - The entity requesting [Server's](#server) metadata endpoints.
+A Client can be any person, company, or organization seeking to access Customer Data with a Server for a specific scope of access.
 These entities can include, but are not limited to, energy efficiency contractors, utility vendors, distributed energy resource companies, building energy management platforms, and even Customers themselves (to gain automated access their own data).
 
-<a id="customer" href="#customer" class="permalink">🔗</a> **"Customer"** - The entity who's data is being requested from a Server by a Client ("Customer Data").
-For grants that require customer authorization, the Customer is the user who authorizes the access.
+<a id="customer" href="#customer" class="permalink">🔗</a> **"Customer"** - The entity who's [Customer Data](#customer-data-def) is being requested from a [Server](#server) by a [Client](#client).
+For grants that require customer authorization, the Customer is the [User](#user) who authorizes the access.
 Customers are typically the account holder, also commonly called the "customer of record", such as homeowners, renters, businesses, and industrial companies.
 Customers may also be a representative of the customer of record, such as an energy management company, provided that the reprentative has been duly authorized give consent on the customer of record's behalf according to local regulatory requirements.
+
+<a id="customer-data-def" href="#customer-data-def" class="permalink">🔗</a> **"Customer Data"** - Data that is made available by a Server via the various [APIs](#api) defined in this specification.
+This data is typically confidential data that is tied to an individual Customer ([Accounts](#account-format), [Bill Statements](#bill-statement-format), etc.), but can also be other data such as details about utility [Service Points](#service-point-format), regional usage [Aggregations](#aggregation-format), or system wide [Energy Attribute Certificates](#eac-format).
+This means that this specification does not distinguish between what is Customer personally identifiable information (PII), what is utility or central entity confidential information, and what is public information.
+Instead, this specification assumes that all information being accessed by Clients is confidential and requires a valid access token for an authorized [Scope](#scopes).
+It is up to a Server to manage which Clients have which Scopes available to use, what resources are available to query for those Clients, which Clients require [Customer consent](#scopes-customer-consent) to access data, and which Clients may [query data directly](#scopes-direct-access).
+
+<a id="user" href="#user" class="permalink">🔗</a> **"User"** - The person who is navigating the [Authorization Process](#authorizations).
+For the Authorization Process, the User is assumed to be the [Customer](#customer) (if the Customer is a person) or the Customer's representative (if the Customer is a business).
+So for the purposes of this specification, anytime the "User" is mentioned it can be assumed that the Customer is the User, whether or not they have completed [Customer Authentication](#customer-authentication).
 
 <a id="array" href="#array" class="permalink">🔗</a> "Array" - A list of objects or values as defined by `Arrays` in [[RFC 8259 Section 5](#ref-rfc8259-arrays)].
 
@@ -240,7 +251,20 @@ Customers may also be a representative of the customer of record, such as an ene
 
 <a id="key-words" href="#key-words" class="permalink">🔗</a> Key Words: "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" are defined in accordance with [[BCP 14](#ref-bcp14)].
 
-## 3. Scenarios <a id="scenarios" href="#scenarios" class="permalink">🔗</a>
+## 3. CDS-WG1-02 Extension <a id="cds-wg1-02-extension" href="#CDS-WG1-02-extension" class="permalink">🔗</a>
+
+As the framework for providing Client registration, onboarding, communication, management, and grant authorizations, Servers MUST implement CDS's Client Registration specification [[CDS-WG1-02](#ref-cds-wg1-02)] in order to implement the functionality defined in this specification.
+This specification also extends the CDS's Client Registration framework by defining additional fields, values, and APIs that are relevant to Customer Data access, so that Servers implementing this specification can satisfy Customer Data use cases.
+
+Specifically, the following sections are extended from [[CDS-WG1-02](#ref-cds-wg1-02)]:
+
+* The Authorization Server Metadata object [[CDS-WG1-02 Section 3.2](#ref-cds-wg1-02-metadata)] is extended to include [additional fields](#server-metadata).
+* The Registration Field Formats [[CDS-WG1-02 Section 3.7](#ref-cds-wg1-02-registration-field-formats)] is extended to include [additional fields](#registration-field-formats-extension).
+* The Scopes Supported section [[CDS-WG1-02 Section 3.3](#ref-cds-wg1-02-scopes)] is extended to include [additional Scopes](#scopes).
+* The Client object [[CDS-WG1-02 Section 5.1](#ref-cds-wg1-02-client-object)] is extended to include [additional fields](#client-extension).
+* The Client modification API [[CDS-WG1-02 Section 5.5](#ref-cds-wg1-02-modifying-clients)] is extended to include [additional requirements](#clients-modify-extension).
+
+## 4. Scenarios <a id="scenarios" href="#scenarios" class="permalink">🔗</a>
 
 Customer Data access is necessary for many different use cases, but not all use cases require the same type of access or same fields of Customer Data.
 For example, an energy efficiency auditor working with a Customer may need historical usage intervals, but no bill data.
@@ -266,7 +290,7 @@ For example, a utility could enable Scopes that streamline how they transfer pro
 Clients MUST NOT rely on stated Scenario compliance from regulators or Servers.
 Instead, Clients MUST parse the [Server Metadata](#server-metadata) to evaluate if a Server's offered Scopes and functionality is adequate for their use case.
 
-### 3.1. Usage Self-Access <a id="scenario-usage-self-access" href="#scenario-usage-self-access" class="permalink">🔗</a>
+### 4.1. Usage Self-Access <a id="scenario-usage-self-access" href="#scenario-usage-self-access" class="permalink">🔗</a>
 
 This section defines the Scenario "Usage Self-Access" in which a utility Customer wants to access their own accounts' meter and usage data.
 For example, a commercial customer would like to download their historical meter usage feed for their owned properties, so that their energy management team can evaluate their buildings' energy profiles.
@@ -285,7 +309,7 @@ To implement the "Usage Self-Access" Scenario, Servers MUST implement the follow
 * The [Usage Query](#scope-usage-query) Scope Description's `segment_end` authorization details field MUST have the `maximum` field's value set to `infinite`, which means Clients MAY authorize access to.
 * <span style="background-color:yellow">TODO: what `include_*` auth details</span>
 
-### 3.2. Billing Self-Access <a id="scenario-billing-self-access" href="#scenario-billing-self-access" class="permalink">🔗</a>
+### 4.2. Billing Self-Access <a id="scenario-billing-self-access" href="#scenario-billing-self-access" class="permalink">🔗</a>
 
 This section defines the Scenario "Billing Self-Access" in which a utility Customer wants to access their own accounts' utility bills.
 For example, an enterprise customer would like automate importing their utility bills into their accounting software.
@@ -305,7 +329,7 @@ To implement the "Billing Self-Access" Scenario, Servers MUST implement the foll
 * The [Bill Sections Query](#scope-bill-sections-query) Scope Description's `start_date` authorization details field MUST allow the Client to access for each connected Service Contract at least 1 year of historical bill sections (i.e. `minimum` value set to at least `P1Y`).
 * <span style="background-color:yellow">TODO: what `include_*` auth details</span>
 
-### 3.3. Usage and Billing Self-Access <a id="scenario-self-access" href="#scenario-self-access" class="permalink">🔗</a>
+### 4.3. Usage and Billing Self-Access <a id="scenario-self-access" href="#scenario-self-access" class="permalink">🔗</a>
 
 This section defines the Scenario "Usage and Billing Self-Access" in which a utility Customer wants to access their own accounts' usage and bills.
 For example, an enterprise customer would like automate a energy billing.
@@ -315,7 +339,7 @@ To implement the "Usage and Billing Self-Access" Scenario, Servers MUST implemen
 * Servers MUST implement the [Usage Self-Access](#scenario-usage-self-access) Scenario.
 * Servers MUST implement the [Billing Self-Access](#scenario-billing-self-access) Scenario.
 
-### 3.4. Meter Data <a id="scenario-meter-data" href="#scenario-meter-data" class="permalink">🔗</a>
+### 4.4. Meter Data <a id="scenario-meter-data" href="#scenario-meter-data" class="permalink">🔗</a>
 
 This section defines the Scenario "Meter Data" in which a Client requests access to a Customer's historical and/or ongoing usage data.
 For example, an energy efficiency auditor is working with building owner, and needs to download their previous year's usage.
@@ -325,58 +349,45 @@ To implement the "Meter Data" Scenario, Servers MUST implement the following lis
 * Servers MUST include at least one of each [Accounts Query](#scope-accounts-query), [Service Contracts Query](#scope-service-contracts-query), [Service Points Query](#scope-service-points-query), [Meter Devices Query](#scope-meter-devices-query), and [Usage Query](#scope-usage-query) Scope Descriptions in the Server Metadata `cds_scope_descriptions` object, as well as include those Scope Description `id` values in the Server Metadata `scopes_supported` list.
 * The [Usage Query](#scope-usage-query) Scope Description's `segment_start` authorization details field MUST allow the Client to access for each connected Service Contract's usage at least 1 year of historical usage data (i.e. `minimum` value set to at least `P1Y`).
 
-### 3.5. Rate Plan <a id="scenario-rate-plan" href="#scenario-rate-plan" class="permalink">🔗</a>
+### 4.5. Rate Plan <a id="scenario-rate-plan" href="#scenario-rate-plan" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.6. Program Participation <a id="scenario-program-participation" href="#scenario-program-participation" class="permalink">🔗</a>
+### 4.6. Program Participation <a id="scenario-program-participation" href="#scenario-program-participation" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.7. Program Analysis <a id="scenario-program-analysis" href="#scenario-program-analysis" class="permalink">🔗</a>
+### 4.7. Program Analysis <a id="scenario-program-analysis" href="#scenario-program-analysis" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.8. Bill Amount Due <a id="scenario-bill-amount-due" href="#scenario-bill-amount-due" class="permalink">🔗</a>
+### 4.8. Bill Amount Due <a id="scenario-bill-amount-due" href="#scenario-bill-amount-due" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.9. Bill Statements <a id="scenario-bill-statements" href="#scenario-bill-statements" class="permalink">🔗</a>
+### 4.9. Bill Statements <a id="scenario-bill-statements" href="#scenario-bill-statements" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.10. Service Charges <a id="scenario-service-charges" href="#scenario-service-charges" class="permalink">🔗</a>
+### 4.10. Service Charges <a id="scenario-service-charges" href="#scenario-service-charges" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.11. Whole-Building Data <a id="scenario-building-data" href="#scenario-building-data" class="permalink">🔗</a>
+### 4.11. Whole-Building Data <a id="scenario-building-data" href="#scenario-building-data" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.12. Aggregated Data <a id="scenario-aggregated-data" href="#scenario-aggregated-data" class="permalink">🔗</a>
+### 4.12. Aggregated Data <a id="scenario-aggregated-data" href="#scenario-aggregated-data" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.13. EAC Data <a id="scenario-eac-data" href="#scenario-eac-data" class="permalink">🔗</a>
+### 4.13. EAC Data <a id="scenario-eac-data" href="#scenario-eac-data" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 3.14. Internal Access <a id="scenario-internal-access" href="#scenario-internal-access" class="permalink">🔗</a>
+### 4.14. Internal Access <a id="scenario-internal-access" href="#scenario-internal-access" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
-
-## 4. CDS-WG1-02 Extension <a id="cds-wg1-02-extension" href="#CDS-WG1-02-extension" class="permalink">🔗</a>
-
-As the framework for providing Client registration, onboarding, communication, management, and grant authorizations, Servers MUST implement CDS's Client Registration specification [[CDS-WG1-02](#ref-cds-wg1-02)].
-This specification in subsequent sections extends the CDS's Client Registration framework by defining additional fields, values, and APIs that are relevant to Customer Data access, so that Servers implementing this specification can satisfy Customer Data use cases.
-
-Specifically, the following sections are extended from [[CDS-WG1-02](#ref-cds-wg1-02)]:
-
-* The Authorization Server Metadata object [[CDS-WG1-02 Section 3.2](#ref-cds-wg1-02-metadata)] is extended to include [additional fields](#server-metadata).
-* The Registration Field Formats [[CDS-WG1-02 Section 3.7](#ref-cds-wg1-02-registration-field-formats)] is extended to include [additional fields](#registration-field-formats-extension).
-* The Scopes Supported section [[CDS-WG1-02 Section 3.3](#ref-cds-wg1-02-scopes)] is extended to include [additional Scopes](#scopes).
-* The Client object [[CDS-WG1-02 Section 5.1](#ref-cds-wg1-02-client-object)] is extended to include [additional fields](#client-extension).
-* The Client modification API [[CDS-WG1-02 Section 5.5](#ref-cds-wg1-02-modifying-clients)] is extended to include [additional requirements](#clients-modify-extension).
 
 ## 5. Server Metadata <a id="server-metadata" href="#server-metadata" class="permalink">🔗</a>
 
@@ -444,7 +455,7 @@ The Customer authorization process uses the Server's OAuth Authorization Code Gr
 
 When a Server supports any of the Scopes in this section, the Server MUST implement the following:
 
-* The Server MUST implement the [Customer Authorizations](#customer-authorizations) framework, which defines the process and user interfaces for a Server obtaining Customer consent.
+* The Server MUST implement the [Customer Authorizations](#authorizations) framework, which defines the process and user interfaces for a Server obtaining Customer consent.
 
 #### 6.1.1. Rate Plan <a id="scope-rate-plan" href="#scope-rate-plan" class="permalink">🔗</a>
 
@@ -2236,7 +2247,7 @@ Additionally, Servers MUST implement the following behavior to support this auth
 
 #### 7.2.9. Include Energy Attribute Certificates <a id="auth-details-include-eacs" href="#auth-details-include-eacs" class="permalink">🔗</a>
 
-For some use cases, Clients need to have access to a set of [Energy Attribute Certificates](#eac-format") (EACs).
+For some use cases, Clients need to have access to a set of [Energy Attribute Certificates](#eac-format) (EACs).
 For example, a emissions auditor Client may need to access the utility's EACs that have been applied to a set of enterprise Customer's Accounts in order to verify the Customer's corporate emissions reporting.
 To enable whether EAC objects access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional EAC access.
 
@@ -2484,7 +2495,7 @@ When this authorization field is included in an authorization request, Servers M
         * For preselection authorization details fields that exist both in both match's Scope Description `authorization_details_fields_supported`, the field's object MUST have the same values, so that the field's value in the request has the same validation process for both scopes.
         * For preselection authorization details fields that only exist in one or the other Scope Descriptions `authorization_details_fields_supported`, the field's value in the request MUST be `null` or `null` by default, so that there is no preselection impact for combining the Scopes into a single Selection Component.
     * If a match does not pass validation, the Server MUST reject the authorization request with an `invalid_authorization_details` error.
-    * If a match passes validation, the Server MUST render the [Request Section](#auth-form-request) for this field's scope and the matched scope as having a single Selection Component, such that the User only needs to select the resources in that Selection and those resources will be applied to all of the scopes grouped together via this authorization details field.
+    * If a match passes validation, the Server MUST render the [Request Section](#auth-form-request) for this field's scope and the matched scope as having a single Selection Component, such that the Customer only needs to select the resources in that Selection and those resources will be applied to all of the scopes grouped together via this authorization details field.
     * Servers MUST support merging the any number of scopes together that reference each other via this authorization details field, so that Clients can group any number of scopes together into a single Selection Component for an authorization form.
 * When the field value is `null`, Servers MUST treat the scope for this authorization details field as an individually rendered [Request Section](#auth-form-request) with an individual Selection Component.
   This means that when a scope uses this authorization details field to reference another scope, that other scope MUST also have a non-`null` value for its `merge_selection_with` authorization details field.
@@ -2496,10 +2507,10 @@ These preselections are configured by other authorization details fields (e.g. `
 However, sometimes a Customer does not have any Accounts, Meter Devices, or other relevant objects that meet the preselection criteria.
 For example, an energy audit contractor Client may request access to all of a Customer's electric Service Contracts using the [`service_types`](#auth-details-service-types) authorization details field (i.e. `"service_types": ["electric"]`).
 If the Customer does not have any electric meters (e.g. they are a gas-only customer), the authorization form will not be able to have any Service Contracts preselected.
-In other situations, a Customer may have multiple accounts they control, such as a commercial Customer with multiple locations, and may need to reauthenticate as a different user if they are accidentally logged in as the wrong user for an authorization request with a specific list of preselected [account numbers](#auth-details-account-numbers) (e.g. `"account_numbers": ["1234-5"]`).
+In other situations, a Customer may have multiple accounts they control, such as a commercial Customer with multiple locations, and may need to reauthenticate as a different Customer if they are accidentally logged in as the wrong Customer for an authorization request with a specific list of preselected [account numbers](#auth-details-account-numbers) (e.g. `"account_numbers": ["1234-5"]`).
 
 In these relevant use cases, Clients benefit from being able to configure the authorization request to automatically render a [Preselection Error](#preselection-error) for an authenticated Customer if they do not have any objects that can be preselected.
-That way, Customers are given a chance to reauthenticate as a different user or decline the authorization and be redirected back to the Client with a specific error.
+That way, Customers are given a chance to reauthenticate as a different Customer or decline the authorization and be redirected back to the Client with a specific error.
 This allows Clients to present relevant messages to Customers that do not have required objects for the Client's use case (e.g. "You don't appear to have any electric meters, so we won't be able to run an energy audit for your account.").
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
@@ -2509,9 +2520,9 @@ To support this authorization details field, the Authorization Details Field Obj
 
 For scopes where the Scope Description's `response_types_supported` array is not empty (i.e. authorization requests are required) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
-* When this field value is `true`, after the user is authenticated and prior to rendering the authorization form to the user, the Server MUST determine if the user will need to select any objects relevant to preselection fields included in the authorization details of the request (e.g. `"account_numbers": ["1234-5"]`) didn't match any of the user's Account `account_number` values, so no Accounts will be preselected and the user will be asked to select the Accounts they want to apply to this authorization).
-  If the user will need to select any objects relevant to preselection fields included in the authorization details of the request, the Server MUST render and present a [Preselection Error](#preselection-error) to the user, which allows the user to either reauthenticate or cancel the authorization request.
- If the user selects to cancel the authorization request, the Server MUST redirect the user back to the Client's `redirect_uri` with an `error` parameter value of `no_preselections`.
+* When this field value is `true`, after the User is authenticated as a Customer and prior to rendering the authorization form to the Customer, the Server MUST determine if the Customer will need to select any objects relevant to preselection fields included in the authorization details of the request (e.g. `"account_numbers": ["1234-5"]`) didn't match any of the Customer's Account `account_number` values, so no Accounts will be preselected and the Customer will be asked to select the Accounts they want to apply to this authorization).
+  If the Customer will need to select any objects relevant to preselection fields included in the authorization details of the request, the Server MUST render and present a [Preselection Error](#preselection-error) to the Customer, which allows the Customer to either reauthenticate or cancel the authorization request.
+ If the Customer selects to cancel the authorization request, the Server MUST redirect the Customer back to the Client's `redirect_uri` with an `error` parameter value of `no_preselections`.
 * If the authorization request did not include any preselection fields, defined by Section 7.1, or this field value is `false`, the Server MUST ignore this field and treat the authorization request as if this field was not included.
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
@@ -2560,8 +2571,8 @@ Servers MUST NOT include an object for this authorization field in a Scope Descr
 
 When this authorization field is included in an authorization request, Servers MUST implement the following requirements:
 
-* When the field value is `true`, Servers MAY render authorization form presented to the user as editable, meaning that the user MAY modify the requested scope or authorization details values within the authorization form and then authorize that modified scope.
-* When this field value is `false`, Servers MUST render the authorization from presented to the user as non-editable, meaning that the user MUST be able to only authorize or decline the authorization request as a whole and cannot modify the requested scope.
+* When the field value is `true`, Servers MAY render authorization form presented to the Customer as editable, meaning that the Customer MAY modify the requested scope or authorization details values within the authorization form and then authorize that modified scope.
+* When this field value is `false`, Servers MUST render the authorization from presented to the Customer as non-editable, meaning that the Customer MUST be able to only authorize or decline the authorization request as a whole and cannot modify the requested scope.
 
 If the Server supports the ability for a Customer to modify the requested Scope in the [Authorization Form](#auth-form), the Server MUST include this authorization details field for all Scopes that may be used for that Authorization Form.
 This means that in this situation, Servers MUST support a Client's ability to toggle the ability for a Customer to edit their authorization request.
@@ -2608,7 +2619,7 @@ Purpose objects are formatted as JSON objects and contain the following named va
 * `scopes_supported` - _Array[[string](#string)]_ - (REQUIRED) The list of [Scope](#scopes) values for which this Purpose can be included using the [Purpose Identifier](#auth-details-purpose) authorization details field.
   If the Purpose is not available for use in any Scopes, this value can be an empty list (`[]`).
 
-## 9. Customer Authorizations <a id="customer-authorizations" href="#customer-authorizations" class="permalink">🔗</a>
+## 9. Customer Authorizations <a id="authorizations" href="#authorizations" class="permalink">🔗</a>
 
 This section defines a set of requirements that Servers MUST follow when implementing the Customer authorization process required for [Customer Consent Scopes](#scopes-customer-consent).
 Requirements include how authorization requests are handled and the layout of the authorization form page.
@@ -2648,7 +2659,7 @@ When a authorization request is received by a Server, the Server MUST implement 
             * If the `redirect_uri` parameter is not included in the authorization request, the Server MUST use the `cds_default_redirect_uri` value in the Client's Client object [[CDS-WG1-02 Section 5.1](#ref-cds-wg1-02-client-object)] as the default `redirect_uri` value.
         * `request_uri` (if included) - validate as defined in [[RFC 9126](#ref-9126-pushed-auth-requests)].
     * If the `response_type`, `response_type`, or `redirect_uri` parameters in the authorization request are invalid, the Server MUST show the Customer a [Invalid Request Error](#request-error).
-    * If any other parameters are invalid, the Server MUST redirect the user back to the Client's `redirect_uri` with an Error Response as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
+    * If any other parameters are invalid, the Server MUST redirect the User back to the Client's `redirect_uri` with an Error Response as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
 * If the URL parameters for the authorization request pass the Server's initial validation, the Server MUST:
     * Determine if the [Authorization Form](#auth-form) requires [Customer Authentication](#customer-authentication).
       Customer Authentication MUST be required when the Authorization Form will render with Customer details that are sourced from a confidential dataset, such as rendering the Customer's full list of accounts in the [Account Selection](#account-selection).
@@ -2656,20 +2667,20 @@ When a authorization request is received by a Server, the Server MUST implement 
       It is RECOMMENDED that Customer Authentication is required when the Server has the ability to authenticate the Customer (e.g. when the Server is integrated wit a utility's Single Sign-On (SSO)) and the Server has access to render the Customer's list of resources for the [Selection Component](#selection-component) of the Authorization.
         * If Customer Authentication is required, the Server MUST follow the [Customer Authentication](#customer-authentication) process.
         * If Customer Authentication is not required, the Server MUST skip the Customer Authentication process and proceed to rendering the Authorization Form.
-* If the user completes the Customer Authentication process, the Server MUST:
+* If the User completes the Customer Authentication process and is now authenticated as a Customer, the Server MUST:
     * Validate the authorization request URL parameters again, now under the context of knowing the Customer's identity.
-    * If any parameters are invalid, the Server MUST redirect the user back to the Client's `redirect_uri` with an Error Response as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
+    * If any parameters are invalid, the Server MUST redirect the Customer back to the Client's `redirect_uri` with an Error Response as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
     * If the [`error_if_no_preselections`](#auth-details-error-if-no-preselections) authorization details field is enabled, the Server MUST evaluate if the Customer has any resources selected by default.
-      If there are no [selections](#selection-component), the Server MUST show the user a [Preselection Error](#preselection-error).
+      If there are no [selections](#selection-component), the Server MUST show the Customer a [Preselection Error](#preselection-error).
 * If the URL parameters for the authorization request are valid, the Server MUST:
-    * Render and show the user the [Authorization Form](#auth-form).
-* If the user declines the authorization request, the Server MUST:
-    * Redirect the user back to the Client's `redirect_uri` with an `access_denied` error as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
-* If the user authorizes the authorization request, the Server MUST:
+    * Render and show the Customer the [Authorization Form](#auth-form).
+* If the Customer declines the authorization request, the Server MUST:
+    * Redirect the Customer back to the Client's `redirect_uri` with an `access_denied` error as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
+* If the Customer authorizes the authorization request, the Server MUST:
     * Create a Grant as defined by the authorized [Scopes](#scopes), or if the request is a Grant Authorization Request [[CDS-WG1-02 Section 8.3](#ref-cds-wg1-02-grant-auth-requests)], update the referenced Grant.
     * If the Server has the ability to contact the Customer, send the Customer an [Authorization Receipt](#auth-receipt).
     * If the Customer has an associated online profile or user account, include in the Customer's authenticated interface (e.g. their user settings) a location where the Customer can open and view the [Authorization Receipt](#auth-receipt) for the Grant.
-    * Redirect the user back to the Client's `redirect_uri` with an Authorization Response as defined in [[RFC 6749 Section 4.1.2](#ref-rfc6749-auth-response)].
+    * Redirect the Customer back to the Client's `redirect_uri` with an Authorization Response as defined in [[RFC 6749 Section 4.1.2](#ref-rfc6749-auth-response)].
 
 #### 9.1.2. Customer Authentication <a id="customer-authentication" href="#customer-authentication" class="permalink">🔗</a>
 
@@ -2683,15 +2694,15 @@ This "redirect" is dependent on the authentication process, which could be an ac
 
 Given the assumptions in the previous paragraph, the Server MUST implement the following when needing to complete the Customer Authentication process as defined in handling [Authorization Requests](#auth-requests):
 
-* If the Server can immediately authenticate the user as a Customer (e.g. the user has an authenticated session cookie), and the authentication is still valid, based on session timeout and policy requirements, the Server MUST continue on to the next step of the request handling process with the Customer as authenticated.
-* If the Server cannot immediately authenticate the user as a Customer (e.g. because the user does not have a session or the user's session has expired), the Server MUST redirect the user to the start of the authentication process.
+* If the Server can immediately authenticate the User as a Customer (e.g. the User has an authenticated session cookie), and the authentication is still valid, based on session timeout and policy requirements, the Server MUST continue on to the next step of the request handling process with the Customer as authenticated.
+* If the Server cannot immediately authenticate the User as a Customer (e.g. because the User does not have a session or the User's session has expired), the Server MUST redirect the User to the start of the authentication process.
   Which authentication processes are used is outside of the scope of this specification, so the following examples of common authentication processes are not endorsements of preference:
     * Integration with an Identify Provider (IdP) using OpenID Connect (OIDC) for a Single Sign-On (SSO) process
     * Using contact information, such as phone or email, to send a One-Time Passcode (OTP) to verify the Customer's identity
-* If the user is unable to successfully complete the authentication process (e.g. can't remember their password), the authentication process SHOULD have a way for the user to decline to continue (e.g. click "Cancel") or be automatically redirected back (e.g. after too many failed login attempts) to the Server, so that the Server knows that the authentication process failed.
-    * When the Server receives a redirect back from an authentication process indicating that the authentication process did not complete, the Server MUST redirect the user back to the Client's `redirect_uri` with an `access_denied` error as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
+* If the User is unable to successfully complete the authentication process (e.g. can't remember their password), the authentication process SHOULD have a way for the User to decline to continue (e.g. click "Cancel") or be automatically redirected back (e.g. after too many failed login attempts) to the Server, so that the Server knows that the authentication process failed.
+    * When the Server receives a redirect back from an authentication process indicating that the authentication process did not complete, the Server MUST redirect the User back to the Client's `redirect_uri` with an `access_denied` error as defined in [[RFC 6749 Section 4.1.2.1](#ref-rfc6749-error-response)].
       This treats authentication failures the same as if the Customer declined the authorization request.
-    * If an Identity Provider or authentication process does not have a means of redirecting the user back when they are unable to authenticate, the user MAY have to stop the authorization process at this point and the Client will never see the user return to their `redirect_uri` endpoint.
+    * If an Identity Provider or authentication process does not have a means of redirecting the User back when they are unable to authenticate, the User MAY have to stop the authorization process at this point and the Client will never see the User return to their `redirect_uri` endpoint.
       In these cases, the Server MUST include a note of this limitation in their documentation linked by their Scope Description's `documentation` URL [[CDS-WG1-02 Section 3.4](#ref-cds-wg1-02-scope-descriptions)], so that Clients can be prepared to handle this scenario.
 * When the Customer successfully completes the authentication process and is redirected back to the Server, the Server MUST be able determine the Customer's identity so that the Server can render the [Authorization Form](#auth-form).
   Additionally, the Server MUST retain an authenticated session for the Customer for the duration in which they are active on the Authorization Form plus no less than 10 minutes, so that if the Customer returns to the Authorization Form again within a few minutes, they are not required to login again.
@@ -2861,7 +2872,7 @@ sequenceDiagram
 
 ### 9.2. Authorization Form <a id="auth-form" href="#auth-form" class="permalink">🔗</a>
 
-After a Customer is authenticated or if the Customer does not need to be initially authenticated, the Server presents to the Customer an Authorization Form for the user to review and approve or decline.
+After a Customer is authenticated or if the Customer does not need to be initially authenticated, the Server presents to the Customer an Authorization Form for the Customer to review and approve or decline.
 To help streamline Server development and prevent Customer confusion, this specification has created a framework and set of requirements that Servers MUST follow when implementing the Customer Authorization Form.
 The main goal of these requirements is to prevent Customers from being redirected to the Authorization Form and the Customer getting confused or lost and not being able to complete the authorization request with a simple approve or decline selection.
 
@@ -3045,7 +3056,7 @@ The following are requirements and recommendations for the Server when implement
 * The Server MUST have a relevant title in this section that communicates to the Customer that this is an authorization request.
   The Server MAY combine both their identifier and the form's title (e.g. "Example Utility Authorization Form").
 * It is RECOMMENDED that the Server include a relevant logo that the Customer would associate with the entity for which the Authorization Form is branded.
-  The Server MAY embed the logo as a link to the branded entity's website, and if it does, the Server MUST configure the link to open in a new tab rather than navigate the user away from the Authorization Form.
+  The Server MAY embed the logo as a link to the branded entity's website, and if it does, the Server MUST configure the link to open in a new tab rather than navigate the Customer away from the Authorization Form.
 * The Server MUST NOT use logos or branding of entities for which they do not have permission from that entity.
   This means that the Server MUST NOT appear to the Customer as an entity or brand themselves as such if the entity has not approved.
 * The Server MUST NOT include unrelated content in the Authorization Form which may distract or confuse the Customer from the purpose of the Authorization Form (which is that this is an authorization request).
@@ -3224,7 +3235,7 @@ The Selection Component content is the [Authorization Form Selection](#auth-form
 The Purpose Component of a Request Section is where the Server communicates the [Purpose](#purpose-format) for which the Scope(s) in that Request Section will be used, if any.
 The following are requirements and recommendations for the Server when implementing the Purpose Component:
 
-* The Server MUST communicate to the user that the included content is disclosing how the data access will be used by the Client (e.g. "For this purpose:" followed by the Purpose's content).
+* The Server MUST communicate to the Customer that the included content is disclosing how the data access will be used by the Client (e.g. "For this purpose:" followed by the Purpose's content).
 * If the Purpose was written by the Client (i.e. was not one of the Server's default Purposes), the Server MUST communicate to the Customer that the included purpose was written by the Client.
 * The Server MUST include the full content of the Purpose's `content` value as text only, to prevent the Client from being able to inject malicious content.
 * If the Purpose has `related_uri` and `related_uri` values, the Server MUST append a link to the `related_uri` to the end of the block where the Purpose's `content` will be rendered.
@@ -3435,7 +3446,7 @@ There are two primary reasons this specification defines the Preselection Error:
   By adding a Preselection Error page, the Customer is given a chance to review the authorization request and what preselected resources have been requested and must choose to be redirected back to the Client.
 * It is a common situation for enterprise Customers with many properties in a utility territory to to have multiple logins and online profiles for their various properties and utility Accounts.
   So if a Client is requesting a specific set of resources using preselection fields (e.g. a specific set of `account_numbers`), it is entirely likely that the Customer could be already authenticated or accidentally authenticates with the wrong online profile that does not have access to that specific set of preselected resources.
-  Rather than redirecting back to the Client with an error, the specification instead shows the Customer this Preselection Error and gives the Customer a chance to try to authenticate as another user that may have the appropriate resources matching the requested preselection fields.
+  Rather than redirecting back to the Client with an error, the specification instead shows the Customer this Preselection Error and gives the Customer a chance to try to authenticate as another Customer that may have the appropriate resources matching the requested preselection fields.
 
 The following are requirements and recommendations for the Server when implementing the Preselection Error:
 
@@ -3448,19 +3459,19 @@ The following are requirements and recommendations for the Server when implement
 * Below the error message, the Server MUST display two options rendered as buttons or links, from which the Customer may select:
     * The Server MUST provide an option for the Customer to decline the authorization request.
       This option would redirect the Customer back to the Client's `redirect_uri` with an `invalid_authorization_details` error parameter.
-    * The Server MUST provide an option for the Customer to authenticate as a different user.
-      If the Server offers the ability to be authenticated as multiple profiles and switch between those profiles, the Server MAY include functionality for switching profiles on the Preselection Error page, in addition to the ability to authenticate as another user.
-      This option would redirect the Customer back to the authentication process, where they are allowed to authenticate as another user, after which they are again redirected to the Authorization Form as a different authenticated Customer.
+    * The Server MUST provide an option for the Customer to authenticate as a different Customer.
+      If the Server offers the ability to be authenticated as multiple profiles and switch between those profiles, the Server MAY include functionality for switching profiles on the Preselection Error page, in addition to the ability to authenticate as another Customer.
+      This option would redirect the Customer back to the authentication process, where they are allowed to authenticate as another Customer, after which they are again redirected to the Authorization Form as a different authenticated Customer.
 * The Server MAY include a [Header Section](#auth-form-header) above the error message, so long as it does not hide the required error message and two options for resolving the issue.
 * Below the required options, the Server MAY include additional content and functionality, so long as it appears secondary to the required error message and two options for resolving the issue.
 
 #### 9.3.2. Invalid Request Error <a id="request-error" href="#request-error" class="permalink">🔗</a>
 
-If the Server receives an authorization request with invalid `response_type`, `response_type`, or `redirect_uri` parameters, the Server cannot determine the correct `redirect_uri` to which the user should be redirected with an error parameter.
-In these situations the Server MUST display an Invalid Request Error page to the user, and the following are requirements and recommendations for the Server when implementing the Invalid Request Error:
+If the Server receives an authorization request with invalid `response_type`, `response_type`, or `redirect_uri` parameters, the Server cannot determine the correct `redirect_uri` to which the User should be redirected with an error parameter.
+In these situations the Server MUST display an Invalid Request Error page to the User, and the following are requirements and recommendations for the Server when implementing the Invalid Request Error:
 
-* The Server MUST render an error message that clearly communicates to the user that the authorization request does not have the correct parameters, so the Server is unable to complete the request.
-* The Server MUST communicate to the user the they should contact the website or app that provided them with the link to this authorization request and let that entity know their link is invalid.
+* The Server MUST render an error message that clearly communicates to the User that the authorization request does not have the correct parameters, so the Server is unable to complete the request.
+* The Server MUST communicate to the User the they should contact the website or app that provided them with the link to this authorization request and let that entity know their link is invalid.
 * The Server MAY include a [Header Section](#auth-form-header) above the error message, so long as it does not hide the required error message.
 * Below the required options, the Server MAY include additional content and functionality, so long as it appears secondary to the required error message.
 
@@ -3570,12 +3581,17 @@ Below is an example rendered Authorization Receipt layout that is rendered when 
 
 ---
 
-## 10. Accounts API <a id="accounts-api" href="#accounts-api" class="permalink">🔗</a>
+## 10. Customer Data API <a id="api" href="#api" class="permalink">🔗</a>
+
+To enable Servers providing access to [Customer Data](#customer-data-def), this specification defines a set of Application Programming Interfaces (APIs) and data object formats that MUST be implemented by Servers when providing access to data under this specification's defined [Scopes](#scopes).
+Servers MAY only implement the APIs defined in these sections that are necessary to provide access under the Scopes they support.
+
+### 10.1. Accounts API <a id="accounts-api" href="#accounts-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of Application Programming Interfaces (APIs) allowing Clients to retrieve a Customer's Account details for which they are authorized to access.
 These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Accounts API.
 
-### 10.1. Account Object Format <a id="account-format" href="#account-format" class="permalink">🔗</a>
+#### 10.1.1. Account Object Format <a id="account-format" href="#account-format" class="permalink">🔗</a>
 
 Account objects are formatted as JSON objects and contain the following named values:
 
@@ -3599,7 +3615,7 @@ Account objects are formatted as JSON objects and contain the following named va
 * `account_programs` - _Array[[AccountProgram](#TODO-account-program-format)]_ - (OPTIONAL) A list of Account Programs for the Account.
   If the Server does not have this information or the Customer is not participating in any Account-level programs, this value is and empty list (`[]`).
 
-### 10.2. Listing Accounts <a id="accounts-list" href="#accounts-list" class="permalink">🔗</a>
+#### 10.1.2. Listing Accounts <a id="accounts-list" href="#accounts-list" class="permalink">🔗</a>
 
 Clients may request to list Account objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Accounts, to the `cds_accounts_api` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
 The Account listing request responses are formatted as JSON objects and contain the following named values.
@@ -3631,12 +3647,12 @@ Servers MUST support Clients adding any of the following URL parameters to the `
 
 Listings of Account objects MUST be ordered in reverse chronological order by `cds_modified` timestamp, where the most recently updated relevant Account MUST be first in each listing.
 
-## 11. Service Contracts API <a id="service-contracts-api" href="#service-contracts-api" class="permalink">🔗</a>
+### 10.2. Service Contracts API <a id="service-contracts-api" href="#service-contracts-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's Service Contract details for which they are authorized to access.
 These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Service Contracts API.
 
-### 11.1. Service Contract Object Format <a id="service-contract-format" href="#service-contract-format" class="permalink">🔗</a>
+#### 10.2.1. Service Contract Object Format <a id="service-contract-format" href="#service-contract-format" class="permalink">🔗</a>
 
 Service Contract objects are formatted as JSON objects and contain the following named values:
 
@@ -3665,7 +3681,7 @@ Service Contract objects are formatted as JSON objects and contain the following
 * `service_programs` - _Array[[ServiceProgram](#TODO-service-program-format)]_ - (OPTIONAL) A list of Service Programs for the Account.
   If the Server does not have this information or the Customer is not participating in any Service Contract-level programs, this value is and empty list (`[]`).
 
-### 11.2. Listing Service Contracts <a id="service-contract-list" href="#service-contract-list" class="permalink">🔗</a>
+#### 10.2.2. Listing Service Contracts <a id="service-contract-list" href="#service-contract-list" class="permalink">🔗</a>
 
 Clients may request to list Service Contract objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Service Contracts, to the `cds_servicecontracts_api` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
 The Service Contract listing request responses are formatted as JSON objects and contain the following named values.
@@ -3697,12 +3713,12 @@ Servers MUST support Clients adding any of the following URL parameters to the `
 
 Listings of Service Contract objects MUST be ordered in reverse chronological order by `cds_modified` timestamp, where the most recently updated relevant Service Contract MUST be first in each listing.
 
-## 12. Service Points API <a id="service-points-api" href="#service-points-api" class="permalink">🔗</a>
+### 10.3. Service Points API <a id="service-points-api" href="#service-points-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Service Point details for which they are authorized to access.
 These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Service Points API.
 
-### 12.1. Service Point Object Format <a id="service-point-format" href="#service-point-format" class="permalink">🔗</a>
+#### 10.3.1. Service Point Object Format <a id="service-point-format" href="#service-point-format" class="permalink">🔗</a>
 
 Service Point objects are formatted as JSON objects and contain the following named values:
 
@@ -3729,7 +3745,7 @@ Service Point objects are formatted as JSON objects and contain the following na
 * `premises` - _Array[[Premise](#TODO-premise-format)]_ - (OPTIONAL) A list of related premise identifiers and details that a Customer sees on their bill or online user interface as the premises for this Service Point, if available.
   If a Server does not have any Customer-facing premises for a Service Point or the Client is not authorized to see the Server's internal premise details for this Service Point, or the Server does not have premises stored for this Server Point, this value is an empty list (`[]`).
 
-### 12.2. Listing Service Points <a id="service-point-list" href="#service-point-list" class="permalink">🔗</a>
+#### 10.3.2. Listing Service Points <a id="service-point-list" href="#service-point-list" class="permalink">🔗</a>
 
 Clients may request to list Service Point objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Service Points, to the `cds_servicepoints_api` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
 The Service Point listing request responses are formatted as JSON objects and contain the following named values.
@@ -3756,12 +3772,12 @@ Servers MUST support Clients adding any of the following URL parameters to the `
 
 Listings of Service Point objects MUST be ordered in reverse chronological order by `cds_modified` timestamp, where the most recently updated relevant Service Point MUST be first in each listing.
 
-## 13. Meter Devices API <a id="meter-devices-api" href="#meter-devices-api" class="permalink">🔗</a>
+### 10.4. Meter Devices API <a id="meter-devices-api" href="#meter-devices-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Meter Device details for which they are authorized to access.
 These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Meter Devices API.
 
-### 13.1. Meter Device Object Format <a id="meter-device-format" href="#meter-device-format" class="permalink">🔗</a>
+#### 10.4.1. Meter Device Object Format <a id="meter-device-format" href="#meter-device-format" class="permalink">🔗</a>
 
 Meter Device objects are formatted as JSON objects and contain the following named values:
 
@@ -3779,7 +3795,7 @@ Meter Device objects are formatted as JSON objects and contain the following nam
 * `previous_servicepoints` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_servicepoint_id` values that identify Service Points where this Meter Device was previously installed or associated.
   This list MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
 
-### 13.2. Listing Meter Devices <a id="meter-device-list" href="#meter-device-list" class="permalink">🔗</a>
+#### 10.4.2. Listing Meter Devices <a id="meter-device-list" href="#meter-device-list" class="permalink">🔗</a>
 
 Clients may request to list Meter Device objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Meter Devices, to the `cds_meterdevices_api` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
 The Meter Device listing request responses are formatted as JSON objects and contain the following named values.
@@ -3804,12 +3820,12 @@ Servers MUST support Clients adding any of the following URL parameters to the `
 
 Listings of Meter Device objects MUST be ordered in reverse chronological order by `cds_modified` timestamp, where the most recently updated relevant Meter Device MUST be first in each listing.
 
-## 14. Bill Statements API <a id="bill-statements-api" href="#bill-statements-api" class="permalink">🔗</a>
+### 10.5. Bill Statements API <a id="bill-statements-api" href="#bill-statements-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Bill Statement details for which they are authorized to access.
 These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Bill Statements API.
 
-### 14.1. Bill Statement Object Format <a id="bill-statement-format" href="#bill-statement-format" class="permalink">🔗</a>
+#### 10.5.1. Bill Statement Object Format <a id="bill-statement-format" href="#bill-statement-format" class="permalink">🔗</a>
 
 Bill Statement objects are formatted as JSON objects and contain the following named values:
 
@@ -3844,7 +3860,7 @@ Bill Statement objects are formatted as JSON objects and contain the following n
 * `program_participations` - _Array[[ProgramParticipation](#TODO-program-participation-format)]_ - (OPTIONAL) A list of Account-level programs in which the Customer is participating for the Bill Statement period.
   If the Server does not have this information or the Customer is not participating in any Account-level programs, this value is and empty list (`[]`).
 
-### 14.2. Listing Bill Statements <a id="bill-statement-list" href="#bill-statement-list" class="permalink">🔗</a>
+#### 10.5.2. Listing Bill Statements <a id="bill-statement-list" href="#bill-statement-list" class="permalink">🔗</a>
 
 Clients may request to list Bill Statement objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Bill Statements, to the `cds_billstatement_api` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
 The Bill Statement listing request responses are formatted as JSON objects and contain the following named values.
@@ -3868,12 +3884,12 @@ Servers MUST support Clients adding any of the following URL parameters to the `
 Listings of Bill Statement objects MUST be ordered in reverse chronological order by `statement_date` date, where the most recent dated relevant Bill Statement MUST be first in each listing.
 In situations where relevant Bill Statement objects have the same `statement_date`, those Bill Statements with the same `statement_date` are further ordered in reverse chronological order by `cds_modified` timestamp, where the most recently updated relevant Bill Statement is listed first.
 
-## 15. Bill Sections API <a id="bill-sections-api" href="#bill-sections-api" class="permalink">🔗</a>
+### 10.6. Bill Sections API <a id="bill-sections-api" href="#bill-sections-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Bill Section details for which they are authorized to access.
 These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Bill Sections API.
 
-### 15.1. Bill Section Object Format <a id="bill-section-format" href="#bill-section-format" class="permalink">🔗</a>
+#### 10.6.1. Bill Section Object Format <a id="bill-section-format" href="#bill-section-format" class="permalink">🔗</a>
 
 Bill Section objects are formatted as JSON objects and contain the following named values:
 
@@ -3908,7 +3924,7 @@ Bill Section objects are formatted as JSON objects and contain the following nam
 * `cost_summary` - _Array[[BillSectionCostSummary](#TODO-bill-section-cost-summary-format)]_ - (REQUIRED) A list of the Bill Section Cost Summary objects that detail the service's total and subtotal costs on the Customer-facing bill statement section represented by this Bill Section.
 * `line_items` - _Array[[BillSectionLineItem](#TODO-bill-section-line-item-format)]_ - (OPTIONAL) A list of the Bill Section Line Item objects that denote the individual charges listed on the Customer-facing bill statement section represented by this Bill Section.
 
-### 15.2. Listing Bill Sections <a id="bill-section-list" href="#bill-section-list" class="permalink">🔗</a>
+#### 10.6.2. Listing Bill Sections <a id="bill-section-list" href="#bill-section-list" class="permalink">🔗</a>
 
 Clients may request to list Bill Section objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Bill Sections, to the `cds_billsection_api` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
 The Bill Section listing request responses are formatted as JSON objects and contain the following named values.
@@ -3937,12 +3953,12 @@ In situations where relevant Bill Section objects have the same `account_number`
 In situations where relevant Bill Section objects have the same `account_number` and `contract_number`, those Bill Sections with the same `account_number` and `contract_number` are further ordered in chronological order by `start_date`, where the relevant Bill Section with the earliest date is listed first.
 In situations where relevant Bill Section objects have the same `account_number`, `contract_number`, and `start_date`, those Bill Sections with the same `account_number`, `contract_number`, and `start_date` are further ordered in reverse chronological order by `modified`, where the most recently updated relevant Bill Section is listed first.
 
-## 16. Aggregations API <a id="aggregations-api" href="#aggregations-api" class="permalink">🔗</a>
+### 10.7. Aggregations API <a id="aggregations-api" href="#aggregations-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Server's Aggregation objects for which they are authorized to access.
 These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Aggregations API.
 
-### 16.1. Aggregation Object Format <a id="aggregation-format" href="#aggregation-format" class="permalink">🔗</a>
+#### 10.7.1. Aggregation Object Format <a id="aggregation-format" href="#aggregation-format" class="permalink">🔗</a>
 
 Aggregation objects are formatted as JSON objects and contain the following named values:
 
@@ -3976,7 +3992,7 @@ Aggregation objects are formatted as JSON objects and contain the following name
 For Aggregations that have more than 1000 grouped items in any of the Aggregation object's `grouped_*` arrays, so as to not create overly large individual Aggregation objects, the Server MUST create Aggregation objects that group the items in groups of 1000 or fewer items, then include those Aggregations in the original Aggregation's `groupd_aggregations` array.
 The intent of this requirement is to enable Servers to use the [Listing Aggregations](#aggregation-list) API as a means for breaking up and paginating very large groupings of Account, Service Contract, Service Point, Meter Devices, or Aggregation objects.
 
-### 16.2. Listing Aggregations <a id="aggregation-list" href="#aggregation-list" class="permalink">🔗</a>
+#### 10.7.2. Listing Aggregations <a id="aggregation-list" href="#aggregation-list" class="permalink">🔗</a>
 
 Clients may request to list Aggregation objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Aggregations, to the `cds_aggregations_api` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
 The Aggregation listing request responses are formatted as JSON objects and contain the following named values.
@@ -4002,12 +4018,12 @@ Servers MUST support Clients adding any of the following URL parameters to the `
 
 Listings of Aggregation objects MUST be ordered in reverse chronological order by `modified` timestamp, where the most recently updated relevant Aggregation MUST be first in each listing.
 
-## 17. Usage Segments API <a id="usage-segments-api" href="#usage-segments-api" class="permalink">🔗</a>
+### 10.8. Usage Segments API <a id="usage-segments-api" href="#usage-segments-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Usage Segment objects for which they are authorized to access.
 These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Usage Segments API.
 
-### 17.1. Usage Segment Object Format <a id="usage-segment-format" href="#usage-segment-format" class="permalink">🔗</a>
+#### 10.8.1. Usage Segment Object Format <a id="usage-segment-format" href="#usage-segment-format" class="permalink">🔗</a>
 
 Usage Segment objects are formatted as JSON objects and contain the following named values:
 
@@ -4035,7 +4051,7 @@ Usage Segment objects are formatted as JSON objects and contain the following na
 
 Servers MUST only include unique identifiers in `related_aggregations`, `related_accounts`, `related_servicecontracts`, `related_servicepoints`, `related_meterdevices`, and `related_billsections` lists MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
 
-### 17.2. Usage Segment Value Formats <a id="usage-segment-value-format" href="#usage-segment-value-format" class="permalink">🔗</a>
+#### 10.8.2. Usage Segment Value Formats <a id="usage-segment-value-format" href="#usage-segment-value-format" class="permalink">🔗</a>
 
 The Usage Segment `format` field provides an ordered list of strings that denote the object types that are included in each Usage Segment `values` entry's [Value Set](#usage-segment-value-set-format).
 Usage Segments are organized this way so that the `format` listing essentially provides a "schema" of object types to expect when parsing the `values` Value Sets, which removes the need for each object in each Value Set to include repeated fields, such as an object type value.
@@ -4065,7 +4081,7 @@ This is useful when a Server provides multiple variations of optional fields for
 Extensions to this specification MAY further define additional formats other that what is listed above.
 Client MUST ignore format values they do not know how to interpret.
 
-### 17.3. Usage Segment Value Set Format <a id="usage-segment-value-set-format" href="#usage-segment-value-set-format" class="permalink">🔗</a>
+#### 10.8.3. Usage Segment Value Set Format <a id="usage-segment-value-set-format" href="#usage-segment-value-set-format" class="permalink">🔗</a>
 
 The Usage Segment `values` field provides an ordered list of Value Set entries.
 A Value Set entry is an array that contains an ordered list of [Value objects](#usage-segment-value-object-format), where the type of each Value object which is defined by the order of the `format` listing.
@@ -4076,11 +4092,11 @@ For example, if a Usage Segment has a `segment_start` of `2025-01-01T00:00:00Z`,
 If a Value object is not available for a specific Value Set.
 Servers MUST replace the item in the Value Set with `null`.
 
-### 17.4. Usage Segment Value Object Format <a id="usage-segment-value-object-format" href="#usage-segment-value-object-format" class="permalink">🔗</a>
+#### 10.8.4. Usage Segment Value Object Format <a id="usage-segment-value-object-format" href="#usage-segment-value-object-format" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-### 17.5. Listing Usage Segments <a id="usage-segment-list" href="#usage-segment-list" class="permalink">🔗</a>
+#### 10.8.5. Listing Usage Segments <a id="usage-segment-list" href="#usage-segment-list" class="permalink">🔗</a>
 
 Clients may request to list Usage Segment objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Usage Segments, to the `cds_usagesegments_api` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
 The Usage object listing request responses are formatted as JSON objects and contain the following named values.
@@ -4114,12 +4130,12 @@ In situations where relevant Usage Segments have the same `account_number`, thos
 In situations where relevant Usage Segments have the same `contract_number`, those Usage Segments with the same `contract_number` are further ordered in chronological order by `segment_start`, where the relevant Usage Segment object with the earliest date is listed first.
 In situations where relevant Usage Segments have the same `segment_start`, those Usage Segments with the same `segment_start` are further ordered in reverse chronological order by `cds_modified`, where the most recently updated relevant Usage Segment object is listed first.
 
-## 18. Energy Attribute Certificates API <a id="eac-api" href="#eac-api" class="permalink">🔗</a>
+### 10.9. Energy Attribute Certificates API <a id="eac-api" href="#eac-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Energy Attribute Certificate (EAC) objects for which they are authorized to access.
 These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Energy Attribute Certificates API.
 
-### 18.1. Energy Attribute Certificate Object Format <a id="eac-format" href="#eac-format" class="permalink">🔗</a>
+#### 10.9.1. Energy Attribute Certificate Object Format <a id="eac-format" href="#eac-format" class="permalink">🔗</a>
 
 EAC objects are formatted as JSON objects and contain the following named values:
 
@@ -4144,7 +4160,7 @@ EAC objects are formatted as JSON objects and contain the following named values
 * `period_start` - _[datetime](#datetime)_ - (REQUIRED) When the EAC coverage time period started.
 * `period_end` - _[datetime](#datetime)_ - (REQUIRED) When the EAC coverage time period ended or will end.
 
-### 18.2. Beneficiary Types <a id="eac-beneficiary-types" href="#eac-beneficiary-types" class="permalink">🔗</a>
+#### 10.9.2. Beneficiary Types <a id="eac-beneficiary-types" href="#eac-beneficiary-types" class="permalink">🔗</a>
 
 EAC object `beneficiary_type` values MUST be one of the following:
 
@@ -4166,7 +4182,7 @@ EAC object `beneficiary_type` values MUST be one of the following:
 * `general` - Within the EAC's destination, the EAC is applied generally to the base energy usage profile for all customers.
   When the `beneficiary_type` is `general`, the `beneficiaries` MUST be an empty list (`[]`).
 
-### 18.3. EAC Data Format Description Object <a id="eac-data-format-descriptions" href="#eac-data-format-descriptions" class="permalink">🔗</a>
+#### 10.9.3. EAC Data Format Description Object <a id="eac-data-format-descriptions" href="#eac-data-format-descriptions" class="permalink">🔗</a>
 
 EAC Data Format Descriptions objects are formatted as JSON objects and contain the following named values:
 
@@ -4175,7 +4191,7 @@ EAC Data Format Descriptions objects are formatted as JSON objects and contain t
 * `description` - _[string](#string)_ - (REQUIRED) A human-readable description of the EAC data format.
 * `documentation` - _[URL](#url)_ - (REQUIRED) A link to developer documentation on the EAC data format.
 
-### 18.4. Listing Energy Attribute Certificates <a id="eac-list" href="#eac-list" class="permalink">🔗</a>
+#### 10.9.4. Listing Energy Attribute Certificates <a id="eac-list" href="#eac-list" class="permalink">🔗</a>
 
 Clients may request to list EAC objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of EACs, to the `cds_eacs_api` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
 The EAC object listing request responses are formatted as JSON objects and contain the following named values.
@@ -4202,19 +4218,19 @@ Listings of EACs MUST be ordered in reverse chronological order by `period_start
 In situations where relevant EACs have the same `period_start`, those EACs with the same `period_start` are further ordered in reverse chronological order by `cds_created`, where the most recently created EAC is first.
 In situations where relevant EACs have the same `period_start` and `cds_created`, those EACs with the same `period_start` and `cds_created` are further ordered in alphanumeric order by `cds_eac_id`.
 
-## 19. Extensions <a id="extensions" href="#extensions" class="permalink">🔗</a>
+## 11. Extensions <a id="extensions" href="#extensions" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-## 20. Security Considerations <a id="security" href="#security" class="permalink">🔗</a>
+## 12. Security Considerations <a id="security" href="#security" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-## 21. Examples <a id="examples" href="#examples" class="permalink">🔗</a>
+## 13. Examples <a id="examples" href="#examples" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-## 22. References <a id="references" href="#references" class="permalink">🔗</a>
+## 14. References <a id="references" href="#references" class="permalink">🔗</a>
 
 <a id="ref-bcp14" href="#ref-bcp14" class="permalink">🔗</a>
 `BCP 14` - "Best Current Practice 14", Internet Engineering Task Force (IETF),  
@@ -4361,11 +4377,11 @@ In situations where relevant EACs have the same `period_start` and `cds_created`
 [https://www.rfc-editor.org/rfc/rfc9396#section-7](https://www.rfc-editor.org/rfc/rfc9396#section-7)
 
 
-## 23. Acknowledgments <a id="acknowledgments" href="#acknowledgments" class="permalink">🔗</a>
+## 15. Acknowledgments <a id="acknowledgments" href="#acknowledgments" class="permalink">🔗</a>
 
 The authors would like to thank the late Shuli Goodman, who was the Executive Director of LFEnergy, for her incredible leadership in initially organizing the CDS.
 
-## 24. Authors' Addresses <a id="authors-addresses" href="#authors-addresses" class="permalink">🔗</a>
+## 16. Authors' Addresses <a id="authors-addresses" href="#authors-addresses" class="permalink">🔗</a>
 
 Daniel Roesler  
 Daniel Roesler LLC  

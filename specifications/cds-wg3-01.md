@@ -149,31 +149,77 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
 * [10. Customer Data API](#api)
     * [10.1. Accounts API](#accounts-api)  
         * [10.1.1. Account Object Format](#account-format)  
-        * [10.1.2. Listing Accounts](#accounts-list)  
+        * [10.1.2. Account Types](#account-types)  
+        * [10.1.3. Account Statuses](#account-statuses)  
+        * [10.1.4. Account Contact Object Format](#account-contact-format)  
+        * [10.1.5. Account Contact Types](#account-contact-types)  
+        * [10.1.6. Account Program Object Format](#account-program-format)  
+        * [10.1.7. Account Program Types](#account-program-types)  
+        * [10.1.8. Account Program Statuses](#account-program-statuses)  
+        * [10.1.9. Listing Accounts](#accounts-list)  
     * [10.2. Service Contracts API](#service-contracts-api)  
         * [10.2.1. Service Contract Object Format](#service-contract-format)  
-        * [10.2.2. Listing Service Contracts](#service-contract-list)  
+        * [10.2.2. Contract Types](#contract-types)  
+        * [10.2.3. Contract Statuses](#contract-statuses)  
+        * [10.2.4. Service Types](#service-types)  
+        * [10.2.5. Service Classes](#service-classes)  
+        * [10.2.6. Service Program Object Format](#service-program-format)  
+        * [10.2.7. Service Program Types](#service-program-types)  
+        * [10.2.8. Service Program Statuses](#service-program-statuses)  
+        * [10.2.9. Listing Service Contracts](#service-contract-list)  
     * [10.3. Service Points API](#service-points-api)  
         * [10.3.1. Service Point Object Format](#service-point-format)  
-        * [10.3.2. Listing Service Points](#service-point-list)  
+        * [10.3.2. Service Point Types](#service-point-types)  
+        * [10.3.3. Premise Object Format](#premise-format)  
+        * [10.3.4. Premise Types](#premise-types)  
+        * [10.3.5. Listing Service Points](#service-point-list)  
     * [10.4. Meter Devices API](#meter-devices-api)  
         * [10.4.1. Meter Device Object Format](#meter-device-format)  
-        * [10.4.2. Listing Meter Device](#meter-device-list)  
+        * [10.4.2. Meter Types](#meter-types)  
+        * [10.4.3. Listing Meter Devices](#meter-device-list)  
     * [10.5. Bill Statements API](#bill-statements-api)  
         * [10.5.1. Bill Statement Object Format](#bill-statement-format)  
-        * [10.5.2. Listing Bill Statements](#bill-statement-list)  
+        * [10.5.2. New Charge Object Format](#new-charge-format)  
+        * [10.5.3. New Charge Types](#new-charge-types)  
+        * [10.5.4. Listing Bill Statements](#bill-statement-list)  
     * [10.6. Bill Sections API](#bill-sections-api)  
         * [10.6.1. Bill Section Object Format](#bill-section-format)  
-        * [10.6.2. Listing Bill Sections](#bill-section-list)  
+        * [10.6.2. Bill Section Types](#bill-section-types)  
+        * [10.6.3. Distribution Entity Object Format](#distribution-entity-format)  
+        * [10.6.4. Distribution Entity Types](#distribution-entity-types)  
+        * [10.6.5. Load Serving Entity Object Format](#load-serving-entity-format)  
+        * [10.6.6. Load Serving Entity Types](#load-serving-entity-types)  
+        * [10.6.7. Bill Section Usage Detail Object Format](#bill-section-usage-detail-format)  
+        * [10.6.8. Bill Section Usage Detail Types](#bill-section-usage-detail-types)  
+        * [10.6.9. Bill Section Cost Detail Object Format](#bill-section-cost-detail-format)  
+        * [10.6.10. Bill Section Cost Detail Types](#bill-section-cost-detail-types)  
+        * [10.6.11. Bill Section Line Item Object Format](#bill-section-line-item-format)  
+        * [10.6.12. Bill Section Line Item Types](#bill-section-line-item-types)  
+        * [10.6.13. Listing Bill Sections](#bill-section-list)  
     * [10.7. Aggregations API](#aggregations-api)  
         * [10.7.1. Aggregation Object Format](#aggregation-format)  
-        * [10.7.2. Listing Aggregations](#aggregation-list)  
+        * [10.7.2. Aggregation Types](#aggregation-types)  
+        * [10.7.3. Aggregation Region Object Format](#aggregation-region-format)  
+        * [10.7.4. Aggregation Region Types](#aggregation-region-types)  
+        * [10.7.5. Consent Requirement Object Format](#consent-requirement-format)  
+        * [10.7.6. Consent Requirement Types](#consent-requirement-types)  
+        * [10.7.7. Listing Aggregations](#aggregation-list)  
     * [10.8. Usage Segments API](#usage-segments-api)  
         * [10.8.1. Usage Segment Object Format](#usage-segment-format)  
-        * [10.8.2. Usage Segment Value Formats](#usage-segment-value-format)  
-        * [10.8.3. Usage Segment Value Set Format](#usage-segment-value-set-format)  
-        * [10.8.4. Usage Segment Value Object Format](#usage-segment-value-object-format)  
-        * [10.8.5. Listing Usage Segments](#usage-segment-list)  
+        * [10.8.2. Usage Segment Value Format Objects](#usage-segment-value-formats)  
+        * [10.8.3. Usage Segment Value Format Types](#usage-segment-value-format-types)  
+            * [10.8.3.1. Electric Usage](#usage-segment-electric-usage)  
+            * [10.8.3.2. Electric Demand](#usage-segment-electric-demand)  
+            * [10.8.3.3. Water Usage](#usage-segment-water-usage)  
+            * [10.8.3.4. Natural Gas Usage](#usage-segment-gas-usage)  
+            * [10.8.3.5. Fuel Oil Usage](#usage-segment-fueloil-usage)  
+            * [10.8.3.6. Interval Cost](#usage-segment-interval-cost)  
+            * [10.8.3.7. Electric Supply Mix](#usage-segment-supply-mix)  
+            * [10.8.3.8. Energy Attribute Certificates](#usage-segment-eacs)  
+        * [10.8.4. Usage Segment Value Format Description Objects](#usage-segment-value-format-description)  
+        * [10.8.5. Usage Segment Value Sets](#usage-segment-value-set-format)  
+        * [10.8.6. Usage Segment Value Objects](#usage-segment-value-objects)  
+        * [10.8.7. Listing Usage Segments](#usage-segment-list)  
     * [10.9. Energy Attribute Certificates API](#eac-api)  
         * [10.9.1. Energy Attribute Certificate Object Format](#eac-format)  
         * [10.9.2. Beneficiary Types](#eac-beneficiary-types)  
@@ -181,6 +227,7 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
         * [10.9.4. Listing Energy Attribute Certificates](#eac-list)  
 * [11. Extensions](#extensions)  
 * [12. Security Considerations](#security)  
+    * [12.1. Rate Limiting](#rate-limiting)  
 * [13. Examples](#examples)  
 * [14. References](#references)  
 * [15. Acknowledgments](#acknowledgments)  
@@ -520,13 +567,13 @@ To implement the "Customer Programs" Scenario, Servers MUST implement the follow
     * [`include_meter_devices`](#auth-details-include-meter-devices)
     * [`include_meter_numbers`](#auth-details-include-meter-numbers)
 * The following are requirements for supported Authorization Details Field Objects [[CDS-WG1-02 Section 3.8](#ref-cds-wg1-02-auth-details-object)]:
-    * For [Account Program Participation](#scope-account-program-participation) Scopes, the [`account_programs`](#auth-details-account-programs) authorization details field for each Scope MUST include a `choices` array that includes Choice objects where the `id` values are supported [Service Program](#TODO-account-program-format) `program_number` values for which the Server is providing access.
+    * For [Account Program Participation](#scope-account-program-participation) Scopes, the [`account_programs`](#auth-details-account-programs) authorization details field for each Scope MUST include a `choices` array that includes Choice objects where the `id` values are supported [Service Program](#account-program-format) `program_number` values for which the Server is providing access.
       This can include programs for which the Customer is eligible, in addition to programs in which the Customer is currently participating or has previously participated.
-    * For [Service Program Participation](#scope-service-program-participation) Scopes, the [`service_programs`](#auth-details-service-programs) authorization details field for each Scope MUST include a `choices` array that includes Choice objects where the `id` values are supported [Service Program](#TODO-service-program-format) `program_number` values for which the Server is providing access.
+    * For [Service Program Participation](#scope-service-program-participation) Scopes, the [`service_programs`](#auth-details-service-programs) authorization details field for each Scope MUST include a `choices` array that includes Choice objects where the `id` values are supported [Service Program](#service-program-format) `program_number` values for which the Server is providing access.
       This can include programs for which the Customer is eligible, in addition to programs in which the Customer is currently participating or has previously participated.
     * For the [`sync_until`](#auth-details-sync-until) field, the Server MUST set the `maximum` value to `"infinite"` (i.e. Customers MAY authorize access to ongoing updates to their relevant programs and associated details until they choose to revoke it).
 * Servers MUST keep the [API](#api) objects that are associated with the Grant updated to reflect any changes to the Customer, in accordance with the requirements of the `sync_until` authorization details field.
-  For example, if a Customer has authorized `"infinite"` as the value for `sync_until` and later joins a supported utility demand response program, the Client will see that [Service Program](#TODO-service-program-format) in the relevant Service Contract be updated to reflect their participation and eligibility status when data is next synced to the Server from the Server's source of truth (e.g. the utility's internal Customer Resource Management system).
+  For example, if a Customer has authorized `"infinite"` as the value for `sync_until` and later joins a supported utility demand response program, the Client will see that [Service Program](#service-program-format) in the relevant Service Contract be updated to reflect their participation and eligibility status when data is next synced to the Server from the Server's source of truth (e.g. the utility's internal Customer Resource Management system).
 * The Server MUST sync updates from its source of truth at least once per week, so that Client's may receive changes to the Customer's resources within a week of their occurrence.
 
 ### 4.7. Bill Amount Due <a id="scenario-bill-amount-due" href="#scenario-bill-amount-due" class="permalink">🔗</a>
@@ -694,6 +741,7 @@ To implement the "Aggregated Data" Scenario, Servers MUST implement the followin
 
 This specification extends CDS's Authorization Server Metadata object [[CDS-WG1-02 Section 3.2](#ref-cds-wg1-02-metadata)] to include the following named values:
 
+* `cds_customerdata_version` - string - (REQUIRED) The version of the CDS-WG3-01 Customer Data specification that the Server has implemented, which for this version of the specification is v1.
 * `cds_accounts_list` - _[URL](#url)_ - (OPTIONAL) The base url for the [Accounts listing API](#accounts-list).
   This is REQUIRED if any Scopes included in the `scopes_supported` array has the [`include_accounts`](#auth-details-include-accounts) authorization details field or it is required as part of the Scope.
 * `cds_servicecontracts_list` - _[URL](#url)_ - (OPTIONAL) The base url for the [Service Contracts listing API](#service-contracts-list).
@@ -710,10 +758,16 @@ This specification extends CDS's Authorization Server Metadata object [[CDS-WG1-
   This is REQUIRED if any Scopes included in the `scopes_supported` array has the [`include_aggregations`](#auth-details-include-aggregations) authorization details field or it is required as part of the Scope.
 * `cds_usagesegments_list` - _[URL](#url)_ - (OPTIONAL) The base url for the [Usage Segments listing API](#usage-segments-list).
   This is REQUIRED if any Scopes included in the `scopes_supported` array has the [`include_usage_segments`](#auth-details-include-usage-segments) authorization details field or it is required as part of the Scope.
+* `cds_usagesegments_additional_formats` - _Map[[ValueFormatDescription](#usage-segment-value-format-description)]_ - (OPTIONAL) A reference object of possible Usage Segment [Value Format Types](#usage-segment-value-format-types) that the Server could include in a Usage Segment's `formats` array, in addition to the Value Format Types that are defined in this specification.
+  This object is composed of keys that represent the `type` value of the additional Value Format, and values that are the [Value Format Description](#usage-segment-value-format-description) of the additional Value format.
+  This is REQUIRED if the `cds_usagesegments_list` field is populated in the Server Metadata object.
+  If the Server does will not provide any additional Value Format Types in their Usage Segment objects, this is an empty object (`{}`).
 * `cds_eacs_list` - _[URL](#url)_ - (OPTIONAL) The base url for the [Energy Attribute Certificates listing API](#eac-list).
   This is REQUIRED if any Scopes included in the `scopes_supported` array has the [`include_eacs`](#auth-details-include-eacs) authorization details field or it is required as part of the Scope.
 * `cds_eac_formats` - _Map[[EACDataFormatDescription](#eac-data-format-descriptions)]_ - (OPTIONAL) An object providing additional information about each Energy Attribute Certificate (EAC) data format value that may be provided as the [EAC object](#eac-format) `eac_format`, with the [EAC Data Format Description's](#eac-data-format-descriptions) `id` as the keys of the object and values being the [EAC Data Format Description](#eac-data-format-descriptions) object itself.
   This is REQUIRED if the `cds_eacs_list` field is populated in the Server Metadata object.
+
+Clients MUST obtain the correct Server Metadata object from the relevant Client object's `cds_server_metadata` URL [[CDS-WG1-02 Section 5.1](#ref-cds-wg1-02-client-object)], since Servers MAY only provide the above fields in the Client objects for which they are appropriate.
 
 ### 5.1. Registration Field Formats Extension <a id="registration-field-formats-extension" href="#registration-field-formats-extension" class="permalink">🔗</a>
 
@@ -803,7 +857,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 
 #### 6.1.2. Account Program Participation <a id="scope-account-program-participation" href="#scope-account-program-participation" class="permalink">🔗</a>
 
-For some use cases, a Client only needs to obtain a list of which [Account-level programs](#TODO-account-program-format) which apply to a Customer.
+For some use cases, a Client only needs to obtain a list of which [Account-level programs](#account-program-format) which apply to a Customer.
 For example, a utility rebate program contractor Client may need to know if a Customer is on low-income assistance for their  utility account in order to know if they are qualified for a specific set of utility rebates.
 In these relevant use cases, Clients only need access to Customers' relevant account-level programs, so this Scope provides the ability for Servers to limit access to only [Account](#account-format) `account_programs`.
 
@@ -847,7 +901,7 @@ Additionally, to support this Scope, the Server MUST implement the following req
 
 #### 6.1.3. Service Program Participation <a id="scope-service-program-participation" href="#scope-service-program-participation" class="permalink">🔗</a>
 
-For some use cases, a Client only needs to obtain a list of which [Service Contract-level programs](#TODO-service-program-format) which apply to a Customer.
+For some use cases, a Client only needs to obtain a list of which [Service Contract-level programs](#service-program-format) which apply to a Customer.
 For example, a demand response app Client may need to know if an enterprise Customer is already signed up for a demand response program for their buildings.
 In these relevant use cases, Clients only need access to Customers' relevant service-level programs, so this Scope provides the ability for Servers to limit access to only [Service Contract](#service-contract-format) `service_programs`.
 
@@ -1320,7 +1374,7 @@ The following are some examples of possible additional restrictions:
   For example, if a utility vendor Client is only permitted to access [Accounts](#account-api) for which they have obtained the Account number (e.g. as part of a rebate program verification contract), the utility Server can limit the vendor's Client by requiring they always include the `account_numbers` preselection field in Client Credentials requests, so if the vendor Client requests to create an access token that is unbounded (i.e. no `account_numbers` included), the Server is able to reject the request.
 * If the Server wants to limit a Client's ability to enumerate all objects on an API, the Server MAY return an error response for API requests that do not have granular enough request parameters.
   For example, if a building owner Client has been given the ability to search a Server's list of building identifiers (stored by the server as [Aggregation](#aggregation-format) objects with the building ID as the `aggregation_number`) for their own building, the Server can limit the [Aggregations listing API](#aggregation-list) to only respond successfully to requests that use request parameters (e.g. `q={building_address}`) and return a limited number of results, and return an error response if there are too many results.
-  By imposing this limitation, in combination with [Rate Limiting](#TODO-rate-limiting), the Client will not be able to enumerate all building IDs stored on the Server.
+  By imposing this limitation, in combination with [Rate Limiting](#rate-limiting), the Client will not be able to enumerate all building IDs stored on the Server.
 
 #### 6.2.1. Accounts Query <a id="scope-accounts-query" href="#scope-accounts-query" class="permalink">🔗</a>
 
@@ -1630,7 +1684,7 @@ For scopes where the Scope Description's `response_types_supported` array is emp
 
 For some use cases, a Client may need to request access to Customer contract details for specific types of services.
 For example, an electrician may need details about a Customer's electric services, but not any gas or water services.
-In these relevant use cases, Clients benefit from being able to configure an authorization request that preselects a set of [Service Contract](#service-contract-format) with the provided `service_type` values.
+In these relevant use cases, Clients benefit from being able to configure an authorization request that preselects a set of [Service Contract](#service-contract-format) with the provided [Service Type](#service-types) values.
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
@@ -1641,17 +1695,17 @@ To support this authorization details field, the Authorization Details Field Obj
 
 When rendering [Account Selections](#account-selection) for this field's scope and this field is included, the Server MUST preselect Accounts based on the following criteria:
 
-* If the value is an array, Accounts are preselected that have a Service Contract with a matching `service_type` to any of the array's values that also has the Account as that Service Contract's `cds_account_id`.
+* If the value is an array, Accounts are preselected that have a Service Contract in which any of its `service_types` values match any of the array's values that also has the Account as that Service Contract's `cds_account_id`.
 
 When rendering [Service Contract Selections](#contract-selection) for this field's scope and this field is included, the Server MUST preselect Service Contracts based on the following criteria:
 
-* If the value is an array, Service Contracts are preselected that match their `service_type` to any of the array's values.
+* If the value is an array, Service Contracts are preselected in which any of their `service_types` values match any of the array's values.
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
 * If the value is `null`, this field has no effect on the filtering API responses.
 * If the value is an array, the following filters MUST be applied for API responses:
-    * Service Contract objects in API responses that do not match their `service_type` to any of the array's values MUST NOT be included.
+    * Service Contract objects in API responses that do not match any of their `service_types` values to any of the array's values MUST NOT be included.
     * The following arrays MUST only include references to Service Contracts that are included:
         * Service Point `current_servicecontracts`
         * Service Point `previous_servicecontracts`
@@ -1734,7 +1788,7 @@ For scopes where the Scope Description's `response_types_supported` array is emp
 
 For some use cases, a Client may need to request access to datasets for a specific types of Service Points.
 For example, a utility vendor may need to run an analysis of energy usage over a Customer's electric service points.
-In these relevant use cases, Clients benefit from being able to configure an authorization request that preselects a set of [Service Point](#service-point-format) with the provided `servicepoint_type` values.
+In these relevant use cases, Clients benefit from being able to configure an authorization request that preselects a set of [Service Point](#service-point-format) with the provided [Service Point Type](#service-point-types) values.
 
 To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
 
@@ -1745,25 +1799,25 @@ To support this authorization details field, the Authorization Details Field Obj
 
 When rendering [Account Selections](#account-selection) for this field's scope and this field is included, the Server MUST preselect Accounts based on the following criteria:
 
-* If the value is an array, Accounts are preselected that have a Service Point with a matching `servicepoint_type` to any of the array's values and a Service Contract is listed in the Service Point's `current_servicecontracts` array that also has the Account set as the Service Contract's `cds_account_id`.
+* If the value is an array, Accounts are preselected that have a Service Point in which any of its `servicepoint_types` values match any of the array's values and a Service Contract is listed in the Service Point's `current_servicecontracts` array that also has the Account set as the Service Contract's `cds_account_id`.
 
 When rendering [Service Contract Selections](#contract-selection) for this field's scope and this field is included, the Server MUST preselect Service Contracts based on the following criteria:
 
-* If the value is an array, Service Contracts are preselected that have a Service Point with a matching `servicepoint_type` to any of the array's values that also has the Service Contract listed in the Service Point's `current_servicecontracts`.
+* If the value is an array, Service Contracts are preselected that have a Service Point in which any of its `servicepoint_types` values match any of the array's values that also has the Service Contract listed in the Service Point's `current_servicecontracts`.
 
 When rendering [Service Point Selections](#servicepoint-selection) for this field's scope and this field is included, the Server MUST preselect Service Points based on the following criteria:
 
-* If the value is an array, Service Points are preselected that match their `servicepoint_type` to any of the array's values.
+* If the value is an array, Service Points are preselected in which any of their `servicepoint_types` values match any of the array's values.
 
 When rendering [Meter Device Selections](#meter-selection) for this field's scope and this field is included, the Server MUST preselect Meter Devices based on the following criteria:
 
-* If the value is an array, Meter Devices are preselected that have Service Points in their `current_servicepoints` which have matching `servicepoint_type` values to any of the array's values.
+* If the value is an array, Meter Devices are preselected that have Service Points in their `current_servicepoints` in which any of their `servicepoint_types` values match any of the array's values.
 
 For scopes where the Scope Description's `response_types_supported` array is empty (i.e. no authorization request method is available) and this field is included in `authorization_details_fields_supported` object, Servers MUST implement the following requirements:
 
 * If the value is `null`, this field has no effect on the filtering API responses.
 * If the value is an array, the following filters MUST be applied for API responses:
-    * Service Point objects in API responses that do not match their `servicepoint_type` to any of the array's values MUST NOT be included.
+    * Service Point objects in API responses that do not match any of their `servicepoint_types` values to any of the array's values MUST NOT be included.
     * The following arrays MUST only include references to Service Points that are included:
         * Meter Device `current_servicepoints`
         * Meter Device `previous_servicepoints`
@@ -2089,7 +2143,7 @@ Additionally, Servers MUST implement the following behavior to support this auth
 * If this field's value is `true`, Servers MUST include the following field values in any Account objects accessible using this field's scope:
     * `account_name`
     * `account_address`
-    * `account_type`
+    * `account_types`
     * `account_status`
     * `account_contacts`
 
@@ -2405,7 +2459,7 @@ To support this authorization details field, the Authorization Details Field Obj
 Additionally, Servers MUST implement the following behavior to support this authorization details field:
 
 * If this field's value is `true`, Servers MUST include the following field values in any Bill Statement objects accessible using this field's scope:
-    * `program_participations`
+    * `account_programs`
 
 #### 7.2.6. Include Bill Sections <a id="auth-details-include-bill-sections" href="#auth-details-include-bill-sections" class="permalink">🔗</a>
 
@@ -2518,7 +2572,7 @@ Additionally, Servers MUST implement the following behavior to support this auth
 
 ##### 7.2.8.1. Include Usage Segment Formats <a id="auth-details-include-usage-segment-formats" href="#auth-details-include-usage-segment-formats" class="permalink">🔗</a>
 
-For some use cases, Clients need to have access to a specific set of [Usage Segment Value Formats](#usage-segment-value-format) (e.g. both usage kWh and peak kW readings).
+For some use cases, Clients need to have access to a specific set of [Usage Segment Value Format Types](#usage-segment-value-format-types) (e.g. both usage kWh and peak kW readings).
 For example, a utility vendor Client may need to access the electric usage, demand, and supply mix for a specific set of Meter Devices with which they are contracted in analyzing.
 To enable which Usage Segment Value Formats access is included in addition to the data normally provided for a scope, this specification defines an authorization details field that controls additional Usage Segment access.
 
@@ -2526,7 +2580,7 @@ To support this authorization details field, the Authorization Details Field Obj
 
 * The `id` value MUST be `"include_usage_segment_formats"`.
 * The `format` value MUST be `"choice_list_or_null"`.
-* The `choices` array contains Choice objects who's `id` values are one of the defined [Usage Segment Value Formats](#usage-segment-value-format) in this specification.
+* The `choices` array contains Choice objects who's `id` values are one of the defined [Usage Segment Value Format Types](#usage-segment-value-format-types) in this specification or included in the [Server Metadata's](#server-metadata) `cds_usage_segment_additional_formats` reference object.
   Servers MAY include additional Choice objects that do not represent one of the defined Value Formats defined in this specification in order to accommodate extensions and Server-specific use cases (e.g. cloud coverage readings).
   Servers MUST NOT have custom Choice `id` values that represent an already defined Value Format in this specification, so that Clients can be interoperable with Servers for the set of Value Formats defined in this specification.
   Clients MUST ignore any Choice `id` values that they do not understand, so that Servers are able to include extension and Server-specific `id` values without breaking Client integrations.
@@ -2539,7 +2593,7 @@ Additionally, Servers MUST implement the following behavior to support this auth
   This can be useful if the Server is only providing durations (e.g. month cutoff dates) for a Usage Segment, but no values, for example as part of an Aggregation.
 * If the value is an array, Usage Segments included as part of this field's scope MUST have `format` values that are an array that contains the same or a subset of Value Formats in this field's array.
   Servers MAY order the `format` values in any order, so it does not have to be in the same order as this field's array values.
-  Clients MUST be able to parse Usage Segment [Value Formats](#usage-segment-value-format) in any order and in any subset of this field's array values.
+  Clients MUST be able to parse Usage Segment [Value Formats](#usage-segment-value-formats) in any order and in any subset of this field's array values.
 
 #### 7.2.9. Include Energy Attribute Certificates <a id="auth-details-include-eacs" href="#auth-details-include-eacs" class="permalink">🔗</a>
 
@@ -2563,7 +2617,7 @@ Additionally, Servers MUST implement the following behavior to support this auth
     * EACs that have a `beneficiary_type` value of `servicecontract` and `beneficiaries` values that match the `cds_servicecontract_id` for any included Service Contract object.
     * EACs that have a `beneficiary_type` value of `rateplan` and `beneficiaries` values that match the `rateplan_code` for any included Service Contract object.
     * EACs that have a `beneficiary_type` value of `program` and `beneficiaries` values that match the `program_number` for any included Account object's `account_programs` entries or Service Contract object's `service_programs` entries.
-    * EACs that are referenced in [`eacs`](#TODO-usage-segment-value-eacs) formatted [Value Objects](#usage-segment-value-object-format) in any included [Usage Segment](#usage-segment-format) object.
+    * EACs that are referenced in [`eacs`](#usage-segment--eacs) formatted [Value Objects](#usage-segment-value-objects) in any included [Usage Segment](#usage-segment-format) object.
     * Any additional EACs that the Server determines are related to this field's scope or other authorization details fields (e.g. EACs that have a `beneficiary_type` value of `general` and applicable to the Client's use case).
 * If this field's value is `false`, Servers MUST NOT include EAC objects in the Client's access.
 
@@ -3596,7 +3650,7 @@ The Server MUST implement the following to support the Service Contract Selectio
         * The Server MUST render the Selection Component as a list of the Customer's Service Contracts that are available for selection for the Scope(s).
         * Each entry in the Service Contract list MUST display the following:
             * The Server MUST display the Service Contract's `contract_number`.
-            * The Server MUST display the Service Contract's `service_type`.
+            * The Server MUST display the Service Contract's `service_types`.
             * The Server MUST display the Service Contract's `account_number`.
             * If the Server has access to the Service Contract's display name as the Customer would see it in their online profile, the Server MUST display that value.
             * If the Server has access to the Service Contract's `contract_address`, the Server MUST display that value.
@@ -3633,10 +3687,10 @@ The Server MUST implement the following to support the Service Point Selection t
         * The Server MUST render the Selection Component as a list of the Customer's Service Points that are available for selection for the Scope(s).
         * Each entry in the Service Point list MUST display the following:
             * The Server MUST display the Service Point's `servicepoint_number`.
-            * The Server MUST display the Service Point's `servicepoint_type`.
+            * The Server MUST display the Service Point's `servicepoint_types`.
             * If the Server has access to the Service Point's display name as the Customer would see it in their online profile, the Server MUST display that value.
             * If the Server has access to the Service Point's `servicepoint_address`, the Server MUST display that value.
-        * The Server MAY include other values for the entries, such as [Premise](#TODO-premise-format) `premise_number` under the Service Point.
+        * The Server MAY include other values for the entries, such as [Premise](#premise-format) `premise_number` under the Service Point.
         * The Server MUST allow the Customer to select and deselect individual Service Point entries that will be subject the the Scope(s).
         * The Server MUST include the ability for the Customer to select or deselect all Service Point entries.
         * If there are more than 10 Service Point entries, the Server MUST implement the following requirements:
@@ -3706,7 +3760,7 @@ The Server MUST implement the following to support the Aggregation Selection typ
         * The Server MUST render the Selection Component as a list of the Customer's Aggregations that are available for selection for the Scope(s).
         * Each entry in the Aggregation list MUST display the following:
             * The Server MUST display the Aggregation's `aggregation_number`.
-            * The Server MUST display the Aggregation's `aggregation_type`.
+            * The Server MUST display the Aggregation's `aggregation_types`.
             * If the Server has access to the Aggregation's display name as the Customer would see it in their online profile, the Server MUST display that value.
             * If the Server has access to the Aggregation's `grouped_addresses`, the Server MUST display at least one of those values per entry, if it has any.
         * The Server MAY include other values for the entries, such as related `premise_number` values.
@@ -3882,10 +3936,11 @@ Below is an example rendered Authorization Receipt layout that is rendered when 
 To enable Servers providing access to [Customer Data](#customer-data-def), this specification defines a set of Application Programming Interfaces (APIs) and data object formats that MUST be implemented by Servers when providing access to data under this specification's defined [Scopes](#scopes).
 Servers MAY only implement the APIs defined in these sections that are necessary to provide access under the Scopes they support.
 
+The APIs defined in this section MUST be authenticated using a Bearer `access_token` that is associated with a Grant [[CDS-WG1-02 Section 8](#ref-cds-wg1-02-grants-api)] that provisions access for [Scopes](#scopes) that allows a Client to access objects on the APIs.
+
 ### 10.1. Accounts API <a id="accounts-api" href="#accounts-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of Application Programming Interfaces (APIs) allowing Clients to retrieve a Customer's Account details for which they are authorized to access.
-These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Accounts API.
 
 #### 10.1.1. Account Object Format <a id="account-format" href="#account-format" class="permalink">🔗</a>
 
@@ -3905,15 +3960,44 @@ Account objects are formatted as JSON objects and contain the following named va
 * `account_name` - _[string](#string)_ - (OPTIONAL) The name that a Customer sees on their bill and online user interface as the name for this Account, if available.
 * `account_address` - _[string](#string)_ - (OPTIONAL) The address that a Customer sees on their bill and online user interface as the address for this Account, if available.
   This string MAY have line breaks, such as when the address is multiple lines.
-* `account_type` - _[AccountType](#TODO-account-types)_ - (OPTIONAL) What type of Account this is.
-* `account_status` - _[AccountStatus](#TODO-account-status)_ - (OPTIONAL) What the Account's status is.
-* `account_contacts` - _Array[[AccountContact](#TODO-account-contact-format)]_ - (OPTIONAL) A list of Account Contacts for the Account.
-* `account_programs` - _Array[[AccountProgram](#TODO-account-program-format)]_ - (OPTIONAL) A list of Account Programs for the Account.
+* `account_types` - _Array[[AccountType](#account-types)]_ - (OPTIONAL) A list of types that apply to the Account.
+  Multiple Account Types can apply to a single account (e.g. both `utility_customer` and `business_account`).
+* `account_status` - _[AccountStatus](#account-statuses)_ - (OPTIONAL) What the Account's status is.
+* `account_contacts` - _Array[[AccountContact](#account-contact-format)]_ - (OPTIONAL) A list of Account Contacts for the Account.
+* `account_programs` - _Array[[AccountProgram](#account-program-format)]_ - (OPTIONAL) A list of Account Programs for the Account.
   If the Server does not have this information or the Customer is not participating in any Account-level programs, this value is and empty list (`[]`).
 
-#### 10.1.2. Listing Accounts <a id="accounts-list" href="#accounts-list" class="permalink">🔗</a>
+#### 10.1.2. Account Types <a id="account-types" href="#account-types" class="permalink">🔗</a>
 
-Clients may request to list Account objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Accounts, to the `cds_accounts_list` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
+<span style="background-color:yellow">TODO</span>
+
+#### 10.1.3. Account Statuses <a id="account-statuses" href="#account-statuses" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.1.4. Account Contact Object Format <a id="account-contact-format" href="#account-contact-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.1.5. Account Contact Types <a id="account-contact-types" href="#account-contact-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.1.6. Account Program Object Format <a id="account-program-format" href="#account-program-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.1.7. Account Program Types <a id="account-program-types" href="#account-program-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.1.8. Account Program Statuses <a id="account-program-statuses" href="#account-program-statuses" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.1.9. Listing Accounts <a id="accounts-list" href="#accounts-list" class="permalink">🔗</a>
+
+Clients may request to list Account objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_accounts_list` URL.
 The Account listing request responses are formatted as JSON objects and contain the following named values.
 
 * `accounts` - _Array[[Account](#account-format)]_ - (REQUIRED) A list of Accounts to which the requesting `access_token` is scoped to have access.
@@ -3946,7 +4030,6 @@ Listings of Account objects MUST be ordered in reverse chronological order by `c
 ### 10.2. Service Contracts API <a id="service-contracts-api" href="#service-contracts-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's Service Contract details for which they are authorized to access.
-These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Service Contracts API.
 
 #### 10.2.1. Service Contract Object Format <a id="service-contract-format" href="#service-contract-format" class="permalink">🔗</a>
 
@@ -3964,22 +4047,53 @@ Service Contract objects are formatted as JSON objects and contain the following
   If a Server does not have a Customer-facing identifier for a Service Contract and the Client is not authorized to see the Server's internal identifier for this Service Contract, this value is `null`.
 * `contract_address` - _[string](#string)_ - (OPTIONAL) The address that a Customer sees on their bill or online user interface as the address for this Service Contract, if available.
   This string MAY have line breaks, such as when the address is multiple lines.
-* `contract_status` - _[ContractStatus](#TODO-contract-statuses)_ - (REQUIRED) The current status of the Service Contract.
-* `contract_type` - _[ContractType](#TODO-contract-types)_ - (REQUIRED) The type of agreement that this Service Contract represents.
+* `contract_types` - _Array[[ContractType](#contract-types)]_ - (REQUIRED) A list of the types of agreement that this Service Contract represents.
+  Multiple Contract Types can apply to a single Service Contract (e.g. both `utility_service` and `monthly_billing`).
+* `contract_status` - _[ContractStatus](#contract-statuses)_ - (REQUIRED) The current status of the Service Contract.
 * `contract_entity` - _[string](#string)_ - (REQUIRED) With which entity the Customer has agreement for this Service Contract.
 * `contract_start` - _[date](#date)_ - (OPTIONAL) When the agreement that this Service Contract represents started.
 * `contract_end` - _[date](#date) or `null`_ - (OPTIONAL) When the agreement that this Service Contract represents ended.
   If the agreement is still ongoing, this value is `null`.
-* `service_type` - _[ServiceType](#TODO-service-types)_ - (REQUIRED) The type of utility or other service that this Service Contract provides.
-* `service_class` - _[ServiceClass](#TODO-service-classes)_ - (REQUIRED) The class of service for which this Service Contract is categorized.
+* `service_types` - _Array[[ServiceType](#service-types)]_ - (REQUIRED) A list of what services are provided with this Service Contract.
+  Multiple Service Types can apply to a single Service Contract (e.g. both `electric` and `commercial_electric`).
+* `service_class` - _[ServiceClass](#service-classes)_ - (REQUIRED) The class of service for which this Service Contract is categorized.
 * `rateplan_code` - _[string](#string)_ - (OPTIONAL) A unique code for the current rate plan or tariff on which costs for this Service Contract are calculated.
 * `rateplan_name` - _[string](#string)_ - (OPTIONAL) The name that a Customer sees on their bill or online user interface as the rate plan or tariff that applies to this Service Contract.
-* `service_programs` - _Array[[ServiceProgram](#TODO-service-program-format)]_ - (OPTIONAL) A list of Service Programs for the Account.
+* `service_programs` - _Array[[ServiceProgram](#service-program-format)]_ - (OPTIONAL) A list of Service Programs for the Account.
   If the Server does not have this information or the Customer is not participating in any Service Contract-level programs, this value is and empty list (`[]`).
 
-#### 10.2.2. Listing Service Contracts <a id="service-contract-list" href="#service-contract-list" class="permalink">🔗</a>
+#### 10.2.2. Contract Types <a id="contract-types" href="#contract-types" class="permalink">🔗</a>
 
-Clients may request to list Service Contract objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Service Contracts, to the `cds_servicecontracts_list` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
+<span style="background-color:yellow">TODO</span>
+
+#### 10.2.3. Contract Statuses <a id="contract-statuses" href="#contract-statuses" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.2.4. Service Types <a id="service-types" href="#service-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.2.5. Service Classes <a id="service-classes" href="#service-classes" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+
+#### 10.2.6. Service Program Object Format <a id="service-program-format" href="#service-program-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.2.7. Service Program Types <a id="service-program-types" href="#service-program-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.2.8. Service Program Statuses <a id="service-program-statuses" href="#service-program-statuses" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.2.9. Listing Service Contracts <a id="service-contract-list" href="#service-contract-list" class="permalink">🔗</a>
+
+Clients may request to list Service Contract objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_servicecontracts_list` URL.
 The Service Contract listing request responses are formatted as JSON objects and contain the following named values.
 
 * `service_contracts` - _Array[[ServiceContract](#service-contract-format)]_ - (REQUIRED) A list of Service Contracts to which the requesting `access_token` is scoped to have access.
@@ -3996,8 +4110,10 @@ Servers MUST support Clients adding any of the following URL parameters to the `
 * `account_numbers` - A space-separated list of `account_number` values for which the Servers MUST filter the Service Contracts.
 * `contract_numbers` - A space-separated list of `contract_number` values for which the Servers MUST filter the Service Contracts.
 * `contract_statuses` - A space-separated list of `contract_status` values for which the Servers MUST filter the Service Contracts.
-* `contract_types` - A space-separated list of `contract_type` values for which the Servers MUST filter the Service Contracts.
-* `service_types` - A space-separated list of `service_type` values for which the Servers MUST filter the Service Contracts.
+* `contract_types` - A space-separated list of [Contract Type](#contract-types) values for which the Servers MUST filter the Service Contracts.
+  Service Contracts in which any of their `contract_types` values match any of this parameter's values MUST be returned.
+* `service_types` - A space-separated list of [Service Type](#service-types) values for which the Servers MUST filter the Service Contracts.
+  Service Contracts in which any of their `service_types` values match any of this parameter's values MUST be returned.
 * `q` - A search term for which the Servers MUST filter the Service Contracts following fields for values that case-insensitive contains the search term, if the field is accessible based on the Client's `access_token` scope.
     * `cds_servicecontract_id`
     * `account_number`
@@ -4012,7 +4128,6 @@ Listings of Service Contract objects MUST be ordered in reverse chronological or
 ### 10.3. Service Points API <a id="service-points-api" href="#service-points-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Service Point details for which they are authorized to access.
-These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Service Points API.
 
 #### 10.3.1. Service Point Object Format <a id="service-point-format" href="#service-point-format" class="permalink">🔗</a>
 
@@ -4026,7 +4141,8 @@ Service Point objects are formatted as JSON objects and contain the following na
   If the Server caches the data for this object and periodically synchronizes it with the Server's source of truth (e.g. nightly batch updates), this value is the last time this object's Customer Data was updated or validated.
 * `servicepoint_number` - _[string](#string) or `null`_ - (REQUIRED) The identifier that a Customer sees on their bill or online user interface as the identifier for this Service Point.
   If a Server does not have a Customer-facing identifier for a Service Point and the Client is not authorized to see the Server's internal identifier for this Service Point, this value is `null`.
-* `servicepoint_type` - _[ServicePointType](#TODO-service-point-types)_ - (REQUIRED) The type of service point that this Service Point represents.
+* `servicepoint_types` - _Array[[ServicePointType](#service-point-types)]_ - (REQUIRED) A list of types that this Service Point represents.
+  Multiple Service Point Types can apply to a single Service Point (e.g. both `electric` and `single_meter`).
 * `servicepoint_address` - _[string](#string) or `null`_ - (OPTIONAL) The address that a Customer sees on their bill or online user interface as the address for this Service Point, if available.
   Strings MAY have line breaks, such as when the address is multiple lines.
   If a Server does not have a Customer-facing address for a Service Point and the Client is not authorized to see the Server's internal address for this Service Point, this value is `null`.
@@ -4038,12 +4154,24 @@ Service Point objects are formatted as JSON objects and contain the following na
   This list MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
 * `previous_servicecontracts` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_servicecontract_id` values that identify Service Contracts that have previously provided a service to a Customer via this Service Point.
   This list MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
-* `premises` - _Array[[Premise](#TODO-premise-format)]_ - (OPTIONAL) A list of related premise identifiers and details that a Customer sees on their bill or online user interface as the premises for this Service Point, if available.
+* `premises` - _Array[[Premise](#premise-format)]_ - (OPTIONAL) A list of related premise identifiers and details that a Customer sees on their bill or online user interface as the premises for this Service Point, if available.
   If a Server does not have any Customer-facing premises for a Service Point or the Client is not authorized to see the Server's internal premise details for this Service Point, or the Server does not have premises stored for this Service Point, this value is an empty list (`[]`).
 
-#### 10.3.2. Listing Service Points <a id="service-point-list" href="#service-point-list" class="permalink">🔗</a>
+#### 10.3.2. Service Point Types <a id="service-point-types" href="#service-point-types" class="permalink">🔗</a>
 
-Clients may request to list Service Point objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Service Points, to the `cds_servicepoints_list` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
+<span style="background-color:yellow">TODO</span>
+
+#### 10.3.3. Premise Object Format <a id="premise-format" href="#premise-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.3.4. Premise Types <a id="premise-types" href="#premise-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.3.5. Listing Service Points <a id="service-point-list" href="#service-point-list" class="permalink">🔗</a>
+
+Clients may request to list Service Point objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_servicepoints_list` URL.
 The Service Point listing request responses are formatted as JSON objects and contain the following named values.
 
 * `service_points` - _Array[[ServicePoint](#service-point-format)]_ - (REQUIRED) A list of Service Points to which the requesting `access_token` is scoped to have access.
@@ -4071,7 +4199,6 @@ Listings of Service Point objects MUST be ordered in reverse chronological order
 ### 10.4. Meter Devices API <a id="meter-devices-api" href="#meter-devices-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Meter Device details for which they are authorized to access.
-These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Meter Devices API.
 
 #### 10.4.1. Meter Device Object Format <a id="meter-device-format" href="#meter-device-format" class="permalink">🔗</a>
 
@@ -4085,15 +4212,20 @@ Meter Device objects are formatted as JSON objects and contain the following nam
   If the Server caches the data for this object and periodically synchronizes it with the Server's source of truth (e.g. nightly batch updates), this value is the last time this object's Customer Data was updated or validated.
 * `meter_number` - _[string](#string) or `null`_ - (OPTIONAL) The identifier that a Customer sees on their bill or online user interface or on the face of their physical meter as the identifier for this Meter Device.
   If a Server does not have a Customer-facing identifier for a Meter Device and the Client is not authorized to see the Server's internal identifier for this Meter Device, this value is `null`.
-* `meter_type` - _[MeterType](#TODO-meter-types)_ - (REQUIRED) The type of metering device that this Meter Device represents.
+* `meter_types` - _Array[[MeterType](#meter-types)]_ - (REQUIRED) A list of types that this Meter Device represents.
+  Multiple Meter Types can apply to a single Meter Device (e.g. both `electric_meter` and `bidirectional`).
 * `current_servicepoints` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_servicepoint_id` values that identify Service Points where this Meter Device is currently installed or associated.
   This list MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
 * `previous_servicepoints` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_servicepoint_id` values that identify Service Points where this Meter Device was previously installed or associated.
   This list MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
 
-#### 10.4.2. Listing Meter Devices <a id="meter-device-list" href="#meter-device-list" class="permalink">🔗</a>
+#### 10.4.2. Meter Types <a id="meter-types" href="#meter-types" class="permalink">🔗</a>
 
-Clients may request to list Meter Device objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Meter Devices, to the `cds_meterdevices_list` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
+<span style="background-color:yellow">TODO</span>
+
+#### 10.4.3. Listing Meter Devices <a id="meter-device-list" href="#meter-device-list" class="permalink">🔗</a>
+
+Clients may request to list Meter Device objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_meterdevices_list` URL.
 The Meter Device listing request responses are formatted as JSON objects and contain the following named values.
 
 * `meter_devices` - _Array[[MeterDevice](#meter-device-format)]_ - (REQUIRED) A list of Meter Devices to which the requesting `access_token` is scoped to have access.
@@ -4119,7 +4251,6 @@ Listings of Meter Device objects MUST be ordered in reverse chronological order 
 ### 10.5. Bill Statements API <a id="bill-statements-api" href="#bill-statements-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Bill Statement details for which they are authorized to access.
-These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Bill Statements API.
 
 #### 10.5.1. Bill Statement Object Format <a id="bill-statement-format" href="#bill-statement-format" class="permalink">🔗</a>
 
@@ -4153,12 +4284,20 @@ Bill Statement objects are formatted as JSON objects and contain the following n
   If there is no shutoff notice on the Customer-facing bill statement, this value is `null`.
 * `shutoff_prevention_date` - _[date](#date) or `null`_ - (REQUIRED) The value shown on the Customer-facing bill statement as the date that the `shutoff_prevention_minimum_due` value is due, if available.
   If `shutoff_prevention_minimum_due` is `null`, this value is also `null`.
-* `program_participations` - _Array[[ProgramParticipation](#TODO-program-participation-format)]_ - (OPTIONAL) A list of Account-level programs in which the Customer is participating for the Bill Statement period.
+* `account_programs` - _Array[[AccountProgram](#account-program-format)]_ - (OPTIONAL) A list of Account-level programs in which the Customer is participating for the Bill Statement period.
   If the Server does not have this information or the Customer is not participating in any Account-level programs, this value is and empty list (`[]`).
 
-#### 10.5.2. Listing Bill Statements <a id="bill-statement-list" href="#bill-statement-list" class="permalink">🔗</a>
+#### 10.5.2. New Charge Object Format <a id="new-charge-format" href="#new-charge-format" class="permalink">🔗</a>
 
-Clients may request to list Bill Statement objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Bill Statements, to the `cds_billstatement_list` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
+<span style="background-color:yellow">TODO</span>
+
+#### 10.5.3. New Charge Types <a id="new-charge-types" href="#new-charge-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.5.4. Listing Bill Statements <a id="bill-statement-list" href="#bill-statement-list" class="permalink">🔗</a>
+
+Clients may request to list Bill Statement objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_billstatement_list` URL.
 The Bill Statement listing request responses are formatted as JSON objects and contain the following named values.
 
 * `bill_statements` - _Array[[BillStatement](#bill-statement-format)]_ - (REQUIRED) A list of Bill Statements to which the requesting `access_token` is scoped to have access.
@@ -4183,7 +4322,6 @@ In situations where relevant Bill Statement objects have the same `statement_dat
 ### 10.6. Bill Sections API <a id="bill-sections-api" href="#bill-sections-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Bill Section details for which they are authorized to access.
-These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Bill Sections API.
 
 #### 10.6.1. Bill Section Object Format <a id="bill-section-format" href="#bill-section-format" class="permalink">🔗</a>
 
@@ -4199,13 +4337,14 @@ Bill Section objects are formatted as JSON objects and contain the following nam
   If the Client is not authorized to see the related Bill Statement, this value is `null`.
 * `cds_account_id` - _[string](#string)_ - (REQUIRED) The Account for which this Bill Section was issued.
 * `account_number` - _[string](#string)_ - (REQUIRED) The Account's `account_number` at the time that this Bill Section was issued.
-* `section_type` - _[BillSectionType](#TODO-bill-section-types)_ - (REQUIRED) The type of bill section that this Bill Section represents.
+* `section_types` - _Array[[BillSectionType](#bill-section-types)]_ - (REQUIRED) A list of section types that this Bill Section represents.
+  Multiple Bill Section Types can apply to a single Bill Section (e.g. both `electric_service` and `solar_net_metering`).
 * `start_date` - _[date](#date)_ - (REQUIRED) The start date of services provided for which this Bill Section covers.
 * `end_date` - _[date](#date)_ - (REQUIRED) The end date of services provided for which this Bill Section covers.
 * `currency` - _[string](#string)_ - (REQUIRED) The currency for this Bill Section's charge values as an [[ISO 4217](#ref-iso4217)] currency code.
-* `distribution_entity` - _[DistributionEntity](#TODO-distribution-entity-format) or `null`_ - (REQUIRED) The details for the utility or other entity providing distribution for the services that this Bill Section covers.
+* `distribution_entity` - _[DistributionEntity](#distribution-entity-format) or `null`_ - (REQUIRED) The details for the utility or other entity providing distribution for the services that this Bill Section covers.
   If the services provided that are covered by this Bill Section do not have distribution, this value is `null`.
-* `load_serving_entity` - _[LoadServingEntity](#TODO-load-serving-entity-format) or `null`_ - (REQUIRED) The details for the utility or other entity providing distribution for the services that this Bill Section covers.
+* `load_serving_entity` - _[LoadServingEntity](#load-serving-entity-format) or `null`_ - (REQUIRED) The details for the utility or other entity providing distribution for the services that this Bill Section covers.
   If the services provided that are covered by this Bill Section do not have a supply or retailer component, this value is `null`.
   If the load serving entity is the same as the distributor, the Load Serving Entity `type` value MUST be `distributor` and no other fields are populated in the Load Serving Entity object.
 * `related_servicecontracts` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_servicecontract_id` values that identify Service Contracts to which this Bill Section is applicable.
@@ -4216,13 +4355,57 @@ Bill Section objects are formatted as JSON objects and contain the following nam
   This list MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
 * `related_billsections` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_billsection_id` that identify other Bill Sections that were issued alongside this Bill Section, where those Bill Sections represent another set of charges covering the same Service Contract.
   This list MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
-* `usage_summary` - _Array[[BillSectionUsageSummary](#TODO-bill-section-usage-summary-format)]_ - (REQUIRED) A list of the Bill Section Usage Summary objects that detail the service's usage and other values on the Customer-facing bill statement section represented by this Bill Section.
-* `cost_summary` - _Array[[BillSectionCostSummary](#TODO-bill-section-cost-summary-format)]_ - (REQUIRED) A list of the Bill Section Cost Summary objects that detail the service's total and subtotal costs on the Customer-facing bill statement section represented by this Bill Section.
-* `line_items` - _Array[[BillSectionLineItem](#TODO-bill-section-line-item-format)]_ - (OPTIONAL) A list of the Bill Section Line Item objects that denote the individual charges listed on the Customer-facing bill statement section represented by this Bill Section.
+* `usage_details` - _Array[[BillSectionUsageDetail](#bill-section-usage-detail-format)]_ - (REQUIRED) A list of the Bill Section Usage Detail objects that summarize the service's usage and other values on the Customer-facing bill statement section represented by this Bill Section.
+* `cost_details` - _Array[[BillSectionCostDetail](#bill-section-cost-detail-format)]_ - (REQUIRED) A list of the Bill Section Cost Detail objects that summarize the service's total and subtotal costs on the Customer-facing bill statement section represented by this Bill Section.
+* `line_items` - _Array[[BillSectionLineItem](#bill-section-line-item-format)]_ - (OPTIONAL) A list of the Bill Section Line Item objects that denote the individual charges listed on the Customer-facing bill statement section represented by this Bill Section.
 
-#### 10.6.2. Listing Bill Sections <a id="bill-section-list" href="#bill-section-list" class="permalink">🔗</a>
+#### 10.6.2. Bill Section Types <a id="bill-section-types" href="#bill-section-types" class="permalink">🔗</a>
 
-Clients may request to list Bill Section objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Bill Sections, to the `cds_billsection_list` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.3. Distribution Entity Object Format <a id="distribution-entity-format" href="#distribution-entity-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.4. Distribution Entity Types <a id="distribution-entity-types" href="#distribution-entity-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.5. Load Serving Entity Object Format <a id="load-serving-entity-format" href="#load-serving-entity-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.6. Load Serving Entity Types <a id="load-serving-entity-types" href="#load-serving-entity-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.7. Bill Section Usage Detail Object Format <a id="bill-section-usage-detail-format" href="#bill-section-usage-detail-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.8. Bill Section Usage Detail Types <a id="bill-section-usage-detail-types" href="#bill-section-usage-detail-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.9. Bill Section Cost Detail Object Format <a id="bill-section-cost-detail-format" href="#bill-section-cost-detail-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.10. Bill Section Cost Detail Types <a id="bill-section-cost-detail-types" href="#bill-section-cost-detail-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.11. Bill Section Line Item Object Format <a id="bill-section-line-item-format" href="#bill-section-line-item-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.12. Bill Section Line Item Types <a id="bill-section-line-item-types" href="#bill-section-line-item-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.6.13. Listing Bill Sections <a id="bill-section-list" href="#bill-section-list" class="permalink">🔗</a>
+
+Clients may request to list Bill Section objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_billsection_list` URL.
 The Bill Section listing request responses are formatted as JSON objects and contain the following named values.
 
 * `bill_sections` - _Array[[BillSection](#bill-section-format)]_ - (REQUIRED) A list of Bill Sections to which the requesting `access_token` is scoped to have access.
@@ -4252,7 +4435,6 @@ In situations where relevant Bill Section objects have the same `account_number`
 ### 10.7. Aggregations API <a id="aggregations-api" href="#aggregations-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Server's Aggregation objects for which they are authorized to access.
-These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Aggregations API.
 
 #### 10.7.1. Aggregation Object Format <a id="aggregation-format" href="#aggregation-format" class="permalink">🔗</a>
 
@@ -4264,7 +4446,8 @@ Aggregation objects are formatted as JSON objects and contain the following name
 * `cds_synced` - _[datetime](#datetime)_ - (REQUIRED) When the data in this object was last confirmed to be valid against the Server's source of truth (e.g. the utility's backend customer database).
   If the Server directly queries the source of truth when returning data for this object, this value is the current time.
   If the Server caches the data for this object and periodically synchronizes it with the Server's source of truth (e.g. nightly batch updates), this value is the last time this object's Customer Data was updated or validated.
-* `aggregation_type` - _[AggregationType](#TODO-aggregation-types)_ - (REQUIRED) The type of aggregation that this Aggregation represents.
+* `aggregation_types` - _Array[[AggregationType](#aggregation-types)]_ - (REQUIRED) A list of types that this Aggregation represents.
+  Multiple Aggregation Types can apply to a single Aggreation (e.g. both `regional` and `public`).
 * `aggregation_number` - _[string](#string) or `null`_ - (REQUIRED) The aggregation identifier that a Client sees in Server documentation or other online interfaces as the aggregation identifier for this Aggregation, if available.
   If a Server does not have a Client-facing aggregation identifier for an Aggregation and the Client is not authorized to see the Server's internal aggregation identifier for this Aggregation, or the Server does not have aggregation identifiers stored for this Aggregation, this value is `null`.
 * `grouped_accounts` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_account_id` values that identify Accounts that are part of this Aggregation.
@@ -4277,20 +4460,40 @@ Aggregation objects are formatted as JSON objects and contain the following name
   For Aggregations that do not have or the Client does not have authorization to access Meter Devices that are part of the Aggregation, this is an empty array (`[]`).
 * `grouped_aggregations` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_aggregation_id` values that identify other Aggregations that are part of this Aggregation.
   For Aggregations that do not have or the Client does not have authorization to access other sub Aggregations that are part of the parent Aggregation, this is an empty array (`[]`).
-* `grouped_addresses` - _Array[[string](#string)]_ - (OPTIONAL) A list of addresses that are associated with this Aggregation, if applicable for the `aggregation_type`.
+* `grouped_addresses` - _Array[[string](#string)]_ - (OPTIONAL) A list of addresses that are associated with this Aggregation, if applicable for the `aggregation_types`.
   Strings MAY have line breaks, such as when the address is multiple lines.
   For Aggregations that do not have or the Client does not have authorization to access addresses that are part of the parent Aggregation, this is an empty array (`[]`).
-* `grouped_regions` - _Array[[AggregationRegion](#TODO-aggregation-region-format)]_ - (REQUIRED) A list of Aggregation Regions that are associated with this Aggregation, if applicable for the `aggregation_type`.
+* `grouped_regions` - _Array[[AggregationRegion](#aggregation-region-format)]_ - (REQUIRED) A list of Aggregation Regions that are associated with this Aggregation, if applicable for the `aggregation_types`.
   For Aggregations that do not have or the Client does not have authorization to access regions that are part of the parent Aggregation, this is an empty array (`[]`).
-* `consents_required` - _Array[[ConsentRequirement](#TODO-consent-requirement-format)]_ - (REQUIRED) A list of Consent Requirements that are required for this Aggregation, if applicable for the `aggregation_type`.
+* `consents_required` - _Array[[ConsentRequirement](#consent-requirement-format)]_ - (REQUIRED) A list of Consent Requirements that are required for this Aggregation, if applicable for the `aggregation_types`.
   If there are no consent requirements for this Aggregation, this value is an empty array (`[]`).
 
 For Aggregations that have more than 1000 grouped items in any of the Aggregation object's `grouped_*` arrays, so as to not create overly large individual Aggregation objects, the Server MUST create Aggregation objects that group the items in groups of 1000 or fewer items, then include those Aggregations in the original Aggregation's `groupd_aggregations` array.
 The intent of this requirement is to enable Servers to use the [Listing Aggregations](#aggregation-list) API as a means for breaking up and paginating very large groupings of Account, Service Contract, Service Point, Meter Devices, or Aggregation objects.
 
-#### 10.7.2. Listing Aggregations <a id="aggregation-list" href="#aggregation-list" class="permalink">🔗</a>
+#### 10.7.2. Aggregation Types <a id="aggregation-types" href="#aggregation-types" class="permalink">🔗</a>
 
-Clients may request to list Aggregation objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Aggregations, to the `cds_aggregations_list` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
+<span style="background-color:yellow">TODO</span>
+
+#### 10.7.3. Aggregation Region Object Format <a id="aggregation-region-format" href="#aggregation-region-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.7.4. Aggregation Region Types <a id="aggregation-region-types" href="#aggregation-region-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.7.5. Consent Requirement Object Format <a id="consent-requirement-format" href="#consent-requirement-format" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.7.6. Consent Requirement Types <a id="consent-requirement-types" href="#consent-requirement-types" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.7.7. Listing Aggregations <a id="aggregation-list" href="#aggregation-list" class="permalink">🔗</a>
+
+Clients may request to list Aggregation objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_aggregations_list` URL.
 The Aggregation listing request responses are formatted as JSON objects and contain the following named values.
 
 * `aggregations` - _Array[[Aggregation](#aggregation-format)]_ - (REQUIRED) A list of Aggregations to which the requesting `access_token` is scoped to have access.
@@ -4305,7 +4508,8 @@ Servers MUST support Clients adding any of the following URL parameters to the `
 
 * `cds_aggregation_ids` - A space-separated list of `cds_aggregation_id` values for which the Servers MUST filter the Aggregations.
 * `aggregation_numbers` - A space-separated list of `aggregation_number` values for which the Servers MUST filter the Aggregations.
-* `aggregation_types` - A space-separated list of `aggregation_type` values for which the Servers MUST filter the Aggregations.
+* `aggregation_types` - A space-separated list of [Aggregation Type](#aggregation-types) values for which the Servers MUST filter the Aggregations.
+  Aggregations in which any of their `aggregation_types` values match any of this parameter's values MUST be returned.
 * `q` - A search term for which the Servers MUST filter the Aggregations following fields for values that case-insensitive contains the search term, if the field is accessible based on the Client's `access_token` scope.
     * `cds_aggregation_id`
     * `aggregation_number`
@@ -4317,7 +4521,6 @@ Listings of Aggregation objects MUST be ordered in reverse chronological order b
 ### 10.8. Usage Segments API <a id="usage-segments-api" href="#usage-segments-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Usage Segment objects for which they are authorized to access.
-These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Usage Segments API.
 
 #### 10.8.1. Usage Segment Object Format <a id="usage-segment-format" href="#usage-segment-format" class="permalink">🔗</a>
 
@@ -4342,59 +4545,116 @@ Usage Segment objects are formatted as JSON objects and contain the following na
   For values representing a duration interval (e.g. kwh usage intervals), this `interval` represents the duration of each interval, where the next value starts immediately at the end of the prior interval value with no time gap.
   For values representing instantaneous readings (e.g. register read), this `interval` represents the time between the readings provided in the `values`.
   For usage readings that have varying duration, such as monthly usage readings, Servers MUST create individual Usage Point objects that have an `interval` value with the duration of the specific period (e.g. month) and a single Value Set entry in their `values` array.
-* `format` - _Array[[ValueFormat](#usage-segment-value-format)]_ - (REQUIRED) For each entry in `values`, these are the formats of that are included, presented in the order in which the values are presented.
+* `formats` - _Array[[ValueFormat](#usage-segment-value-formats)]_ - (REQUIRED) For each entry in `values`, these are the formats of that are included, presented in the order in which the values are presented.
 * `values` - _Array[[ValueSet](#usage-segment-value-set-format)]_ - (REQUIRED) A list of Value Sets that represent the entries included in the Usage Segment.
 
 Servers MUST only include unique identifiers in `related_aggregations`, `related_accounts`, `related_servicecontracts`, `related_servicepoints`, `related_meterdevices`, and `related_billsections` lists MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
 
-#### 10.8.2. Usage Segment Value Formats <a id="usage-segment-value-format" href="#usage-segment-value-format" class="permalink">🔗</a>
+#### 10.8.2. Usage Segment Value Format Objects <a id="usage-segment-value-formats" href="#usage-segment-value-formats" class="permalink">🔗</a>
 
-The Usage Segment `format` field provides an ordered list of strings that denote the object types that are included in each Usage Segment `values` entry's [Value Set](#usage-segment-value-set-format).
-Usage Segments are organized this way so that the `format` listing essentially provides a "schema" of object types to expect when parsing the `values` Value Sets, which removes the need for each object in each Value Set to include repeated fields, such as an object type value.
+The [Usage Segment](#usage-segment-format) `formats` field provides an ordered list of Value Format objects that provide details about the objects that are included in each Usage Segment `values` entry's [Value Set](#usage-segment-value-set-format).
+The Value Format object contains the type and details of the Value Set it represents, such as what kind of measurement the Value Set represents (e.g. electric usage) and units (e.g. kilowatt hours).
+Usage Segments are organized this way so that the `formats` listing essentially provides a "schema" of object types to expect when parsing the `values` Value Sets, which removes the need for each object in each Value Set to include repeated fields, such as an object type and units values.
 
-The following Usage Segment format strings are specified with their corresponding Value Set object types:
+The Server MAY include multiple Value Format objects with the same `type` value if the Value Format's fields or corresponding Value Set's values are different.
+For example, if a Server is providing access to bidirectional electric usage interval data, the Server would include three Value Format objects in the `formats` array, all with the `type` value of [`electric_usage`](#usage-segment-electric-usage), but with different directions of usage (i.e. the `direction` fields set `forward`, `reverse`, and `net`).
 
-* `usage_kwh` - [General Electric Usage in kWh object](#TODO-usage-segment-value-usage-kwh)
-* `usage_fwd_kwh` - [Forward Electric Usage in kWh object](#TODO-usage-segment-value-usage-fwd-kwh)
-* `usage_rev_kwh` - [Reverse Electric Usage in kWh object](#TODO-usage-segment-value-usage-rev-kwh)
-* `usage_net_kwh` - [Net Electric Usage in kWh object](#TODO-usage-segment-value-usage-net-kwh)
-* `aggregated_kwh` - [Aggregated Electric Usage in kWh object](#TODO-usage-segment-value-aggregated-kwh)
-* `demand_kw` - [Electric Demand in kW object](#TODO-usage-segment-value-demand-kw)
-* `peak_kw` - [Electric Peak Demand in kW object](#TODO-usage-segment-value-peak-kw)
-* `water_m3` - [Water Usage in Cubic Meters object](#TODO-usage-segment-value-water-m3)
-* `water_gal` - [Water Usage in Gallons object](#TODO-usage-segment-value-water-gal)
-* `water_ft3` - [Water Usage in Cubic Feet object](#TODO-usage-segment-value-water-ft3)
-* `gas_therm` - [Natural Gas Usage in Therms object](#TODO-usage-segment-value-gas-therm)
-* `gas_ccf` - [Natural Gas Usage in CCF object](#TODO-usage-segment-value-gas-ccf)
-* `gas_mcf` - [Natural Gas Usage in MCF object](#TODO-usage-segment-value-gas-mcf)
-* `gas_mmbtu` - [Natural Gas Usage in mmBTU object](#TODO-usage-segment-value-gas-mmbtu)
-* `supply_mix` - [Electric Supply Mix object](#TODO-usage-segment-value-supply-mix)
-* `eacs` - [Energy Attribute Certificates object](#TODO-usage-segment-value-eacs)
+The intent is to separate the Value Set's metadata from the Value Set object so that the Value Set object can be much more compact, since there could be hundreds or thousands of Value Set objects in a single Usage Segment object.
+For example, a daily net metered elected 15 minute interval Usage Segment would be 384 Value Set objects (i.e. 4 data points per interval * 96 intervals per day).
 
-Value format strings MAY be repeated in the `format` listing, indicating there are multiple value objects in the Value Set for that format.
-This is useful when a Server provides multiple variations of optional fields for the same type of value.
+Value Format objects are formatted as JSON objects and contain the following named values:
 
-Extensions to this specification MAY further define additional formats other that what is listed above.
-Client MUST ignore format values they do not know how to interpret.
+* `type` - _[ValueFormatType](#usage-segment-value-format-types)_ - (REQUIRED) The type of object the corresponding Value Set represents.
 
-#### 10.8.3. Usage Segment Value Set Format <a id="usage-segment-value-set-format" href="#usage-segment-value-set-format" class="permalink">🔗</a>
+Depending on the `type`, the Value Format object can contain other fields, which are defined by the type's documentation.
 
-The Usage Segment `values` field provides an ordered list of Value Set entries.
-A Value Set entry is an array that contains an ordered list of [Value objects](#usage-segment-value-object-format), where the type of each Value object which is defined by the order of the `format` listing.
+#### 10.8.3. Usage Segment Value Format Types <a id="usage-segment-value-format-types" href="#usage-segment-value-format-types" class="permalink">🔗</a>
+
+Value Format `type` values MAY be one of the following and MUST follow the accompanying definition section:
+
+* `electric_usage` - [Electric Usage](#usage-segment-electric-usage)
+* `electric_demand` - [Electric Demand](#usage-segment-electric-demand)
+* `water_usage` - [Water Usage](#usage-segment-water-usage)
+* `gas_usage` - [Natural Gas Usage](#usage-segment-gas-usage)
+* `fueloil_usage` - [Fuel Oil Usage](#usage-segment-fueloil-usage)
+* `cost` - [Interval Cost](#usage-segment-interval-cost)
+* `supply_mix` - [Electric Supply Mix](#usage-segment-supply-mix)
+* `eacs` - [Energy Attribute Certificates](#usage-segment-eacs)
+
+Servers MAY include other Value Format `type` values in the Usage Segment `formats` array, so long as the Value Format `type` is included in the [Server Metadata's](#server-metadata) `cds_usage_segment_additional_formats` reference object.
+It is RECOMMENDED that additional `type` values have a prefix relevant to the Server (e.g. `exampleutility_*`) to prevent potential collisions with other Servers and extensions to this specification that define additional `type` values.
+
+Extensions MAY define additional Value Format `type` values.
+It is RECOMMENDED that the definitions for the additional `type` values follow the same format as those defined in this specification.
+It is RECOMMENDED that additional `type` values have a prefix relevant to the Server (e.g. `exampleutility_*`) to prevent potential collisions with other Servers and extensions to this specification that define additional `type` values.
+
+Clients MUST ignore Value Format and Value Set objects for which they do not understand the `type`.
+
+##### 10.8.3.1. Electric Usage <a id="usage-segment-electric-usage" href="#usage-segment-electric-usage" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 10.8.3.2. Electric Demand <a id="usage-segment-electric-demand" href="#usage-segment-electric-demand" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 10.8.3.3. Water Usage <a id="usage-segment-water-usage" href="#usage-segment-water-usage" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 10.8.3.4. Natural Gas Usage <a id="usage-segment-gas-usage" href="#usage-segment-gas-usage" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 10.8.3.5. Fuel Oil Usage <a id="usage-segment-fueloil-usage" href="#usage-segment-fueloil-usage" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 10.8.3.6. Interval Cost <a id="usage-segment-interval-cost" href="#usage-segment-interval-cost" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 10.8.3.7. Electric Supply Mix <a id="usage-segment-supply-mix" href="#usage-segment-supply-mix" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+##### 10.8.3.8. Energy Attribute Certificates <a id="usage-segment-eacs" href="#usage-segment-eacs" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+#### 10.8.4. Usage Segment Value Format Description Objects <a id="usage-segment-value-format-description" href="#usage-segment-value-format-description" class="permalink">🔗</a>
+
+The Server MAY include [Value Format](#usage-segment-value-formats) object types beyond those that are [defined](#usage-segment-value-format-types) in this specification.
+When Servers do include additional Value Format types, the Server MUST include information, represented by a Value Format Description object, for that additional type so that Clients can become compatible with the Value Format and Value Set objects when they are included in a [Usage Segment's](#usage-segment-format) `formats` and `values` fields.
+
+Value Format Description objects are formatted as JSON objects and contain the following named values:
+
+* `type` - _[string](#string)_ - (REQUIRED) The identifier of the `type` value that will be used in a [Value Format](#usage-segment-value-formats) object.
+* `name` - _[string](#string)_ - (REQUIRED) A human-readable name of the Value Format Type.
+* `description` - _[string](#string)_ - (REQUIRED) A human-readable description of what the Value Set data represents.
+* `documentation` - _[URL](#url)_ - (REQUIRED) A link to developer documentation on the additional Value Format Type.
+  Servers MUST include a definition in their documentation that is formatted the same as the [Value Format Types](#usage-segment-value-format-types) defined in this specification.
+  It is RECOMMENDED that Servers also include details about when they will include the Value Format in Usage Segments.
+  It is RECOMMENDED that Servers also include examples of what typical Value Format objects and Value Set objects could look like.
+  Servers MAY include any other information in their documentation, in addition to the required formatted definition.
+
+#### 10.8.5. Usage Segment Value Sets <a id="usage-segment-value-set-format" href="#usage-segment-value-set-format" class="permalink">🔗</a>
+
+The [Usage Segment](#usage-segment-format) `values` field provides an ordered list of Value Set entries.
+A Value Set entry is an array that contains an ordered list of [Value Objects](#usage-segment-value-objects), where the type of each Value object which is defined by the order of the `formats` listing.
 
 Each Value Set entry in the `values` listing represents an increment of `interval` seconds in the Usage Segment from the `segment_start`.
 For example, if a Usage Segment has a `segment_start` of `2025-01-01T00:00:00Z`, an `interval` of `900`, and four Value Set entries in the `values`, the Value Set entries would represent the each 15 minute period of a one hour segment (`2025-01-01T00:00:00Z - 2025-01-01T00:15:00Z`, `2025-01-01T00:15:00Z - 2025-01-01T00:30:00Z`, `2025-01-01T00:30:00Z - 2025-01-01T00:45:00Z`, and `2025-01-01T00:45:00Z - 2025-01-01T01:00:00Z`).
 
-If a Value object is not available for a specific Value Set.
-Servers MUST replace the item in the Value Set with `null`.
+If a Value Object is not available for a specific Value Set (e.g. that interval has missing data), Servers MUST replace the item in the Value Set where the Value Object would have gone with `null`.
 
-#### 10.8.4. Usage Segment Value Object Format <a id="usage-segment-value-object-format" href="#usage-segment-value-object-format" class="permalink">🔗</a>
+#### 10.8.6. Usage Segment Value Objects <a id="usage-segment-value-objects" href="#usage-segment-value-objects" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
-#### 10.8.5. Listing Usage Segments <a id="usage-segment-list" href="#usage-segment-list" class="permalink">🔗</a>
+#### 10.8.7. Listing Usage Segments <a id="usage-segment-list" href="#usage-segment-list" class="permalink">🔗</a>
 
-Clients may request to list Usage Segment objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of Usage Segments, to the `cds_usagesegments_list` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
+Clients may request to list Usage Segment objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_usagesegments_list` URL.
 The Usage object listing request responses are formatted as JSON objects and contain the following named values.
 
 * `usage_segments` - _Array[[UsageSegment](#usage-segment-format)]_ - (REQUIRED) A list of Usage Segments to which the requesting `access_token` is scoped to have access.
@@ -4429,7 +4689,6 @@ In situations where relevant Usage Segments have the same `segment_start`, those
 ### 10.9. Energy Attribute Certificates API <a id="eac-api" href="#eac-api" class="permalink">🔗</a>
 
 This specification requires Servers provide a set of APIs allowing Clients to retrieve a Customer's and Server's Energy Attribute Certificate (EAC) objects for which they are authorized to access.
-These APIs are authenticated using a Bearer `access_token` [granted](https://cds-registration.lfenergy.org/specs/cds-wg1-02#grants-api) that provisions access for a [scope](#scopes) that allows access to the Energy Attribute Certificates API.
 
 #### 10.9.1. Energy Attribute Certificate Object Format <a id="eac-format" href="#eac-format" class="permalink">🔗</a>
 
@@ -4445,7 +4704,7 @@ EAC objects are formatted as JSON objects and contain the following named values
 * `beneficiaries` - _Array[[string](#string)]_ - (REQUIRED) The list of identifiers to which the EAC is allocated, based on the `beneficiary_type`.
 * `eac_numbers` - _Array[[string](#string)]_ - (REQUIRED) A list of EAC identifier that a Client or Customer sees in Server documentation, Customer documents, Certificate Registries, or other interfaces as the identifier for this EAC, if available.
   If a Server does not have a Client or Customer-facing EAC identifier and the Client is not authorized to see the Server's internal EAC identifier for this EAC, or the Server does not have identifiers stored for this EAC, this value is an emtpy list (`[]`).
-* `eac_format` - _[string](#string)_ - (REQUIRED) The format of the EAC data linked in the `ead_data_url`.
+* `eac_format` - _[string](#string)_ - (REQUIRED) The format of the EAC data linked in the `eac_data_url`.
   Possible values of this format MUST be included in the [Server Metadata's](#server-metadata) `cds_eac_formats` object.
   Clients MUST ignore `eac_format` values that they do not know how to interpret.
 * `eac_data_url` - _[URL](#url)_ - (REQUIRED) A link to an endpoint containing the EAC's data (e.g. asset identifiers, values, locations, etc.).
@@ -4489,7 +4748,7 @@ EAC Data Format Descriptions objects are formatted as JSON objects and contain t
 
 #### 10.9.4. Listing Energy Attribute Certificates <a id="eac-list" href="#eac-list" class="permalink">🔗</a>
 
-Clients may request to list EAC objects that they have access to by making an HTTPS `GET` request, authenticated with a valid Bearer `access_token` that is scoped to provide access to a set of EACs, to the `cds_eacs_list` URL included in the [Client Registration Response](https://cds-registration.lfenergy.org/specs/cds-wg1-02#registration-response) or [Clients API](https://cds-registration.lfenergy.org/specs/cds-wg1-02#client-format).
+Clients may request to list EAC objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_eacs_list` URL.
 The EAC object listing request responses are formatted as JSON objects and contain the following named values.
 
 * `eacs` - _Array[[EnergyAttributeCredit](#eac-format)]_ - (REQUIRED) A list of EACs to which the requesting `access_token` is scoped to have access.
@@ -4519,6 +4778,10 @@ In situations where relevant EACs have the same `period_start` and `cds_created`
 <span style="background-color:yellow">TODO</span>
 
 ## 12. Security Considerations <a id="security" href="#security" class="permalink">🔗</a>
+
+<span style="background-color:yellow">TODO</span>
+
+### 12.1. Rate Limiting <a id="rate-limiting" href="#rate-limiting" class="permalink">🔗</a>
 
 <span style="background-color:yellow">TODO</span>
 
@@ -4571,6 +4834,10 @@ In situations where relevant EACs have the same `period_start` and `cds_created`
 <a id="ref-cds-wg1-02-messages-api" href="#ref-cds-wg1-02-messages-api" class="permalink">🔗</a>
 `CDS-WG1-02 Section 6` - "Messages API", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
 [https://cds-registration.lfenergy.org/specs/cds-wg1-02/#messages-api](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#messages-api)
+
+<a id="ref-cds-wg1-02-grants-api" href="#ref-cds-wg1-02-grants-api" class="permalink">🔗</a>
+`CDS-WG1-02 Section 8` - "Grants API", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grants-api](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grants-api)
 
 <a id="ref-cds-wg1-02-grant-object" href="#ref-cds-wg1-02-grant-object" class="permalink">🔗</a>
 `CDS-WG1-02 Section 8.1` - "Grant Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  

@@ -8225,95 +8225,95 @@ Content-Type: application/json;charset=UTF-8
 
 <a id="ref-cds-wg1-01-coverage-endpoint" href="#ref-cds-wg1-01-coverage-endpoint" class="permalink">🔗</a>
 `CDS-WG1-01 Section 4` - "Coverage Endpoint", CDS-WG1-01, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-01/#coverage-endpoint](https://cds-registration.lfenergy.org/specs/cds-wg1-01/#coverage-endpoint)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-01/latest#coverage-endpoint](https://cds-registration.lfenergy.org/specs/cds-wg1-01/latest#coverage-endpoint)
 
 <a id="ref-cds-wg1-01-coverage-entry" href="#ref-cds-wg1-01-coverage-entry" class="permalink">🔗</a>
 `CDS-WG1-01 Section 4.3` - "Coverage Entry Format", CDS-WG1-01, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-01/#coverage-entry-format](https://cds-registration.lfenergy.org/specs/cds-wg1-01/#coverage-entry-format)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-01/latest#coverage-entry-format](https://cds-registration.lfenergy.org/specs/cds-wg1-01/latest#coverage-entry-format)
 
 <a id="ref-cds-wg1-02" href="#ref-cds-wg1-02" class="permalink">🔗</a>
 `CDS-WG1-02` - "Client Registration", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/](https://cds-registration.lfenergy.org/specs/cds-wg1-02/)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest)
 
 <a id="ref-cds-wg1-02-metadata" href="#ref-cds-wg1-02-metadata" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.2` - "Metadata Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-server-metadata-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-server-metadata-format)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#auth-server-metadata-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#auth-server-metadata-format)
 
 <a id="ref-cds-wg1-02-scopes" href="#ref-cds-wg1-02-scopes" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.3` - "Scopes Supported", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scopes](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scopes)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#scopes](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#scopes)
 
 <a id="ref-cds-wg1-02-client-admin" href="#ref-cds-wg1-02-client-admin" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.3.1` - "Client Admin Scope", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scopes-client-admin](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scopes-client-admin)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#scopes-client-admin](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#scopes-client-admin)
 
 <a id="ref-cds-wg1-02-grant-admin" href="#ref-cds-wg1-02-grant-admin" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.3.2` - "Grant Admin Scope", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scopes-grant-admin](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scopes-grant-admin)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#scopes-grant-admin](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#scopes-grant-admin)
 
 <a id="ref-cds-wg1-02-scope-descriptions" href="#ref-cds-wg1-02-scope-descriptions" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.4` - "Scope Descriptions Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scope-descriptions-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#scope-descriptions-format)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#scope-descriptions-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#scope-descriptions-format)
 
 <a id="ref-cds-wg1-02-registration-fields" href="#ref-cds-wg1-02-registration-fields" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.5` - "Registration Field Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-field-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-field-format)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#registration-field-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#registration-field-format)
 
 <a id="ref-cds-wg1-02-registration-field-formats" href="#ref-cds-wg1-02-registration-field-formats" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.7` - "Registration Field Formats", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-field-formats](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-field-formats)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#registration-field-formats](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#registration-field-formats)
 
 <a id="ref-cds-wg1-02-auth-details-object" href="#ref-cds-wg1-02-auth-details-object" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.8` - "Authorization Details Field Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-details-field-formats](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#auth-details-fields-format)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#auth-details-field-formats](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#auth-details-fields-format)
 
 <a id="ref-cds-wg1-02-choice-object" href="#ref-cds-wg1-02-choice-object" class="permalink">🔗</a>
 `CDS-WG1-02 Section 3.10` - "Choice Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#choice-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#choice-format)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#choice-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#choice-format)
 
 <a id="ref-cds-wg1-02-registration-response" href="#ref-cds-wg1-02-registration-response" class="permalink">🔗</a>
 `CDS-WG1-02 Section 4.2` - "Client Registration Response", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-response](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#registration-response)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#registration-response](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#registration-response)
 
 <a id="ref-cds-wg1-02-client-object" href="#ref-cds-wg1-02-client-object" class="permalink">🔗</a>
 `CDS-WG1-02 Section 5.1` - "Client Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#client-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#client-format)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#client-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#client-format)
 
 <a id="ref-cds-wg1-02-modifying-clients" href="#ref-cds-wg1-02-modifying-clients" class="permalink">🔗</a>
 `CDS-WG1-02 Section 5.5` - "Modifying Client Objects", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#clients-modify](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#clients-modify)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#clients-modify](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#clients-modify)
 
 <a id="ref-cds-wg1-02-messages-api" href="#ref-cds-wg1-02-messages-api" class="permalink">🔗</a>
 `CDS-WG1-02 Section 6` - "Messages API", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#messages-api](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#messages-api)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#messages-api](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#messages-api)
 
 <a id="ref-cds-wg1-02-grants-api" href="#ref-cds-wg1-02-grants-api" class="permalink">🔗</a>
 `CDS-WG1-02 Section 8` - "Grants API", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grants-api](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grants-api)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grants-api](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grants-api)
 
 <a id="ref-cds-wg1-02-grant-object" href="#ref-cds-wg1-02-grant-object" class="permalink">🔗</a>
 `CDS-WG1-02 Section 8.1` - "Grant Object Format", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grant-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grant-format)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grant-format](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grant-format)
 
 <a id="ref-cds-wg1-02-grant-auth-requests" href="#ref-cds-wg1-02-grant-auth-requests" class="permalink">🔗</a>
 `CDS-WG1-02 Section 8.3` - "Grant Authorization Requests", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grant-authorization-requests](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grant-authorization-requests)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grant-authorization-requests](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grant-authorization-requests)
 
 <a id="ref-cds-wg1-02-grants-in-tokens" href="#ref-cds-wg1-02-grants-in-tokens" class="permalink">🔗</a>
 `CDS-WG1-02 Section 8.4` - "Grants in Token Responses", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grant-token-responses](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grant-token-responses)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grant-token-responses](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grant-token-responses)
 
 <a id="ref-cds-wg1-02-grant-list" href="#ref-cds-wg1-02-grant-list" class="permalink">🔗</a>
 `CDS-WG1-02 Section 8.5` - "Listing Grants", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grants-list](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#grants-list)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grants-list](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#grants-list)
 
 <a id="ref-cds-wg1-02-security" href="#ref-cds-wg1-02-security" class="permalink">🔗</a>
 `CDS-WG1-02 Section 11` - "Security Considerations", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#security](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#security)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#security](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#security)
 
 <a id="ref-cds-wg1-02-examples" href="#ref-cds-wg1-02-examples" class="permalink">🔗</a>
 `CDS-WG1-02 Section 12` - "Examples", CDS-WG1-02, LF Energy Standards and Specifications (LFESS),  
-[https://cds-registration.lfenergy.org/specs/cds-wg1-02/#examples](https://cds-registration.lfenergy.org/specs/cds-wg1-02/#examples)
+[https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#examples](https://cds-registration.lfenergy.org/specs/cds-wg1-02/latest#examples)
 
 <a id="ref-e164" href="#ref-e164" class="permalink">🔗</a>
 `E.164` - "The international public telecommunication numbering plan", E.164, International Telecommunication Union (ITU),  

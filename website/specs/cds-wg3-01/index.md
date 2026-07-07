@@ -2,8 +2,9 @@
 layout: base
 nav: specs
 title: CDS-WG3 - 01 Customer Data - Specification
-meta_description: Linux Foundation Energy - Connected Data Specification (CDS) - Customer Data Working Group (WG3) - Specifications - CDS-WG3-01 - Customer Data
+meta_description: Linux Foundation Energy - Connected Data Specifications (CDS) - Customer Data Working Group (WG3) - Specifications - CDS-WG3-01 - Customer Data
 svgicons: fa-file-text-o, fa-check-square-o
+render_mermaid_diagrams: true
 ---
 [Home]({{ "/" | relative_url }}) / [Specifications]({{ "/specs" | relative_url }}) / `CDS-WG3-01` - Customer Data
 

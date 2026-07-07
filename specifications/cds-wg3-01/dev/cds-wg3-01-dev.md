@@ -116,6 +116,7 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
         * [7.4.3. Error If No Preselections](#auth-details-error-if-no-preselections)  
         * [7.4.4. Purpose Identifier](#auth-details-purpose)  
         * [7.4.5. Allow Scope Modifications](#auth-details-allow-scope-modifications)  
+        * [7.4.6. Additional JWK Encryption](#auth-details-jwk)  
 * [8. Clients](#clients)  
     * [8.1. Client Object Extension](#client-extension)  
     * [8.2. Modifying Client Objects Extension](#clients-modify-extension)  
@@ -356,6 +357,8 @@ This means Servers MUST NOT store a decimal value as a float, since that format 
 <a id="integer" href="#integer" class="permalink">🔗</a> "integer" - A positive integer value as defined by `int` in [[RFC 8259 Section 6](#ref-rfc8259-numbers)].
 
 <a id="json" href="#json" class="permalink">🔗</a> "JSON" - A data format defined in [[RFC 8259](#ref-rfc8259)].
+
+<a id="jwk-enc" href="#jwk-enc" class="permalink">🔗</a> "JWK Public Encryption Key" - A JSON object representing a public key as defined in [[RFC 7517 Section 4](#ref-rfc7517-pk)] where the `use` field MUST contain the value `enc`.
 
 <a id="map" href="#map" class="permalink">🔗</a> "Map" - A JSON object as defined by `Objects` in [[RFC 8259 Section 4](#ref-rfc8259-objects)].
 
@@ -926,6 +929,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"merge_selection_with"`](#auth-details-merge-selections)
     * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
+    * [`"jwk"`](#auth-details-jwk)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"account_numbers"`](#auth-details-account-numbers)
     * [`"meter_numbers"`](#auth-details-meter-numbers)
@@ -971,6 +975,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"merge_selection_with"`](#auth-details-merge-selections)
     * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
+    * [`"jwk"`](#auth-details-jwk)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"addresses"`](#auth-details-addresses)
 * The `authorization_details_types_supported` array MUST NOT contain any the following values:
@@ -1016,6 +1021,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"merge_selection_with"`](#auth-details-merge-selections)
     * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
+    * [`"jwk"`](#auth-details-jwk)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"account_numbers"`](#auth-details-account-numbers)
     * [`"meter_numbers"`](#auth-details-meter-numbers)
@@ -1066,6 +1072,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"merge_selection_with"`](#auth-details-merge-selections)
     * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
+    * [`"jwk"`](#auth-details-jwk)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"addresses"`](#auth-details-addresses)
     * [`"include_account_details"`](#auth-details-include-account-details)
@@ -1107,6 +1114,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"merge_selection_with"`](#auth-details-merge-selections)
     * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
+    * [`"jwk"`](#auth-details-jwk)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"account_numbers"`](#auth-details-account-numbers)
     * [`"meter_numbers"`](#auth-details-meter-numbers)
@@ -1162,6 +1170,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"merge_selection_with"`](#auth-details-merge-selections)
     * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
+    * [`"jwk"`](#auth-details-jwk)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"account_numbers"`](#auth-details-account-numbers)
     * [`"contract_numbers"`](#auth-details-contract-numbers)
@@ -1230,6 +1239,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"merge_selection_with"`](#auth-details-merge-selections)
     * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
+    * [`"jwk"`](#auth-details-jwk)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"contract_numbers"`](#auth-details-contract-numbers)
     * [`"meter_numbers"`](#auth-details-meter-numbers)
@@ -1273,6 +1283,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"merge_selection_with"`](#auth-details-merge-selections)
     * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
+    * [`"jwk"`](#auth-details-jwk)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"account_numbers"`](#auth-details-account-numbers)
     * [`"meter_numbers"`](#auth-details-meter-numbers)
@@ -1334,6 +1345,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"merge_selection_with"`](#auth-details-merge-selections)
     * [`"error_if_no_preselections"`](#auth-details-error-if-no-preselections)
     * [`"allow_scope_modifications"`](#auth-details-allow-scope-modifications)
+    * [`"jwk"`](#auth-details-jwk)
 * The `authorization_details_types_supported` array MUST contain any the following values and support the authorization details field when the Server has access to the data that allows for support of that field:
     * [`"account_numbers"`](#auth-details-account-numbers)
     * [`"contract_numbers"`](#auth-details-contract-numbers)
@@ -3062,6 +3074,37 @@ When this authorization field is included in an authorization request, Servers M
 
 If the Server supports the ability for a Customer to modify the requested Scope in the [Authorization Form](#auth-form), the Server MUST include this authorization details field for all Scopes that may be used for that Authorization Form.
 This means that in this situation, Servers MUST support a Client's ability to toggle the ability for a Customer to edit their authorization request.
+
+#### 7.4.6. Additional JWK Encryption <a id="auth-details-jwk" href="#auth-details-jwk" class="permalink">🔗</a>
+
+By default, all [Customer Data API](#api) requests and responses are secured using [HTTPS](#https) so that data is encrypted in transit between the Server and Client.
+However, for some use cases, a Client may additionally want to encrypt Customer Data API responses so that only specific individual end devices can decrypt and view the authorized Customer Data.
+For example, an energy mobile app developer Client may be in a jurisdiction that incurs liability for being able to view Customer Data on its servers, so the Client's app that is installed on a Customer's mobile device needs to be the only place where the Customer Data is accessible.
+
+In these relevant use cases, Clients benefit from being able to add a JSON Web Key (JWK) public encryption key to an authorization request, which will cause the Customer Data API responses for the authorization to be encrypted with that JWK public key.
+This authorization data field is intended to enable Clients to provide JWK public encryption keys on a per-authorization basis, which allows Clients to add a layer of encryption that is individual to each of their end devices.
+
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"jwk"`.
+* The `format` value MUST be `"jwk_or_null"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+    * The `default` value MUST be `null`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* For all Customer Data [Scopes](#scopes) included in the authorization request or token request this field's value MUST be the same, meaning that only one JWK may be provided for an authorization request or token request.
+  This limitation is because many Scopes have overlapping Customer Data API access, so Servers cannot encrypt API responses based on individual Scopes.
+  If a Client submits an authorization request or token request with different `"jwk"` authorization details field values, the Server MUST reject the authorization request or token request with an `invalid_authorization_details` error.
+* When the field value is `null`, Servers MUST use the default [HTTPS](#https) encryption requirements for Customer Data API responses.
+* When the field value is not `null`, Servers MUST validate that the submitted value is a valid [JWK Public Encryption Key](#jwk-enc) and the Server supports the value for public key encryption.
+  Servers MUST support at least JWK public keys with a `"kty"` value of `"EC"` and `"crv"` value of `"P-256"`.
+  If the JWK value does not have a valid format or the Server does not support that type of JWK for public key encryption, the Server MUST reject the request with an `invalid_authorization_details` error.
+  If the JWK value is valid and the Server supports that type of JWK for public key encryption, the Server MUST do the following:
+    * The Server MUST continue to use the default HTTPS encryption requirements for Customer Data API requests and responses.
+    * For any Customer Data API requests made using access tokens that have Scopes with a `"jwk"` authorization details field value that is not `null`, the Server MUST additionally encrypt Customer Data API response body using the JWK that is set in the `"jwk"` authorizations details field value.
+      This means that not only is the response payload encrypted using HTTPS between the Client and the Server, but the Client needs to also have the matching JWK private key to decrypt the response body.
 
 ## 8. Clients <a id="clients" href="#client" class="permalink">🔗</a>
 
@@ -8374,6 +8417,10 @@ Content-Type: application/json;charset=UTF-8
 <a id="ref-rfc6838" href="#ref-rfc6838" class="permalink">🔗</a>
 `RFC 6838` - "Media Type Specifications and Registration Procedures", RFC 6838, Internet Engineering Task Force (IETF),  
 [https://www.rfc-editor.org/rfc/rfc6838](https://www.rfc-editor.org/rfc/rfc6838)
+
+<a id="ref-rfc7517-pk" href="#ref-rfc7517-pk" class="permalink">🔗</a>
+`RFC 7517 Section 4` - Section 4. JSON Web Key (JWK) Format, "JSON Web Key (JWK)", RFC 7517, Internet Engineering Task Force (IETF),  
+[https://www.rfc-editor.org/rfc/rfc7517#section-4](https://www.rfc-editor.org/rfc/rfc7517#section-4)
 
 <a id="ref-rfc7946-geojson" href="#ref-rfc7946-geojson" class="permalink">🔗</a>
 `RFC 7946` - Section 3. GeoJSON Object, "The GeoJSON Format", RFC 7946, Internet Engineering Task Force (IETF),

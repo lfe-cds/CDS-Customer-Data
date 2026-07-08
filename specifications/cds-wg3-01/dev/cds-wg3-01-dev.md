@@ -6795,6 +6795,16 @@ Content-Type: application/json;charset=UTF-8
                     "is_required": false,
                     "default": true
                 },
+                {
+                    "id": "jwk",
+                    "name": "JWK Public Encryption Key",
+                    "description": "Set a JWK public key for encrypting Customer Data API responses.",
+                    "documentation": "https://example.com/docs/customerdata/auth-details-fields#jwk",
+                    "for_types": ["cds_service_contracts_1ad"]
+                    "format": "jwk_or_null",
+                    "is_required": false,
+                    "default": null
+                }
             ]
         },
         "cds_usage_1": {
@@ -7018,6 +7028,16 @@ Content-Type: application/json;charset=UTF-8
                     "format": "boolean",
                     "is_required": false,
                     "default": true
+                },
+                {
+                    "id": "jwk",
+                    "name": "JWK Public Encryption Key",
+                    "description": "Set a JWK public key for encrypting Customer Data API responses.",
+                    "documentation": "https://example.com/docs/customerdata/auth-details-fields#jwk",
+                    "for_types": ["cds_usage_1ad"]
+                    "format": "jwk_or_null",
+                    "is_required": false,
+                    "default": null
                 }
             ]
         }

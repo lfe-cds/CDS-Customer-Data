@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Linux Foundation Energy - Connected Data Specification (CDS) - Customer Data Working Group (WG3) - Specifications - CDS-WG3-01 - Customer Data (version&colon; dev)">
+        <meta name="description" content="Linux Foundation Energy - Connected Data Specifications (CDS) - Customer Data Working Group (WG3) - Specifications - CDS-WG3-01 - Customer Data (version&colon; dev)">
         <link rel="icon" type="image/png" href="/assets/favicon.png">
         <meta name="robots" content="noindex, nofollow"/>
         <title>CDS-WG3 - CDS-WG3 - 01 Customer Data - Specification (version&colon; dev)</title>
@@ -10635,6 +10635,18 @@ URI: <a href="https://danielroesler.com/">https://danielroesler.com/</a></p>
         
 
         
+        
+            <script id="mermaidSrc" src="/assets/mermaid-11.14.0-dist/mermaid.tiny.js" defer></script>
+            <script>
+                // wait for mermaid's library to load
+                document.getElementById("mermaidSrc").addEventListener("load", () => {
+                    // convert jekyll's code blocks to mermaid code blocks
+                    document.querySelectorAll("pre > code.language-mermaid").forEach((m) => { m.parentElement.outerHTML = `<pre class="mermaid">${m.textContent}</pre>`; });
+                    // render code blocks into diagrams
+                    mermaid.initialize({ startOnLoad: true });
+                });
+
+            </script>
         
     </body>
 </html>

@@ -4,7 +4,6 @@ nav: specs
 title: CDS-WG3 - 01 Customer Data - Specification
 meta_description: Linux Foundation Energy - Connected Data Specifications (CDS) - Customer Data Working Group (WG3) - Specifications - CDS-WG3-01 - Customer Data
 svgicons: fa-file-text-o, fa-check-square-o
-render_mermaid_diagrams: true
 ---
 [Home]({{ "/" | relative_url }}) / [Specifications]({{ "/specs" | relative_url }}) / `CDS-WG3-01` - Customer Data
 
@@ -12,9 +11,9 @@ render_mermaid_diagrams: true
 
 This specification defines how utilities and other central entities ("Servers") can provide secure and structured access to Customer Data for external entities ("Clients"), such as enterprise customers, vendors, building owners, energy service providers, and more.
 
-#### [<svg class="svgicon"><use href="#fa-check-square-o"/></svg> Read the Overview]({{ "/specs/cds-wg3-01/overview" | relative_url }}) <span style="font-size:var(--bs-body-font-size);font-weight:normal;display:inline-block;">(currently redirects to the working group maintainer's draft of the overview that summarizes this specification)</span>
+#### [<svg class="svgicon"><use href="#fa-check-square-o"/></svg> Read the Overview]({{ "/specs/cds-wg3-01/overview" | relative_url }}) <span style="font-size:var(--bs-body-font-size);font-weight:normal;display:inline-block;">(a summary of what's in the specification)</span>
 
-#### [<svg class="svgicon"><use href="#fa-file-text-o"/></svg> Read the Specification (latest version)]({{ "/specs/cds-wg3-01/latest" | relative_url }}) <span style="font-size:var(--bs-body-font-size);font-weight:normal;display:inline-block;">(currently redirects to the working group maintainer's [`maintainer-dev`](#version-maintainer) version below)</span>
+#### [<svg class="svgicon"><use href="#fa-file-text-o"/></svg> Read the Specification (latest version)]({{ "/specs/cds-wg3-01/latest" | relative_url }}) <span style="font-size:var(--bs-body-font-size);font-weight:normal;display:inline-block;">(currently redirects to the working group's [`dev`](#version-dev) version below)</span>
 
 ---
 
@@ -25,11 +24,10 @@ Below are some of the official versions and drafts of the specification that are
 
 * <a id="version-latest" href="#version-latest" class="permalink">🔗</a> [`latest`]({{ "/specs/cds-wg3-01/latest" | relative_url }}) -
   This version automatically redirects to what the working group considers to be the latest official version of the specification.
-  Currently this version redirects to the working group maintainer's [`maintainer-dev`](#version-maintainer) version.
+  Currently this version redirects to the working group's [`dev`](#version-dev) version.
 
 * <a id="version-dev" href="#version-dev" class="permalink">🔗</a> [`dev`]({{ "/specs/cds-wg3-01/dev" | relative_url }}) -
-  This version is currently under review in [Pull Request #31](https://github.com/lfe-cds/CDS-Customer-Data/pull/31).
-  When merged, it will be the working group's main development version where other [pull requests](https://github.com/lfe-cds/CDS-Customer-Data/pulls) will be merged.
+  This is the working group's main development version where [pull requests](https://github.com/lfe-cds/CDS-Customer-Data/pulls) with changes and new content are merged.
 
 * <a id="version-maintainer" href="#version-maintainer" class="permalink">🔗</a> [`maintainer-dev` <svg class="svgicon"><use href="#fa-external-link"/></svg>](https://daniel-roesler.github.io/CDS-Customer-Data/specs/cds-wg3-01/dev) -
   This is the working group maintainer's draft, which includes in-development updates by the working group maintainer (Daniel Roesler).

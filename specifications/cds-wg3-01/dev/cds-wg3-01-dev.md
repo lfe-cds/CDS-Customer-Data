@@ -96,6 +96,7 @@ For more information, visit [https://lfess.energy/](https://lfess.energy/).
             * [7.2.5.3. Include Bill Statement Programs](#auth-details-include-bill-statement-programs) 
         * [7.2.6. Include Bill Sections](#auth-details-include-bill-sections)  
             * [7.2.6.1. Include Bill Section Line Items](#auth-details-include-bill-section-line-items)  
+            * [7.2.6.2. Include Bill Section Programs](#auth-details-include-bill-section-programs)  
         * [7.2.7. Include Aggregations](#auth-details-include-aggregations)  
             * [7.2.7.1. Include Aggregation Addresses](#auth-details-include-aggregation-addresses)  
         * [7.2.8. Include Usage Segments](#auth-details-include-usage-segments)  
@@ -504,6 +505,7 @@ To implement the "Billing Self-Access" Scenario, Servers MUST implement the foll
     * [`include_service_contracts`](#auth-details-include-service-contracts)
     * [`include_contract_numbers`](#auth-details-include-contract-numbers)
     * [`include_bill_section_line_items`](#auth-details-include-bill-section-line-items)
+    * [`include_bill_section_programs`](#auth-details-include-bill-section-programs)
 * The following are requirements for supported Authorization Details Field Objects [[CDS-WG1-02 Section 3.8](#ref-cds-wg1-02-auth-details-object)]:
     * For the [`statement_date_start`](#auth-details-statement-start) field, the Server MUST allow the Client to access for each connected Account at least 1 year of historical bills (i.e. `minimum` value set to at least `P1Y`).
     * For the [`statement_date_end`](#auth-details-statement-end) field, the Server MUST set the `maximum` value to `infinite` (i.e. Clients MAY authorize access to ongoing bill access indefinitely).
@@ -1295,6 +1297,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_bill_statement_charges"`](#auth-details-include-bill-statement-charges)
     * [`"include_bill_statement_programs"`](#auth-details-include-bill-statement-programs)
     * [`"include_bill_section_line_items"`](#auth-details-include-bill-section-line-items)
+    * [`"include_bill_section_programs"`](#auth-details-include-bill-section-programs)
     * [`"include_aggregations"`](#auth-details-include-aggregations)
     * [`"include_service_points"`](#auth-details-include-service-points)
     * [`"include_meter_devices"`](#auth-details-include-meter-devices)
@@ -1369,6 +1372,7 @@ To support this Scope, the Scope Description object MUST meet the following requ
     * [`"include_aggregation_addresses"`](#auth-details-include-aggregation-addresses)
     * [`"include_bill_sections"`](#auth-details-include-bill-sections)
     * [`"include_bill_section_line_items"`](#auth-details-include-bill-section-line-items)
+    * [`"include_bill_section_programs"`](#auth-details-include-bill-section-programs)
 * The following is required for Authorization Details Field Objects in the Scope Description's `authorization_details_fields_supported` field:
     * For the object with an `id` value of `authorization_form_selection_type`, it MUST meet the following requirements:
         * The `choices` array MUST contain at least one object and objects MUST have one of following `id` values:
@@ -2638,6 +2642,24 @@ Additionally, Servers MUST implement the following behavior to support this auth
 
 * If this field's value is `true`, Servers MUST include the following field values in any Bill Section objects accessible using this field's scope:
     * `line_items`
+
+##### 7.2.6.2. Include Bill Section Programs <a id="auth-details-include-bill-section-programs" href="#auth-details-include-bill-section-programs" class="permalink">🔗</a>
+
+For some use cases, Clients need to have access to the [Service Programs](#service-program-format) in which a Customer participated for each [Bill Section](#bill-section-format) period.
+For example, an energy app may need to see if a Customer was participating in an aggregated demand response program for the last bill period to file for a program participation credit.
+To address these use cases, this specification defines an authorization details field that controls whether Bill Section program participation details are included.
+
+To support this authorization details field, the Authorization Details Field Object MUST meet the following requirements:
+
+* The `id` value MUST be `"include_bill_section_programs"`.
+* The `format` value MUST be `"boolean"`.
+* If this object is included in a Scope Description where the `response_types_supported` field is not empty array (e.g. Customer authorization is supported):
+    * The `is_required` value MUST be `false`.
+
+Additionally, Servers MUST implement the following behavior to support this authorization details field:
+
+* If this field's value is `true`, Servers MUST include the following field values in any Bill Section objects accessible using this field's scope:
+    * `service_programs`
 
 #### 7.2.7. Include Aggregations <a id="auth-details-include-aggregations" href="#auth-details-include-aggregations" class="permalink">🔗</a>
 
@@ -4950,7 +4972,9 @@ Bill Section objects are formatted as JSON objects and contain the following nam
 * `related_meterdevices` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_meterdevice_id` values that identify Meter Devices to which this Bill Section is applicable.
   This list MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
 * `related_billsections` - _Array[[string](#string)]_ - (REQUIRED) The list of `cds_billsection_id` that identify other Bill Sections that were issued alongside this Bill Section, where those Bill Sections represent another set of charges covering the same Service Contract.
-  This list MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
+  This array MUST only include identifiers that the Client is authorized to see as scoped by their requesting `access_token`.
+* `service_programs` - _Array[[ServiceProgram](#service-program-format)]_ - (OPTIONAL) A list of Service Contract-level programs in which the Customer is participating for the Bill Section period.
+  If the Server does not have this information or the Customer is not participating in any Service Contract-level programs, this value is an empty list (`[]`).
 * `usage_details` - _Array[[BillSectionUsageDetail](#bill-section-usage-detail-format)]_ - (REQUIRED) A list of the Bill Section Usage Detail objects that summarize the service's usage and other values on the Customer-facing bill statement section represented by this Bill Section.
 * `cost_details` - _Array[[BillSectionCostDetail](#bill-section-cost-detail-format)]_ - (REQUIRED) A list of the Bill Section Cost Detail objects that summarize the service's total and subtotal costs on the Customer-facing bill statement section represented by this Bill Section.
 * `line_items` - _Array[[BillSectionLineItem](#bill-section-line-item-format)]_ - (OPTIONAL) A list of the Bill Section Line Item objects that denote the individual charges listed on the Customer-facing bill statement section represented by this Bill Section.
@@ -5398,7 +5422,7 @@ The following are the typical steps for a Client to find the correct Aggregation
 * The Client looks up the base URL for the Usage Segments API, which is the [Server Metadata's](#server-metadata) `cds_usagesegments_api` value (e.g. "https://cds.example.com/usage-segments").
 * The Client can now use OAuth's Client Credentials Grant Flow [[RFC 6749 Section 4.4](#ref-rfc6749-client-credentials)] with the Aggregation's `scope` (e.g. `"cds_query_usage"`) to obtain an access token (`"access_token": "bbbbb..."`), or use the previously obtained access token for the same scope if it has not yet expired, to query the [Usage Segments listing API](#usage-segment-list) (e.g. GET "https://cds.example.com/usage-segments") and obtain the Aggregation's Usage Segment objects (i.e. the Aggregation's dataset).
 
-#### 10.7.8. Listing Aggregations <a id="aggregation-list" href="#aggregation-list" class="permalink">🔗</a>
+#### 10.7.8. Listing Aggregations <a id="aggregations-list" href="#aggregations-list" class="permalink">🔗</a>
 
 Clients may request to list Aggregation objects that they have access to by making an HTTPS `GET` request to the [Server Metadata's](#server-metadata) `cds_aggregations_api` URL.
 The Aggregation listing request responses are formatted as JSON objects and contain the following named values.
@@ -5422,7 +5446,7 @@ Servers MUST support Clients adding any of the following URL parameters to the `
 * `q` - A search term for which the Servers MUST filter the Aggregations following fields for values that case-insensitive contains the search term, if the field is accessible based on the Client's `access_token` scope.
     * `cds_aggregation_id`
     * `aggregation_number`
-    * `addresses`
+    * `grouped_addresses`
     * `region_number` in any included Aggregation Region object
 
 Listings of Aggregation objects MUST be ordered in reverse chronological order by `modified` timestamp, where the most recently updated relevant Aggregation MUST be first in each listing.
@@ -6160,7 +6184,7 @@ Extensions MAY modify the following [Customer Data API](#api) endpoints defined 
 * [Listing Meter Devices](#meter-device-list)
 * [Listing Bill Statements](#bill-statement-list)
 * [Listing Bill Sections](#bill-section-list)
-* [Listing Aggregations](#aggregation-list)
+* [Listing Aggregations](#aggregations-list)
 * [Listing Usage Segments](#usage-segment-list)
 * [Listing Energy Attribute Certificates](#eac-list)
 
@@ -6202,7 +6226,7 @@ Extensions MAY modify the following [Customer Data](#api) objects defined in thi
 * [Aggregation Object](#aggregation-format)
 * [Aggregation Region Object](#aggregation-region-format)
 * [Consent Requirement Object](#consent-requirement-format)
-* [Aggregation List Object](#aggregation-list)
+* [Aggregation List Object](#aggregations-list)
 * [Usage Segment Object](#usage-segment-format)
 * [Usage Segment Value Format Object](#usage-segment-value-formats)
     * [Electric Usage Value Format Object](#usage-segment-electric-usage-value-format)

@@ -4878,7 +4878,7 @@ New Charge Type values MUST be a [string](#string) of one of the following:
 * `flat_rate` - The line item is an account-level flat rate charge.
 * `interest` - The line item is an account-level interest charge, typically for when an Account is on a payment plan with interest.
 * `deposit` - The line item is an adjustment that results from the application of deposit the Customer paid, either as a charge (i.e. positive value) if the deposit is being charged on the Bill Statement, or as a credit (i.e. negative value) if the deposit is being refunded on the Bill Statement.
-* `differed` - The line item is the amount of the Account's balance that will not be included in the `amount_due` because it is differed or carried over to future bills.
+* `deferred` - The line item is the amount of the Account's balance that will not be included in the `amount_due` because it is deferred or carried over to future bills.
 * `credit_bank` - The line item is an adjustment that results from the application of an Account's credit bank (e.g. NEM tracked charges).
 * `program` - The line item is an adjustment to the amount due that is the result of the Account participating in an Account-level program (e.g. the Account being enrolled in a low-income discount program).
 * `adhoc` - The line item is an ad-hoc, one-time, or manual adjustment to the Bill Statement's `amount_due` that appears on the Bill Statement visible to the Customer.

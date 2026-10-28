@@ -48,7 +48,7 @@ Any changes of Scope or Use Cases are not retroactive.
 
 ## License
 
-See [LICENSE.md](https://github.com/lfe-cds/CDS-Customer-Data/blob/main/License.md).
+See [LICENSE.md](https://github.com/lfe-cds/CDS-Customer-Data/blob/main/LICENSE.md).
 
 Our specifications operate under the Joint Development Foundation (JDF) project model.
 

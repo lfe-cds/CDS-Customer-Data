@@ -1,6 +1,6 @@
 # Joint CDS WG3 (Customer Data) Meeting 2026-08-20
 
-Recording: TODO
+Recording: https://zoom.us/rec/share/OE4oRhT4-IJUXUUBdGtDKuLblQliGijex7QxQv4anzscd4MGuDO8sG6mTlOF30SG.jzDbEWC_HpAdlwVm
 
 ## Agenda
 * Welcome
